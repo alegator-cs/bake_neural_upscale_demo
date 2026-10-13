@@ -1,12 +1,8 @@
-# Neural Light - Experimental C16
+# Baked Neural Upscale
 
-A scene-specific renderer that evaluates compact baked appearance at **480x270**, then uses a **4,000-parameter** residual network to produce **1920x1080** output. This package preserves the October 10, 2026 C16 experiment: directional surface textures, a small appearance correction and a separate pixel-only second pass.
+A scene-specific renderer that evaluates compact baked appearance at **480x270**, then uses a **4,000-parameter** residual network to produce **1920x1080** output. The assets occupy **1,077,260 bytes**.
 
-The appearance assets occupy **1,077,260 bytes**. This is an experimental demonstration with remaining contour and reflection artifacts. It has not established an overall quality or performance win, and its learned appearance is specific to this scene.
-
-![Native October 10 C16 output, fresh camera 12000017](docs/images/12000017-c16.png)
-
-The matched **[bilinear image](docs/images/12000017-bilinear.png)** and **[native physical reference](docs/images/12000017-reference.png)** support comparison at 100% scale. These are unchanged 1920x1080 files from the same frozen camera. The C16 and bilinear panels are actual engine outputs using identical first-pass LR color.
+https://github.com/user-attachments/assets/39f8d508-8141-4e4c-95d5-fa11a33749ef
 
 ## What runs
 
