@@ -1,0 +1,172 @@
+{
+  "schema": "NEURAL_LIGHT_C16_CLEAN_INTERACTIVE_CHECK_1",
+  "checked_date": "2026-10-13",
+  "source_commit": "1fe5c104157f553f154b08c1bad5b845c6c5e65e",
+  "source_tree": "cd154c12f9bcd76464bcf9fc1414265470b6b6e0",
+  "tracked_only_export": true,
+  "borrowed_executable_or_bsp_or_private_runtime_assets": false,
+  "clean_export_post_build_tracked_differences": [
+    "runtime/quake3e/code/renderervk/surface_shader_data.h",
+    "runtime/run.ps1"
+  ],
+  "engine": {
+    "bytes": 3201536,
+    "sha256": "57630cf704d5d6f0a7d03e546e714ed2a1133ef1cf6c7828014dc990a1bd55f4",
+    "built_from_included_source": true,
+    "bit_identical_cross_host_build_promised": false
+  },
+  "build": {
+    "exit_code": 0,
+    "timed_out": false,
+    "shaders_validated": 17,
+    "source_hashes_equal_preserved": 27,
+    "spv_hashes_equal_preserved": 17
+  },
+  "map": {
+    "source": "reproduction/map/neural_test.map",
+    "compiler": "q3map2",
+    "bytes": 254256,
+    "sha256": "b2931bc257a7b018720864a23efa03d21b3e6ebf3deb35ca915b9a04e3072e52",
+    "semantic_lumps_equal_original": 17
+  },
+  "launcher": {
+    "path": "runtime/run.ps1",
+    "sha256": "95be7022cb31a38426a1babb053185e326a95762a429637a7656100093c19159",
+    "generated_config_sha256": "91d6fb4810cf10f35b2fcdd21eb25b01e09e614c8f3567ab20737891ec995317",
+    "frozen_view_id": -1,
+    "surface_pose": 0,
+    "transport_lock": 0,
+    "neural_view": 7,
+    "in_mouse": 1,
+    "surface_mode": 2,
+    "upscale_mode": 10,
+    "startup_commands": 23,
+    "argument_bytes_observed": 782
+  },
+  "published_asset_files": [
+    {
+      "path": "assets/matched_A.nlsf",
+      "bytes": 788096,
+      "sha256": "546a3d123111056e155f4f0491245775375f4047711441997072cb98bd944f01"
+    },
+    {
+      "path": "assets/matched_A.nlsr",
+      "bytes": 272908,
+      "sha256": "02707afc205514bdd4a70675bc5e74e3e08f483783545822ff2b71406f062ece"
+    },
+    {
+      "path": "assets/matched_C16.nlr4",
+      "bytes": 16256,
+      "sha256": "d56767cf48ff7e2933867c8a7ddec43a4dabc4808eb5b1d53c5bf6e29441e3a5"
+    },
+    {
+      "path": "assets/triangles.bin",
+      "bytes": 1224832,
+      "sha256": "657e3d200dcf36412bec2e4b3b3730737a5de07a8e8a49df6e2ba80bb9b1c9ce"
+    },
+    {
+      "path": "assets/materials.bin",
+      "bytes": 128,
+      "sha256": "c5ff9715587f4ae1bc0d31c9c3bc98cdaa802a53e1a91e9950f0df468b049f16"
+    },
+    {
+      "path": "assets/visibility.bvh",
+      "bytes": 240368,
+      "sha256": "c9fd9986d2fb6ca30b19b31a5a08514a684d615211af23ef0b579f4c4fbf2b18"
+    },
+    {
+      "path": "assets/transport/maps/neural_transport.bin",
+      "bytes": 25232,
+      "sha256": "8f7d4f434400cc6d61b88e7f93ec1d2953fb6db7e83e251cb6a61bb806544c6b"
+    },
+    {
+      "path": "assets/transport/textures/neural_transport/reference_480.tga",
+      "bytes": 518444,
+      "sha256": "6b4cf9296210235a64c74801949968abe47b7cb6cb2bf00f7c1170e6430d98a5"
+    }
+  ],
+  "external_stock_OpenArena_pk3s": [
+    {
+      "Name": "pak0.pk3",
+      "Length": 38138505,
+      "sha256": "5bf50ed038fe8098f32e2e9bec7184a763ae2030c8feccef1e8448f6bd7d027f"
+    },
+    {
+      "Name": "pak1-maps.pk3",
+      "Length": 38421794,
+      "sha256": "f8723e7629ac33f94ba025dc11de820c9ec8671c9d4d92ba2b6ba63c7fe74237"
+    },
+    {
+      "Name": "pak2-players-mature.pk3",
+      "Length": 26754265,
+      "sha256": "b54e8e6cefdad8b7d3ceb4d10669e6393f205e007116538bd45c19bfdcb80bd8"
+    },
+    {
+      "Name": "pak2-players.pk3",
+      "Length": 74389371,
+      "sha256": "5021d10cc90ff29158c1750120b8fe0f036c1f20f030a86803313367ca6e3757"
+    },
+    {
+      "Name": "pak4-textures.pk3",
+      "Length": 97077243,
+      "sha256": "aa0a8f59fbb0847e9160f05f2e357bcb1acb66b2b95eb5b68f6302ce9ed78e3c"
+    },
+    {
+      "Name": "pak5-TA.pk3",
+      "Length": 2907315,
+      "sha256": "17f6657d9e59e1afc2333474483786e9b2f9f530855d3bb36428780781fe54aa"
+    },
+    {
+      "Name": "pak6-misc.pk3",
+      "Length": 24912892,
+      "sha256": "71ea57f8bfba366086ca8ee21d7d5e82d90ab0c16fbe66dc5a8f7636f8762687"
+    },
+    {
+      "Name": "pak6-patch085.pk3",
+      "Length": 36972040,
+      "sha256": "d310556375fab08af683e7ea17db319e08d2d11d0ef72972a48e62021aabf239"
+    },
+    {
+      "Name": "pak6-patch088.pk3",
+      "Length": 70645224,
+      "sha256": "c1e1c98f088eb9cb6236f5ca5c0303fa6c9f378e6a235491c3cff3b7d52dc5ed"
+    }
+  ],
+  "legacy_neural_test_nlm_present": false,
+  "private_vm_present": false,
+  "camera_evidence": {
+    "map": "maps/neural_test.bsp",
+    "valid_renderer_state": true,
+    "origin_before": [
+      -330.569946,
+      -36.680363,
+      294.600555
+    ],
+    "origin_after": [
+      -73.421234,
+      -10.292585,
+      252.309296
+    ],
+    "distance_changed": 261.93572780138516,
+    "direction_changed": true,
+    "automated_movement_commands_sent": false
+  },
+  "native_image": {
+    "bytes": 300310,
+    "sha256": "98007fb7f74505c554cf80559bf1fd2724115edc15b14d61ac4f4727dcccaf1c",
+    "actual_native_pixels_inspected": true,
+    "unobstructed_world_and_C16_mirror_visible": true
+  },
+  "user_confirmed_interactive_result": true,
+  "GPU_parity_or_performance_claim": false,
+  "bake_or_training_jobs": 0,
+  "external_dependencies": [
+    "PowerShell 7",
+    "Python 3.10+",
+    "Visual Studio 2022 C++ tools / Windows SDK",
+    "Vulkan SDK shader tools",
+    "Vulkan-capable GPU and driver",
+    "stock OpenArena 0.8.8 PK3 data",
+    "working q3map2 distribution with matching DLLs"
+  ]
+}

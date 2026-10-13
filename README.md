@@ -23,26 +23,26 @@ See [architecture and exact byte accounting](docs/ARCHITECTURE.md), [measurement
 
 ## Build and view
 
-The validated native build uses **Windows x64, Visual Studio 2022, Vulkan SDK 1.3.290.0 and Python**. It does not require Python machine-learning libraries for inference. Linux/macOS engine sources are retained upstream, but this integration has not been validated there.
+The validated native build uses **Windows x64, PowerShell 7, Visual Studio 2022 C++ tools, Vulkan SDK 1.3.290.0 and Python 3.10+** (tested with Python 3.12.8). It does not require Python machine-learning libraries for inference. Linux/macOS engine sources are retained upstream, but this integration has not been validated there.
 
 From this directory:
 
 ```powershell
 python tools/verify_assets.py
-powershell -NoProfile -File runtime/build.ps1 -VulkanBin "$env:VULKAN_SDK\Bin"
+pwsh -NoProfile -ExecutionPolicy Bypass -File runtime/build.ps1 -VulkanBin "$env:VULKAN_SDK\Bin"
 ```
 
-Runtime initialization requires a separately supplied OpenArena 0.8.8 installation and q3map2 executable. Game data, BSPs, compiler/runtime binaries and SDKs are not included. The canonical map source is included. Map compilation requires a fresh `work\map` directory for map compilation:
+Runtime initialization requires a complete, separately supplied OpenArena 0.8.8 installation and a working q3map2 distribution with its matching DLLs. Game data, BSPs, compiler/runtime binaries and SDKs are not included. The canonical map source is included. Map compilation requires a fresh `work\map` directory:
 
 ```powershell
-powershell -NoProfile -File reproduction/map/compile_map.ps1 -OpenArenaRoot "D:\Games\OpenArena" -Q3Map2 "D:\Tools\q3map2.exe" -OutputDirectory "work\map"
+pwsh -NoProfile -ExecutionPolicy Bypass -File reproduction/map/compile_map.ps1 -OpenArenaRoot "D:\Games\OpenArena" -Q3Map2 "D:\Tools\q3map2.exe" -OutputDirectory "work\map"
 New-Item -ItemType Directory -Path "runtime\session\baseoa\maps" -Force
 Copy-Item -LiteralPath "work\map\neural_test.bsp" -Destination "runtime\session\baseoa\maps\neural_test.bsp"
-powershell -NoProfile -File runtime/run.ps1 -OpenArenaPath "D:\Games\OpenArena" -PrepareOnly
-powershell -NoProfile -File runtime/run.ps1 -OpenArenaPath "D:\Games\OpenArena"
+pwsh -NoProfile -ExecutionPolicy Bypass -File runtime/run.ps1 -OpenArenaPath "D:\Games\OpenArena" -PrepareOnly
+pwsh -NoProfile -ExecutionPolicy Bypass -File runtime/run.ps1 -OpenArenaPath "D:\Games\OpenArena"
 ```
 
-The [full recipe](docs/REPRODUCTION.md) documents tool versions, map staging, explicit path arguments, offline teacher generation and training. The launcher prepares an isolated home directory; it does not modify OpenArena's installed game data. Its default is the admitted frozen camera 12000017 and experimental C16 mode 10. `-FrozenViewId -1` selects a free camera. Running the launcher opens the interactive engine; packaging checks do not launch it.
+The [full recipe](docs/REPRODUCTION.md) documents tool versions, map staging, explicit path arguments, offline teacher generation and training. The launcher prepares an isolated home directory; it does not modify OpenArena's installed game data. Its default is a live free camera in the ordinary map, with experimental C16 mode 10 painted into the mirror receiver. Mouse/WASD and Space/Ctrl control flight. F5 shows the raw neural image, F6 restores the composed world, F7 unlocks the camera and F8 shows the original map. `-FrozenViewId 12000017` selects the admitted fixed camera. Running the launcher opens the interactive engine; packaging checks do not launch it.
 
 The retained assets make inference available without rendering a training dataset or refitting any network. Full retraining is a separate offline workflow. The [408-view capture checklist](reproduction/capture/README.md) includes source-only batch preparation and completion checking; the [fresh-fit identity procedure](docs/IDENTITY.md) includes strict byte inspection and manual review/rebuild steps. These do not automate a new end-to-end reproduction. The label dataset and optimizer checkpoints are deliberately omitted.
 
@@ -50,7 +50,7 @@ The retained assets make inference available without rendering a training datase
 
 Across 24 disjoint fresh cameras, descriptive mean RGB MSE was **0.0002571** for C16 versus **0.0005236** for bilinear. C16 made many contours sharper, but false-bright pixels increased from 301.1 to 627.5 per view. Reflection bands, phase-grid edges, halos and motion instability remain possible. The selected model failed 164 visual guards, and the finite physical references failed some noise checks. See [limitations and evidence scope](docs/MEASUREMENTS.md).
 
-Original whole-GPU-frame medians were **13.790 ms C16 / 9.042 ms bilinear** on a GTX 1650 with Max-Q Design. These are single capture samples across cameras, explicitly timing-ineligible. They do **not** establish FPS, a quiet repeated benchmark or a speedup at matched quality. The captures' view 7 presentation also differs from the final view 6 full-scene preview.
+Original whole-GPU-frame medians were **13.790 ms C16 / 9.042 ms bilinear** on a GTX 1650 with Max-Q Design. These are single capture samples across cameras, explicitly timing-ineligible. They do **not** establish FPS, a quiet repeated benchmark or a speedup at matched quality. The captures used view 7 composition; the former full-scene preview used raw view 6. The launcher now defaults to the composed interactive world.
 
 The engine/CPU decoder matched deterministic samples in six selection views; the worst C16 RGBA difference was 1.788139343e-7. This is sampled numerical parity, not exhaustive geometric visibility verification.
 
@@ -63,7 +63,7 @@ The engine/CPU decoder matched deterministic samples in six selection views; the
 - `provenance/`: public relative-path identities and hashes; no private machine paths.
 - `docs/PUBLISHING.md`: local review and manual publication procedure.
 
-The port relocates file paths and disables the Windows build's optional CURL download support to avoid shipping a prebuilt library. Renderer shaders and selected appearance assets remain unchanged. The portable build compiled and validated 17 shaders and built the engine on one CPU worker. It has not had a new GPU pixel-parity run; the original native captures and parity evidence remain the numerical evidence.
+The port relocates file paths and disables the Windows build's optional CURL download support to avoid shipping a prebuilt library. Renderer shaders and selected appearance assets remain unchanged. On October 13, a tracked-files-only export of public commit `1fe5c10` compiled and validated all 17 shaders, linked a fresh engine and compiled the map locally. The corrected launcher then ran with only stock OpenArena PK3s and the published runtime assets. Native pixels and changing renderer-camera receipts confirmed world composition and movement; the user also confirmed the interactive result. The legacy `neural_test.nlm` sidecar was absent. This is an interactive reproduction check, not a new GPU pixel-parity or performance test.
 
 ## Licensing and attribution
 

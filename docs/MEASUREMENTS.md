@@ -33,7 +33,7 @@ Authenticated against 24 capture owners, 96 native headers and 24 capture-config
 - All 96 captures: 1920x1080 window/framebuffer/output. A/C16 LR resolution: 480x270.
 - Windowed borderless, r_fbo 1, r_overBrightBits 0, r_gamma 1, r_neuralFastBuffers 1, r_neuralFastScale 1, sound disabled, surfaceMode 2/visibility 1, com_maxfps 0, r_swapInterval 0, benchmark 0, pose 0.
 
-Capture startup used r_neuralView 7; the final full-scene user preview uses r_neuralView 6. Surface PNG content does not depend on that plate-view choice, but whole-frame timing includes view 7 composition/presentation. These measurements do not describe the view 6 preview.
+Capture startup used r_neuralView 7; the former full-scene user preview used r_neuralView 6. Surface PNG content does not depend on that plate-view choice, but whole-frame timing includes view 7 composition/presentation. These measurements do not describe the view 6 preview. The corrected interactive launcher now defaults to composed view 7; no new timing was collected for it.
 
 The CPU model and installed system RAM are not authenticated in these capture records. UI activity was not independently measured. Mode 4 headers omit detailed GPU/driver/presentation/timestamp fields; do not fill those omissions from unrelated runs.
 
@@ -52,8 +52,8 @@ CPU full-frame latency, display FPS/scanout and continuous whole-process VRAM pe
 
 ## Release preparation checks
 
-The source-only portable Windows build compiled and validated 17 shaders and built Quake3e/renderer in 54.300 seconds, below a 240-second cap, on one CPU worker at below-normal priority. This is build elapsed time, not inference performance. GPU jobs: 0; engine launches: 0.
+The initial source-only portable Windows preparation compiled and validated 17 shaders and built Quake3e/renderer in 54.300 seconds, below a 240-second cap, on one CPU worker at below-normal priority. This is build elapsed time, not inference performance. That preparation performed no GPU jobs or engine launches.
 
-CPU asset checks verify all 6 selected surface files against whole-file SHA and bytes, the C16 NLR40001 ABI/4,000 finite FP32 weights, and the 18,662,400-byte display/activation accounting. The launcher PrepareOnly check verified 8 pinned files, frozen view 12000017, 23 startup commands/761 ASCII argument bytes, and started no renderer. The portable launcher relocates paths; CURL download support is disabled in the Windows project to exclude unverified prebuilt libraries.
+CPU asset checks verify all 6 selected surface files against whole-file SHA and bytes, the C16 NLR40001 ABI/4,000 finite FP32 weights, and the 18,662,400-byte display/activation accounting. The original launcher PrepareOnly check verified 8 pinned files, frozen view 12000017, 23 startup commands/761 ASCII argument bytes, and started no renderer. That frozen setup is historical. The current live setup still uses 23 startup commands; argument bytes depend on supplied paths. The portable launcher relocates paths; CURL download support is disabled in the Windows project to exclude unverified prebuilt libraries.
 
-Shaders and appearance files retain their original numeric identity. There was no new GPU pixel check or interactive test of the rebuilt portable engine. Full offline baking/training from the portable adapters was not rerun. Original native captures and parity remain the pixel evidence.
+The October 13 tracked-only clean export compiled the engine and map, then ran the corrected live world-composited launcher with stock OpenArena PK3s and published assets. Native pixels and changing camera receipts were inspected, and the user confirmed movement and presentation worked. The legacy .nlm sidecar was absent. See [clean-build provenance](../provenance/CLEAN_BUILD.json) and [reproduction instructions](REPRODUCTION.md). Shaders and appearance files retain their original numeric identity. This check added no new GPU parity or timing evidence. Full offline baking/training from the portable adapters was not rerun.

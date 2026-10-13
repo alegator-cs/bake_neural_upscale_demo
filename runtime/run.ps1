@@ -5,7 +5,7 @@ param(
     [string]$AssetsPath = '',
     [string]$HomePath = '',
     [ValidatePattern('^[A-Za-z0-9_-]+$')][string]$MapName = 'neural_test',
-    [ValidateSet(12000017, -1)][int]$FrozenViewId = 12000017,
+    [ValidateSet(12000017, -1)][int]$FrozenViewId = -1,
     [switch]$PrepareOnly
 )
 $ErrorActionPreference = 'Stop'
@@ -88,16 +88,24 @@ $config = @(
     'set r_surfaceBase surface/matched_A.nlsf', 'set r_surfaceCorrection surface/matched_A.nlsr',
     'set r_surfaceCnnModel surface/matched_C16.nlr4', "set r_surfaceBatchViewID $FrozenViewId",
     'set com_maxfps 60', 'set r_swapInterval 0', 'set cg_fov 35',
-    'set cg_drawGun 0', 'set cg_draw2D 0', 'set cl_freelook 1', 'set in_nograb 0',
+    'set cg_drawGun 0', 'set cg_draw2D 0', 'set cg_drawCrosshair 0',
+    'set cg_bobup 0', 'set cg_bobpitch 0', 'set cg_bobroll 0',
+    'set cg_runpitch 0', 'set cg_runroll 0', 'set cl_freelook 1', 'set m_filter 0', 'set in_nograb 0',
+    'set r_neuralActiveMarkers 0', 'set r_neuralApplyMlp 1', 'set r_neuralMirrorOnly 0',
+    'set r_neuralView 7',
     'set developer 0', 'set con_notifytime 0', 'set r_neuralTransport 1',
     'set r_neuralModel maps/neural_transport.bin',
     'set r_transportPlate textures/neural_transport/reference_480.tga',
     'set bot_enable 0', 'set com_introplayed 1',
     'bind w +forward', 'bind s +back', 'bind a +moveleft', 'bind d +moveright',
     'bind SPACE +moveup', 'bind CTRL +movedown', 'bind F10 noclip',
-    'bind F7 "r_surfaceBatchViewID -1; r_surfacePose 0; r_transportLockView 0; echo FREE CAMERA"',
+    'bind F5 "r_neuralMirrorOnly 1; r_neuralView 6; echo RAW NEURAL SURFACE"',
+    'bind F6 "r_neuralMirrorOnly 0; r_neuralView 7; echo COMPOSED NEURAL SURFACE"',
+    'bind F7 "r_surfaceBatchViewID -1; r_surfacePose 0; r_transportLockView 0; r_neuralMirrorOnly 0; r_neuralView 7; echo FREE CAMERA"',
+    'bind F8 "r_surfaceBatchViewID -1; r_surfacePose 0; r_transportLockView 0; r_neuralView 0; echo ORIGINAL GAME SCENE"',
     "devmap $MapName", 'wait 120', 'noclip',
-    'setviewpos 200 -216 70 11.054089', 'wait 3', 'setviewangles -1.647392 11.054089 0'
+    'setviewpos 120 -70 144 4.610649', 'wait 5', 'setviewangles 0.328973 4.610649 0',
+    'wait 16', 'setviewangles 0.328973 4.610649 0'
 )
 $configFile = Join-Path $game 'c16_release.cfg'
 $config | Set-Content -LiteralPath $configFile -Encoding ASCII
@@ -109,7 +117,7 @@ $settings = @(
     @('r_neuralFastBuffers', '1'), @('r_neuralFastScale', '1'),
     @('r_surfaceMode', '2'), @('r_surfaceUpscale', '10'),
     @('r_surfaceBase', 'surface/matched_A.nlsf'), @('r_surfaceCorrection', 'surface/matched_A.nlsr'),
-    @('r_surfaceCnnModel', 'surface/matched_C16.nlr4'), @('r_neuralView', '6'), @('in_mouse', '-1')
+    @('r_surfaceCnnModel', 'surface/matched_C16.nlr4'), @('r_neuralView', '7'), @('in_mouse', '1')
 )
 if ($settings.Count + 1 -gt 31) { throw 'Engine startup console command limit exceeded.' }
 $arguments = foreach ($setting in $settings) {
@@ -123,6 +131,7 @@ if ($argumentLine -match '[^\x00-\x7F]' -or [Text.Encoding]::ASCII.GetByteCount(
 $receipt = [ordered]@{
     schema = 'NL_C16_RELEASE_PREVIEW_PREPARATION_1'; status = 'prepared'; launched = $false
     frozen_view_id = $FrozenViewId; extent = @(1920,1080); surface_mode = 2; upscale_mode = 10
+    neural_view = 7; in_mouse = 1; presentation = 'world mirror composition'; free_camera = ($FrozenViewId -eq -1)
     map = $MapName; OpenArenaPath = $oa; EnginePath = $engine; HomePath = $previewHome
     startup_commands = $settings.Count + 1; argument_bytes = [Text.Encoding]::ASCII.GetByteCount($argumentLine)
     engine_sha256 = (Get-FileHash -LiteralPath $engine -Algorithm SHA256).Hash.ToLowerInvariant()
@@ -136,7 +145,7 @@ if ($PrepareOnly) {
     Write-Output "Prepared C16 preview; no process launched. Receipt: $receiptFile"
     return
 }
-Write-Host 'Opening October 10 ExperimentalC16 at FHD. F7 enables free camera; mouse/WASD, Space/Ctrl and F10 control movement.'
+Write-Host 'Opening October 10 ExperimentalC16 in the interactive world at FHD. Mouse/WASD, Space/Ctrl and F10 control movement; F5 raw image, F6 composed world, F7 free camera, F8 original map.'
 Write-Host 'Close the window or use the console quit command when finished. This launcher starts no training or bake jobs.'
 $process = Start-Process -FilePath $engine -ArgumentList $argumentLine -WorkingDirectory (Split-Path -Parent $engine) -WindowStyle Normal -PassThru
 $receipt.launched = $true

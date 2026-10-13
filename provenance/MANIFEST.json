@@ -2,7 +2,7 @@
   "schema": "NEURAL_LIGHT_RELEASE_MANIFEST_1",
   "experiment": "October10 ExperimentalC16",
   "file_hashes_exclude_manifest_itself": true,
-  "hashed_file_bytes": 31091100,
+  "hashed_file_bytes": 31105522,
   "files": [
     {
       "path": ".gitignore",
@@ -16,8 +16,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 7503,
-      "sha256": "46dacace5579a07c70726f36f2f40611b60f9223cff3976ae657dafda179ff04"
+      "bytes": 8253,
+      "sha256": "80fee186f7ba29ecf1a8f5125f3b3d2e52de6e9e1019f0470c9bfad19c906706"
     },
     {
       "path": "assets/MANIFEST.json",
@@ -86,8 +86,8 @@
     },
     {
       "path": "docs/MEASUREMENTS.md",
-      "bytes": 5841,
-      "sha256": "0a6757b06bd071f08f65906c96377f3036e223538a0e8eb75c6c1f584b790fe8"
+      "bytes": 6466,
+      "sha256": "83f414610e0d6a8acecede6f602878e3347a50d127d914bb3f5d6c0f5852e01d"
     },
     {
       "path": "docs/PUBLISHING.md",
@@ -101,8 +101,8 @@
     },
     {
       "path": "docs/REPRODUCTION.md",
-      "bytes": 4900,
-      "sha256": "b261b4e51dd231ecb36f3b4f68762e2f7280bae2fd8fd5a33ff1fdecb99be847"
+      "bytes": 11728,
+      "sha256": "f795bff5cd0bf4d6a9da8cd5b0de7d2ac4efeca880e1e8499a3e5a49ae0c60ff"
     },
     {
       "path": "docs/images/12000017-bilinear.png",
@@ -133,6 +133,11 @@
       "path": "licenses/curl-8.4.0-COPYING",
       "bytes": 1086,
       "sha256": "55a7c64fc0e188b397fc7aa2010d5a29c58d300481cb0148291aec2e9bf634a7"
+    },
+    {
+      "path": "provenance/CLEAN_BUILD.json",
+      "bytes": 5404,
+      "sha256": "8829e56ddcf113f501dd78377bce063043a716b32a3515c7980c9db8458245f4"
     },
     {
       "path": "provenance/EXPERIMENT.json",
@@ -3611,8 +3616,8 @@
     },
     {
       "path": "runtime/run.ps1",
-      "bytes": 8611,
-      "sha256": "a1a2f1b6e1fc2ff098c0be6c164a28a6612114055df4395b867a774df965fb1e"
+      "bytes": 9426,
+      "sha256": "95be7022cb31a38426a1babb053185e326a95762a429637a7656100093c19159"
     },
     {
       "path": "runtime/surface/appearance_directional.glsl",
