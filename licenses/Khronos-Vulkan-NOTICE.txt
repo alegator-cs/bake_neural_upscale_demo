@@ -1,0 +1,17 @@
+Vendored Vulkan API headers
+
+Files: runtime/quake3e/code/renderercommon/vulkan/
+  vk_platform.h
+  vulkan_core.h
+  vulkan_win32.h
+  vulkan_xlib_xrandr.h
+  vulkan_xlib.h
+  vulkan.h
+
+The original copyright notices and SPDX identifiers are retained in each
+header. They identify The Khronos Group Inc. and Apache-2.0.
+The complete license text is supplied in Apache-2.0.txt.
+
+vulkan_core.h retains the upstream notice for the April 22, 2025 backport
+of VK_PRESENT_MODE_FIFO_LATEST_READY_EXT. These API headers are existing
+engine dependencies, not original Neural Light research code.

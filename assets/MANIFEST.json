@@ -1,0 +1,38 @@
+{
+  "schema": "NEURAL_LIGHT_C16_ASSETS_1",
+  "scene_triangles": 10936,
+  "charts": 88,
+  "appearance_bytes": 1077260,
+  "assets": [
+    {
+      "relative": "assets/matched_A.nlsf",
+      "bytes": 788096,
+      "sha256": "546a3d123111056e155f4f0491245775375f4047711441997072cb98bd944f01"
+    },
+    {
+      "relative": "assets/matched_A.nlsr",
+      "bytes": 272908,
+      "sha256": "02707afc205514bdd4a70675bc5e74e3e08f483783545822ff2b71406f062ece"
+    },
+    {
+      "relative": "assets/matched_C16.nlr4",
+      "bytes": 16256,
+      "sha256": "d56767cf48ff7e2933867c8a7ddec43a4dabc4808eb5b1d53c5bf6e29441e3a5"
+    },
+    {
+      "relative": "assets/triangles.bin",
+      "bytes": 1224832,
+      "sha256": "657e3d200dcf36412bec2e4b3b3730737a5de07a8e8a49df6e2ba80bb9b1c9ce"
+    },
+    {
+      "relative": "assets/visibility.bvh",
+      "bytes": 240368,
+      "sha256": "c9fd9986d2fb6ca30b19b31a5a08514a684d615211af23ef0b579f4c4fbf2b18"
+    },
+    {
+      "relative": "assets/materials.bin",
+      "bytes": 128,
+      "sha256": "c5ff9715587f4ae1bc0d31c9c3bc98cdaa802a53e1a91e9950f0df468b049f16"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+#version 450
+// LR-only pixel reconstruction. No includes, camera, rays or geometry inputs.
+layout(push_constant) uniform PixelExtent { uvec4 extent; } frame;
+layout(binding=11) uniform sampler2D lrLinearTexture;
+layout(rgba32f,binding=5) uniform writeonly image2D outputImage;
+layout(local_size_x=8,local_size_y=8) in;
+
+// Preserve old mode6 GLSL transfer literally. Its recorded SPV exponent is
+// 0x3ee8ba2f, matching CPU. A float32 literal-division alternative can differ
+// by one ULP; root must pin this new build's exponent before parity claims.
+vec4 upDisplay(vec4 linearAssociated) {
+    float alpha=clamp(linearAssociated.a,0.0,1.0);
+    vec3 straight=max(linearAssociated.rgb,vec3(0.0))/max(alpha,1e-8);
+    return vec4(alpha*pow(straight/(vec3(1.0)+straight),vec3(1.0/2.2)),alpha);
+}
+bool extentValid(ivec2 hrSize,ivec2 lrSize) {
+    return all(greaterThan(hrSize,ivec2(0)))&&all(greaterThan(lrSize,ivec2(0)))
+        &&all(equal(imageSize(outputImage),hrSize))
+        &&all(equal(textureSize(lrLinearTexture,0),lrSize));
+}
+
+void main() {
+    ivec2 pixel=ivec2(gl_GlobalInvocationID.xy);
+    ivec2 hrSize=ivec2(frame.extent.xy),lrSize=ivec2(frame.extent.zw);
+    if(any(greaterThanEqual(pixel,hrSize))) return;
+    if(!extentValid(hrSize,lrSize)) {
+        imageStore(outputImage,pixel,vec4(1.0,0.0,1.0,1.0));
+        return;
+    }
+    vec2 low=(vec2(pixel)+vec2(0.5))*(vec2(lrSize)/vec2(hrSize))-vec2(0.5);
+    ivec2 cell=ivec2(floor(low));
+    vec2 phase=low-floor(low);
+    vec4 linear=vec4(0.0);
+    // Old mode6 TL/TR/BL/BR fetch and accumulation order, without diagnostics.
+    for(int p=0;p<4;p++) {
+        ivec2 offset=ivec2(p%2,p/2);
+        ivec2 lowPixel=clamp(cell+offset,ivec2(0),lrSize-ivec2(1));
+        float spatial=(offset.x==0?1.0-phase.x:phase.x)
+                     *(offset.y==0?1.0-phase.y:phase.y);
+        linear+=texelFetch(lrLinearTexture,lowPixel,0)*spatial;
+    }
+    linear.rgb=max(linear.rgb,vec3(0.0));
+    linear.a=clamp(linear.a,0.0,1.0);
+    if(linear.a<=1e-8) linear.rgb=vec3(0.0);
+    imageStore(outputImage,pixel,upDisplay(linear));
+}
+

@@ -1,0 +1,46 @@
+{
+  "schema": "NL_FULL384_A2_PROTOCOL_1",
+  "case": "C16",
+  "noise_limited_train_only": true,
+  "promotion_allowed": false,
+  "no_winner_or_clean_reference_claims": true,
+  "desired_TRAIN_count": 384,
+  "desired_TRAIN_tier_counts": {
+    "A480": 96,
+    "B240": 160,
+    "C128": 128
+  },
+  "large_cohort_complete": true,
+  "acquired_checkpoint_only": false,
+  "global_completion_deadline_epoch_seconds": null,
+  "global_runtime_limit_seconds": null,
+  "initialization_seed": 2026100911,
+  "batch_seed": 2026100912,
+  "mask_pool_seed": 2026100914,
+  "learning_rate": 0.001,
+  "regularizer": 1e-05,
+  "LR_core": 32,
+  "batch": 8,
+  "max_updates": 10000,
+  "checkpoint_every_updates": 500,
+  "process_cap_seconds": 600,
+  "optimization_cap_seconds": 450,
+  "selection_reserved_seconds": 180.0,
+  "panel_view_ids": [
+    11000001,
+    11000002,
+    11000004
+  ],
+  "permitted_model_inputs": [
+    "actual_corrected_LR_display_RGBA_neighborhood",
+    "output4x_phase"
+  ],
+  "camera_used_for_provenance_only": true,
+  "no_HR_guides_or_rays": true,
+  "fresh_pixels_never_read": true,
+  "resumable_chunks": true,
+  "no_old_A_or59_checkpoint_resume": true,
+  "target_semantics": "finite_native_Cycles_Monte_Carlo",
+  "selection_scope": "all24_native_selection_descriptive_only",
+  "same_RNG_prefix_across_regularizers": true
+}

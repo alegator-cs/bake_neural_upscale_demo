@@ -1,0 +1,17 @@
+{
+  "schema": "C16_RELEASE_NATIVE_REGISTRY_EXAMPLE_1",
+  "complete": false,
+  "note": "One schema example only. Supply all 408 frozen camera records and genuine native files; this is not runnable data.",
+  "views": [
+    {
+      "view_id": 10000001,
+      "lr_frame": "capture/train10000001_A480.frame.lr.bin",
+      "lr_linear": "capture/train10000001_A480.lr.rgba32f",
+      "lr_ids": "capture/train10000001_A480.lr.ids.u32",
+      "lr_barycentric": "capture/train10000001_A480.lr.bary.f32",
+      "lr_gate": "capture/train10000001_A480.lr.center.u32",
+      "target_linear": "teacher/10000001/target.linear_rgba.npy",
+      "target_rgba": "teacher/10000001/target.display_rgba.npy"
+    }
+  ]
+}

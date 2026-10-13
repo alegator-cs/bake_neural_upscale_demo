@@ -1,0 +1,82 @@
+#version 450
+// Shared4x stage 2: replicate-padded Conv(C,C,3x3), then ReLU.
+// SOURCE PREPARED: compilation, device parity and timing remain root-owned.
+layout(constant_id=0) const uint cnnWidth=8u;
+layout(push_constant) uniform PixelExtent { uvec4 extent; } frame;
+layout(std430,binding=2) readonly buffer CnnAsset { uint data[]; } cnnAsset;
+layout(std430,binding=16) readonly buffer CnnConv0 { vec4 data[]; } cnnConv0;
+layout(std430,binding=17) writeonly buffer CnnConv1 { vec4 data[]; } cnnConv1;
+layout(local_size_x=8,local_size_y=8) in;
+// Specialization-sized 10x10 feature halo: C8 3200 B, C16 6400 B, C32 12800 B.
+shared vec4 cnnTile[100u*(cnnWidth/4u)];
+
+uint cnnParameterCount() { return 9u*cnnWidth*cnnWidth+102u*cnnWidth+64u; }
+bool cnnHeaderValid() {
+    if(cnnAsset.data.length()<64) return false;
+    if(cnnWidth!=8u&&cnnWidth!=16u&&cnnWidth!=32u) return false;
+    uint parameters=cnnParameterCount();
+    // Whole-file/payload SHA256, source/protocol/baseline bindings and finite
+    // FP32 payload values are mandatory host checks before this SSBO upload.
+    if(cnnAsset.data[0]!=0x34524c4eu||cnnAsset.data[1]!=0x31303030u
+        ||cnnAsset.data[2]!=256u||cnnAsset.data[3]!=1u||cnnAsset.data[4]!=1u
+        ||cnnAsset.data[5]!=cnnWidth||cnnAsset.data[6]!=4u||cnnAsset.data[7]!=64u
+        ||cnnAsset.data[8]!=3u||cnnAsset.data[9]!=4u||cnnAsset.data[10]!=parameters
+        ||cnnAsset.data[11]!=1u||cnnAsset.data[12]!=1u||cnnAsset.data[13]!=1u
+        ||cnnAsset.data[14]!=1u||cnnAsset.data[15]!=1u
+        ||cnnAsset.data[48]!=4u*parameters||cnnAsset.data[49]!=0u
+        ||cnnAsset.data[50]!=0x3f800000u||cnnAsset.data[51]!=0x3f800000u
+        ||uint(cnnAsset.data.length())!=64u+parameters) return false;
+    for(uint word=52u;word<64u;word++) if(cnnAsset.data[word]!=0u) return false;
+    return true;
+}
+float cnnWeight(uint word) { return uintBitsToFloat(cnnAsset.data[word]); }
+
+void main() {
+    ivec2 pixel=ivec2(gl_GlobalInvocationID.xy);
+    ivec2 hrSize=ivec2(frame.extent.xy),lrSize=ivec2(frame.extent.zw);
+    // Uniform rejection precedes synchronization; partial bottom groups still
+    // load the halo with all 64 threads before out-of-frame threads can return.
+    if(!all(equal(hrSize,ivec2(1920,1080)))
+        ||!all(equal(lrSize,ivec2(480,270)))||!cnnHeaderValid()
+        ||uint(cnnConv0.data.length())!=129600u*(cnnWidth/4u)
+        ||uint(cnnConv1.data.length())!=129600u*(cnnWidth/4u)) return;
+    uint groups=cnnWidth/4u;
+    ivec2 tileOrigin=ivec2(gl_WorkGroupID.xy)*8-ivec2(1);
+    for(uint entry=gl_LocalInvocationIndex;entry<100u*groups;entry+=64u) {
+        uint spatialEntry=entry/groups,group=entry%groups;
+        // Replicate this feature layer itself, not only the original LR input.
+        ivec2 samplePixel=clamp(tileOrigin+ivec2(int(spatialEntry%10u),int(spatialEntry/10u)),
+                                ivec2(0),lrSize-ivec2(1));
+        uint source=uint(samplePixel.y*lrSize.x+samplePixel.x)*groups+group;
+        cnnTile[entry]=cnnConv0.data[source];
+    }
+    memoryBarrierShared();
+    barrier();
+    if(any(greaterThanEqual(pixel,lrSize))) return;
+    uint destination=uint(pixel.y*lrSize.x+pixel.x)*groups;
+    uint weights=64u+37u*cnnWidth;
+    uint outputStride=9u*cnnWidth;
+    uint bias=weights+9u*cnnWidth*cnnWidth;
+    for(uint group=0u;group<groups;group++) {
+        uint firstOutput=4u*group;
+        vec4 sum=vec4(cnnWeight(bias+firstOutput),cnnWeight(bias+firstOutput+1u),
+                      cnnWeight(bias+firstOutput+2u),cnnWeight(bias+firstOutput+3u));
+        for(uint ky=0u;ky<3u;ky++) for(uint kx=0u;kx<3u;kx++) {
+            uint tileIndex=(gl_LocalInvocationID.y+ky)*10u+gl_LocalInvocationID.x+kx;
+            uint sampleBase=tileIndex*groups;
+            for(uint inputGroup=0u;inputGroup<groups;inputGroup++) {
+                vec4 value=cnnTile[sampleBase+inputGroup];
+                for(uint component=0u;component<4u;component++) {
+                    uint inputChannel=4u*inputGroup+component;
+                    // Row-major [C,C,3,3]: ((output*C+input)*3+ky)*3+kx.
+                    uint weight=weights+(firstOutput*cnnWidth+inputChannel)*9u+ky*3u+kx;
+                    vec4 coefficient=vec4(cnnWeight(weight),cnnWeight(weight+outputStride),
+                                          cnnWeight(weight+2u*outputStride),
+                                          cnnWeight(weight+3u*outputStride));
+                    sum+=value[component]*coefficient;
+                }
+            }
+        }
+        cnnConv1.data[destination+group]=max(sum,vec4(0.0));
+    }
+}

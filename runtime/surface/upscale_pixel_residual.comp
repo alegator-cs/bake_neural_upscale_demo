@@ -1,0 +1,118 @@
+#version 450
+// LR-only pixel reconstruction. No includes, camera, rays or geometry inputs.
+layout(push_constant) uniform PixelExtent { uvec4 extent; } frame;
+layout(binding=11) uniform sampler2D lrLinearTexture;
+layout(rgba32f,binding=5) uniform writeonly image2D outputImage;
+layout(local_size_x=8,local_size_y=8) in;
+
+// Preserve old mode6 GLSL transfer literally. Its recorded SPV exponent is
+// 0x3ee8ba2f, matching CPU. A float32 literal-division alternative can differ
+// by one ULP; root must pin this new build's exponent before parity claims.
+vec4 upDisplay(vec4 linearAssociated) {
+    float alpha=clamp(linearAssociated.a,0.0,1.0);
+    vec3 straight=max(linearAssociated.rgb,vec3(0.0))/max(alpha,1e-8);
+    return vec4(alpha*pow(straight/(vec3(1.0)+straight),vec3(1.0/2.2)),alpha);
+}
+bool extentValid(ivec2 hrSize,ivec2 lrSize) {
+    return all(greaterThan(hrSize,ivec2(0)))&&all(greaterThan(lrSize,ivec2(0)))
+        &&all(equal(imageSize(outputImage),hrSize))
+        &&all(equal(textureSize(lrLinearTexture,0),lrSize));
+}
+
+layout(std430,binding=2) readonly buffer PixelResidualAsset { uint data[]; } urAsset;
+
+uint urParameterCount(uint width) {
+    return width==0u?66u:21u*width+width+3u*width+3u;
+}
+bool urHeaderValid() {
+    if(urAsset.data.length()<64) return false;
+    uint width=urAsset.data[7];
+    if(width!=0u&&width!=6u&&width!=12u) return false;
+    uint parameters=urParameterCount(width);
+    // Host must also verify checksum, whole selection SHA, finite parameters,
+    // all reserved bytes, baseline identity and core-code identity before upload.
+    return urAsset.data[0]==0x52554c4eu&&urAsset.data[1]==0x31303030u
+        &&urAsset.data[2]==256u&&urAsset.data[3]==1u
+        &&urAsset.data[4]==1u&&urAsset.data[5]==1u
+        &&urAsset.data[6]==21u&&urAsset.data[8]==3u
+        &&urAsset.data[9]==parameters
+        &&urAsset.data[10]==1u&&urAsset.data[11]==1u
+        &&urAsset.data[12]==0u&&urAsset.data[13]==0u
+        &&urAsset.data[14]==0u&&urAsset.data[15]==0u
+        &&urAsset.data[48]==parameters*4u&&urAsset.data[49]==0u
+        &&urAsset.data[50]==0x3e800000u
+        &&uint(urAsset.data.length())==64u+parameters;
+}
+float urWeight(uint word) { return uintBitsToFloat(urAsset.data[word]); }
+
+vec3 urDecode(float f[21],uint width) {
+    vec3 logits=vec3(0.0);
+    if(width==0u) {
+        // Direct21->3: 63 row-major weights then3 biases.
+        for(int o=0;o<3;o++) {
+            float sum=urWeight(127u+uint(o));
+            for(int i=0;i<21;i++) sum+=f[i]*urWeight(64u+uint(o*21+i));
+            logits[o]=sum;
+        }
+    } else {
+        // Hidden6/12: W0,B0,W1,B1, all unchanged fp32 payload words.
+        uint b0=64u+21u*width,w1=b0+width,b1=w1+3u*width;
+        float hidden[12];
+        for(uint o=0u;o<width;o++) {
+            float sum=urWeight(b0+o);
+            for(uint i=0u;i<21u;i++) sum+=f[i]*urWeight(64u+o*21u+i);
+            hidden[o]=max(sum,0.0);
+        }
+        for(uint o=0u;o<3u;o++) {
+            float sum=urWeight(b1+o);
+            for(uint i=0u;i<width;i++) sum+=hidden[i]*urWeight(w1+o*width+i);
+            logits[o]=sum;
+        }
+    }
+    return tanh(logits)*urWeight(50u);
+}
+
+void main() {
+    ivec2 pixel=ivec2(gl_GlobalInvocationID.xy);
+    ivec2 hrSize=ivec2(frame.extent.xy),lrSize=ivec2(frame.extent.zw);
+    if(any(greaterThanEqual(pixel,hrSize))) return;
+    if(!extentValid(hrSize,lrSize)||!urHeaderValid()) {
+        imageStore(outputImage,pixel,vec4(1.0,0.0,1.0,1.0));
+        return;
+    }
+    vec2 low=(vec2(pixel)+vec2(0.5))*(vec2(lrSize)/vec2(hrSize))-vec2(0.5);
+    ivec2 cell=ivec2(floor(low));
+    vec2 phase=low-floor(low);
+    vec4 localLinear[4];
+    vec4 linear=vec4(0.0);
+    for(int p=0;p<4;p++) {
+        ivec2 offset=ivec2(p%2,p/2);
+        ivec2 lowPixel=clamp(cell+offset,ivec2(0),lrSize-ivec2(1));
+        float spatial=(offset.x==0?1.0-phase.x:phase.x)
+                     *(offset.y==0?1.0-phase.y:phase.y);
+        localLinear[p]=texelFetch(lrLinearTexture,lowPixel,0);
+        linear+=localLinear[p]*spatial;
+    }
+    linear.rgb=max(linear.rgb,vec3(0.0));
+    linear.a=clamp(linear.a,0.0,1.0);
+    if(linear.a<=1e-8) linear.rgb=vec3(0.0);
+    vec4 baseline=upDisplay(linear);
+    if(baseline.a==0.0) {
+        // Exact frozen-alpha result; no feature pow, embedding or decoder work.
+        imageStore(outputImage,pixel,baseline);
+        return;
+    }
+    float features[21];
+    // Associated display RGBA per neighbor, NOT the prior NLUP straight RGB.
+    for(int p=0;p<4;p++) {
+        vec4 localDisplay=upDisplay(localLinear[p]);
+        for(int c=0;c<4;c++) features[p*4+c]=localDisplay[c];
+    }
+    for(int c=0;c<3;c++) features[16+c]=baseline[c];
+    features[19]=phase.x*2.0-1.0;
+    features[20]=phase.y*2.0-1.0;
+    vec3 delta=urDecode(features,urAsset.data[7]);
+    vec3 rgb=clamp(baseline.rgb+baseline.a*delta,vec3(0.0),vec3(baseline.a));
+    imageStore(outputImage,pixel,vec4(rgb,baseline.a));
+}
+

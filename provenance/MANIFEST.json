@@ -1,0 +1,3780 @@
+{
+  "schema": "NEURAL_LIGHT_RELEASE_MANIFEST_1",
+  "experiment": "October10 ExperimentalC16",
+  "file_hashes_exclude_manifest_itself": true,
+  "hashed_file_bytes": 31091100,
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 377,
+      "sha256": "8ab0c2ffbdd1a20b07dfc878c8de5a67b0995d08b67111cb41cc6a8b7632e30f"
+    },
+    {
+      "path": "LICENSE.md",
+      "bytes": 3583,
+      "sha256": "3c3e615c09b51a5f5e6d38f0141e8b66a0ce68731aae4819b07c3a78387e0202"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7503,
+      "sha256": "46dacace5579a07c70726f36f2f40611b60f9223cff3976ae657dafda179ff04"
+    },
+    {
+      "path": "assets/MANIFEST.json",
+      "bytes": 1144,
+      "sha256": "5fce15cd70a7ddac72da493653043d1558cf6cf2d9aaa92f38b6a8da65cd9ff5"
+    },
+    {
+      "path": "assets/matched_A.nlsf",
+      "bytes": 788096,
+      "sha256": "546a3d123111056e155f4f0491245775375f4047711441997072cb98bd944f01"
+    },
+    {
+      "path": "assets/matched_A.nlsr",
+      "bytes": 272908,
+      "sha256": "02707afc205514bdd4a70675bc5e74e3e08f483783545822ff2b71406f062ece"
+    },
+    {
+      "path": "assets/matched_C16.nlr4",
+      "bytes": 16256,
+      "sha256": "d56767cf48ff7e2933867c8a7ddec43a4dabc4808eb5b1d53c5bf6e29441e3a5"
+    },
+    {
+      "path": "assets/materials.bin",
+      "bytes": 128,
+      "sha256": "c5ff9715587f4ae1bc0d31c9c3bc98cdaa802a53e1a91e9950f0df468b049f16"
+    },
+    {
+      "path": "assets/transport/maps/neural_transport.bin",
+      "bytes": 25232,
+      "sha256": "8f7d4f434400cc6d61b88e7f93ec1d2953fb6db7e83e251cb6a61bb806544c6b"
+    },
+    {
+      "path": "assets/transport/textures/neural_transport/reference_480.tga",
+      "bytes": 518444,
+      "sha256": "6b4cf9296210235a64c74801949968abe47b7cb6cb2bf00f7c1170e6430d98a5"
+    },
+    {
+      "path": "assets/triangles.bin",
+      "bytes": 1224832,
+      "sha256": "657e3d200dcf36412bec2e4b3b3730737a5de07a8e8a49df6e2ba80bb9b1c9ce"
+    },
+    {
+      "path": "assets/visibility.bvh",
+      "bytes": 240368,
+      "sha256": "c9fd9986d2fb6ca30b19b31a5a08514a684d615211af23ef0b579f4c4fbf2b18"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "bytes": 4930,
+      "sha256": "9e74109bd03a74349d7d9c65f06c0aeff4c205163137cdb3e1eef01dba1aaa62"
+    },
+    {
+      "path": "docs/IDENTITY.md",
+      "bytes": 9236,
+      "sha256": "d8edb081965168bdaf1260098b9a534366c8daa7b1b18928065e0133677dab82"
+    },
+    {
+      "path": "docs/IMAGES.md",
+      "bytes": 3129,
+      "sha256": "d8099f6703176e36bd689a6c37e01fa66c1b91b8ab588f1a9e0d993ca909389b"
+    },
+    {
+      "path": "docs/LICENSING.md",
+      "bytes": 9415,
+      "sha256": "d7660a4d39d208d7c60e17a913f549c3819114235c73672f007408a615a6226c"
+    },
+    {
+      "path": "docs/MEASUREMENTS.md",
+      "bytes": 5841,
+      "sha256": "0a6757b06bd071f08f65906c96377f3036e223538a0e8eb75c6c1f584b790fe8"
+    },
+    {
+      "path": "docs/PUBLISHING.md",
+      "bytes": 2914,
+      "sha256": "23a784fc20f677c96054a7bbf5a2999bc5204ae47b002ba4c805a92cfa761e04"
+    },
+    {
+      "path": "docs/RELATED_WORK.md",
+      "bytes": 4491,
+      "sha256": "6d68da5d56e4c58d6e5ab746a3350c24f2095c87765046d3f81f3d4a602309ad"
+    },
+    {
+      "path": "docs/REPRODUCTION.md",
+      "bytes": 4900,
+      "sha256": "b261b4e51dd231ecb36f3b4f68762e2f7280bae2fd8fd5a33ff1fdecb99be847"
+    },
+    {
+      "path": "docs/images/12000017-bilinear.png",
+      "bytes": 1238350,
+      "sha256": "a5548724fb1b8f38d1ba5ce1d699fcf952e3291fd8f0bab8b04340a5be050286"
+    },
+    {
+      "path": "docs/images/12000017-c16.png",
+      "bytes": 1717313,
+      "sha256": "03bc3728defd08d6b78711bb548219557205b7b3cb752b437885d9e4e88893a5"
+    },
+    {
+      "path": "docs/images/12000017-reference.png",
+      "bytes": 2463469,
+      "sha256": "c2a4220527f4c736e6c930948a6d20bed28c3a3af2c37d22d8291cc886a4f118"
+    },
+    {
+      "path": "licenses/Apache-2.0.txt",
+      "bytes": 11303,
+      "sha256": "3a0b32a74c46bdda3499ec9f39ab4f2a98fc2b239a1c1c1592086d26fdf76159"
+    },
+    {
+      "path": "licenses/Khronos-Vulkan-NOTICE.txt",
+      "bytes": 581,
+      "sha256": "eacd47ebb492ed5a063ddcb6146938bd5b692f1b317472b81239d81d0c46e796"
+    },
+    {
+      "path": "licenses/curl-8.4.0-COPYING",
+      "bytes": 1086,
+      "sha256": "55a7c64fc0e188b397fc7aa2010d5a29c58d300481cb0148291aec2e9bf634a7"
+    },
+    {
+      "path": "provenance/EXPERIMENT.json",
+      "bytes": 7311,
+      "sha256": "1e5467d047c8901faa63599fb4a64759d124359c088b4d02d38d997bec7217d9"
+    },
+    {
+      "path": "reproduction/PROVENANCE.json",
+      "bytes": 11501,
+      "sha256": "eea1bda86e99f3329f0bbe1259584604c539d3ec8238a72b775bb3ad6c1f58bc"
+    },
+    {
+      "path": "reproduction/cameras/COHORT.json",
+      "bytes": 591871,
+      "sha256": "86717d10f5ba0be97dfb506e482091b35147e91f4748446a1cb7a957ca736100"
+    },
+    {
+      "path": "reproduction/capture/README.md",
+      "bytes": 8923,
+      "sha256": "5d4699a93a05c61c043ae14a40aaba73240dd7938b75baf0c12458feae74a8a6"
+    },
+    {
+      "path": "reproduction/capture/SOURCE_VERIFICATION.json",
+      "bytes": 11778,
+      "sha256": "c608fed9ddb4c8885f4416b0e457b1ebd24642a140262474f6e1c21b31795a3f"
+    },
+    {
+      "path": "reproduction/capture/check_capture.py",
+      "bytes": 3873,
+      "sha256": "8e28f2a5c68c85b51db57adcf69bf06c26651642073769bd591203f0d02ae7ac"
+    },
+    {
+      "path": "reproduction/capture/make_packets.py",
+      "bytes": 7332,
+      "sha256": "35d4854c7fbf4f6276d7be10e7db172ec9343ef0d2aeca29571be30846cd3397"
+    },
+    {
+      "path": "reproduction/docs/REPRODUCTION.md",
+      "bytes": 18630,
+      "sha256": "f59fb16d53353a99b2cf4417834e316210f7e55ff71e0ad2d6f0256176d1e9d2"
+    },
+    {
+      "path": "reproduction/map/compile_map.ps1",
+      "bytes": 1269,
+      "sha256": "d9ba04eac921bc78d0cad9db0f38c36cf2f3deb8206bef47efe711d4a2ebbf06"
+    },
+    {
+      "path": "reproduction/map/generate_map.ps1",
+      "bytes": 4050,
+      "sha256": "fd320f18bc1fafb2122f4ead5a4f56e830cdb6ed391a35f4828dcca251d0ffb0"
+    },
+    {
+      "path": "reproduction/map/neural_test.map",
+      "bytes": 16144,
+      "sha256": "4bbe3db3aee0278576222a02a3b2cd0194e6d4376bc525396388a0ff31be67a6"
+    },
+    {
+      "path": "reproduction/models/c16_model.py",
+      "bytes": 8471,
+      "sha256": "39dabf8148069941ae10a09dbeba9e87774f4b7bf2fd4a783867803828f55bde"
+    },
+    {
+      "path": "reproduction/models/residual_model.py",
+      "bytes": 11675,
+      "sha256": "1a662b7afe929704fb32729ae9b8e0177e9c11f74aa3a96c30d7e07c590fa234"
+    },
+    {
+      "path": "reproduction/models/small_model.py",
+      "bytes": 12453,
+      "sha256": "57482582a4b951477679e24a88e8a38b9b4300597dcfc67410485f7acd1095de"
+    },
+    {
+      "path": "reproduction/models/surface_model.py",
+      "bytes": 27391,
+      "sha256": "f511ace1294266dc03afa595190e5c0eb304fcd6635faad392a3ed5578fbea24"
+    },
+    {
+      "path": "reproduction/protocols/a_directional.json",
+      "bytes": 1083,
+      "sha256": "7fa210a8813644fcc29207003250af3ab83b96cb2d224e102236d97e7d490554"
+    },
+    {
+      "path": "reproduction/protocols/a_small32.json",
+      "bytes": 1130,
+      "sha256": "1337efa8f3497b656357282ae312b4b9818a568a4bba07a95addf54bc4e4cb98"
+    },
+    {
+      "path": "reproduction/protocols/c16.json",
+      "bytes": 1320,
+      "sha256": "bfef308d06d40a7082fe89c74eddbacba3075bd40259979489eeebef86aec8ef"
+    },
+    {
+      "path": "reproduction/requirements-training.txt",
+      "bytes": 252,
+      "sha256": "67256c6f22709d0d6fa6c22080e64997fe30abd0edadde91bfb6df669998cc79"
+    },
+    {
+      "path": "reproduction/scene/FILE_UI_REDACTION.json",
+      "bytes": 1486,
+      "sha256": "44f02dd3ef9b20731f3712f7e799a1fc69a59890ccfbb383c4fb2ed02abf4e41"
+    },
+    {
+      "path": "reproduction/scene/SCENE.json",
+      "bytes": 6264,
+      "sha256": "5d87ab8c199fe5d10e3c1d888f0c3cb8a214fa24723d16e304bdc8bf550ee65b"
+    },
+    {
+      "path": "reproduction/scene/allocation_manifest.json",
+      "bytes": 11458,
+      "sha256": "8edb8e2d51c13de678034dc559d595e88314b561c840a2b040b13d754af28e85"
+    },
+    {
+      "path": "reproduction/scene/build_scene.py",
+      "bytes": 7731,
+      "sha256": "ad403d00ec8ff47db0c766c07bd8bf8ed747cf2b2e3e04f8393b0dae30b9c253"
+    },
+    {
+      "path": "reproduction/scene/camera_contract.py",
+      "bytes": 3086,
+      "sha256": "f270c1c6b570334ab809c29e3a38d98c429f879d4c1018ba5e60c223502b48a2"
+    },
+    {
+      "path": "reproduction/scene/chart_metadata_16384.npy",
+      "bytes": 1536,
+      "sha256": "f0a93d627f9be5e46e5c12a73bf7a39b45d82f8bf5cb4bfb1d55d27fab68a2fe"
+    },
+    {
+      "path": "reproduction/scene/export_mesh.py",
+      "bytes": 9861,
+      "sha256": "911ed87e2195553abfb2c335547f74703f117d79e4ebbdc838e8d661e2faa3b7"
+    },
+    {
+      "path": "reproduction/scene/geometry_manifest.json",
+      "bytes": 50706,
+      "sha256": "62526f7de5e77c92fffe326626c57d639cf5585be30d8a0803b67812165a072b"
+    },
+    {
+      "path": "reproduction/scene/indirect_alcove.blend",
+      "bytes": 1685920,
+      "sha256": "8e98ac44c4dab9e52821b3bfff9a510b418f460fb99a9c3223e7829a1296c45c"
+    },
+    {
+      "path": "reproduction/scene/mesh_v1.npz",
+      "bytes": 1225834,
+      "sha256": "cbc50451b331a947bdd17ec77b3706efae39364d6f9fda933e87cf8f1a5b33e6"
+    },
+    {
+      "path": "reproduction/scene/render_teacher.py",
+      "bytes": 8078,
+      "sha256": "e0233b6c98820a19351562d99ebc691204446197680080e84553be27befb596a"
+    },
+    {
+      "path": "reproduction/smoke.py",
+      "bytes": 7023,
+      "sha256": "1ecfcd8f3a487fae2c703092599faa500be0913ec955023a5c671f4118825caa"
+    },
+    {
+      "path": "reproduction/training/a_numerics.py",
+      "bytes": 9217,
+      "sha256": "496d9ef67f6d68486f68ff01b4f1c16c44b0246962943e52101ee5fa307f85e7"
+    },
+    {
+      "path": "reproduction/training/c16_data.py",
+      "bytes": 10513,
+      "sha256": "a24df625dd78b29b2a7ff0a92de01b1e8feac27834246c1b22e636e045e4577e"
+    },
+    {
+      "path": "reproduction/training/common.py",
+      "bytes": 4806,
+      "sha256": "e95f2d35e555937277dde0365058832f66397b8d14123b4462074c26ab1a9be5"
+    },
+    {
+      "path": "reproduction/training/prepare_manifest.py",
+      "bytes": 4337,
+      "sha256": "e98c948d38eda74aead65aacc28e2c227d45aa85b9bd180d9e465971faf946e2"
+    },
+    {
+      "path": "reproduction/training/registry.example.json",
+      "bytes": 697,
+      "sha256": "3da71ac16d34da7dc1a4df45206c8898e220e64e613f85af1b97dd26b316233b"
+    },
+    {
+      "path": "reproduction/training/train_a.py",
+      "bytes": 5414,
+      "sha256": "c8f76a5e2571a5fe8316876eb1e12bfed99852ea9e4e8abd7fdb601d971080c3"
+    },
+    {
+      "path": "reproduction/training/train_c16.py",
+      "bytes": 4601,
+      "sha256": "48bbc89a46903e156889eb63f2a693f9a4559ca813cd8722898b461a1b827c0b"
+    },
+    {
+      "path": "runtime/build.ps1",
+      "bytes": 4965,
+      "sha256": "8dd339b49f7a0a375fb54a29c0dc10859a612e74f0298097bb31297b9ae8ca0b"
+    },
+    {
+      "path": "runtime/embed.py",
+      "bytes": 2955,
+      "sha256": "eff97e4c79eb5e7cbf2491704090c8ce9443408f0380a985d69ed4186d040292"
+    },
+    {
+      "path": "runtime/identity/README.md",
+      "bytes": 993,
+      "sha256": "beee54884cf78c022f1811ec16c53a28b4af63b80f8ae6d9d2ff7402a02adc7a"
+    },
+    {
+      "path": "runtime/identity/SOURCE_PROVENANCE.json",
+      "bytes": 3448,
+      "sha256": "eccfe472b3f5cfd99da34ba24448f83c04db79659234ba593fade43badd24c97"
+    },
+    {
+      "path": "runtime/identity/codec_reference.py",
+      "bytes": 7130,
+      "sha256": "2871d3efc50b1405ba7d77ac3d1320e033b0d191f2f1682b1bb09e68997c14f6"
+    },
+    {
+      "path": "runtime/identity/inspect_assets.py",
+      "bytes": 4822,
+      "sha256": "1a81ed977f97e9deaf9390013a41aee06e8858b5a791337722c0712f3461b794"
+    },
+    {
+      "path": "runtime/quake3e/.github/workflows/build.yml",
+      "bytes": 16805,
+      "sha256": "851ff667cdf050a3fc057761bb23245bd42528e32a27593f42c10256fd6898c2"
+    },
+    {
+      "path": "runtime/quake3e/.gitignore",
+      "bytes": 57,
+      "sha256": "0a0f4417c5d3da1ac6e5c9ab85fc2d4eee822f366dd67b72546e9650e1c946e3"
+    },
+    {
+      "path": "runtime/quake3e/BUILD.md",
+      "bytes": 4823,
+      "sha256": "3cd7eb3c136c163979deaecf3f8b61d92e80a3f21cd08d8dfaa1872ce98c9a89"
+    },
+    {
+      "path": "runtime/quake3e/CMakeLists.txt",
+      "bytes": 7147,
+      "sha256": "5b0bb152b35fe6d0fd999500a1b7576a30a0e81d4c94b0ab38adc80fc296f3eb"
+    },
+    {
+      "path": "runtime/quake3e/COPYING.txt",
+      "bytes": 15429,
+      "sha256": "f675a8c8e587f65b3bbf7f6a85a113eda45fdbc6005dc317af21bf8de7d3c204"
+    },
+    {
+      "path": "runtime/quake3e/Makefile",
+      "bytes": 37172,
+      "sha256": "2473bd429495bff521b1c0f7fd6bbe3131692875237936980649cc393f9eb7c5"
+    },
+    {
+      "path": "runtime/quake3e/README.md",
+      "bytes": 4386,
+      "sha256": "02f89462116815bcd2ebbc2e1da75851f08852073390c10076453b6032e37e87"
+    },
+    {
+      "path": "runtime/quake3e/cmake_modules/FindSDL2.cmake",
+      "bytes": 15208,
+      "sha256": "6f7016fec13c60c2fae585ffc1b4a10b2a1a74a48841e471a95905cb355a5e45"
+    },
+    {
+      "path": "runtime/quake3e/code/asm/common_x64.asm",
+      "bytes": 1235,
+      "sha256": "b4759d3ab9e4295d240f7bb8697dcc72a4c22564c97e67339f257a31429f52d2"
+    },
+    {
+      "path": "runtime/quake3e/code/asm/qasm.h",
+      "bytes": 1300,
+      "sha256": "09103808bd1ba96f8f235e6e716fcb5a1f53af446cdf2e9c4b3367a0547c739b"
+    },
+    {
+      "path": "runtime/quake3e/code/asm/snd_mix_mmx.s",
+      "bytes": 1714,
+      "sha256": "45f163265e75f83600ccf65b508506cf532f7730772c2827bdaf5939cb82bbee"
+    },
+    {
+      "path": "runtime/quake3e/code/asm/snd_mix_sse.s",
+      "bytes": 1728,
+      "sha256": "efe3777520f88b0a41b3279abfe0015441007d4ae33fb2c6e34ee17cb5ebfb9b"
+    },
+    {
+      "path": "runtime/quake3e/code/asm/snd_mix_x64.asm",
+      "bytes": 2153,
+      "sha256": "c307d4e0e84fb34f50da75de24a64e6d85e0a1709248a7fc703eb0ca2b3c1068"
+    },
+    {
+      "path": "runtime/quake3e/code/asm/snd_mix_x86_64.s",
+      "bytes": 1952,
+      "sha256": "51e17bac3fe8ad59c9ba1381a0830a5a8d191e08c01c5a825786ec580931ffa0"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/aasfile.h",
+      "bytes": 9199,
+      "sha256": "727e1723604ba3ab3b613814f64ea1bc2c46e5cd291f221de1fcd5a8bc83a924"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas.h",
+      "bytes": 8284,
+      "sha256": "af751c7a1019ae13b4b2a477559afbe4ba16ec5ad42a31330035263ed60b919d"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_bsp.h",
+      "bytes": 3403,
+      "sha256": "53bbac8e6faa113cf693b4007468d095b5fd345f9d2277bcbf0c2adac3a076ad"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_bspq3.c",
+      "bytes": 15222,
+      "sha256": "0100da99090dc1fb9ccccdc659e49159fe7e470f829bdbdf46add5ace9d7dec7"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_cluster.c",
+      "bytes": 52664,
+      "sha256": "88dc28392ecc7ab662ba37573f0699c9a7832c5ca64a3141d1ef270c6cd3c19c"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_cluster.h",
+      "bytes": 1425,
+      "sha256": "4c01cf30d86185f868a3a8801d3608e3132b1423bfd6cef36fb38fce40ab610c"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_debug.c",
+      "bytes": 24449,
+      "sha256": "3ff42fbc5f295f4761230b73d30d40696c41f4bf34a346ac2dd1f7e17df84e1f"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_debug.h",
+      "bytes": 2465,
+      "sha256": "368fb6e5236cb98fd193b500d5208718f9758ce8ffb82fa038df50e09dc0443a"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_def.h",
+      "bytes": 8277,
+      "sha256": "4a4adc58611e5dfb0c7a2c442e4e9f0ef5c010e79243df01389718b27efeb510"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_entity.c",
+      "bytes": 13630,
+      "sha256": "36b60963549c0cf1411c2ab810968bdfbb37f856f3334c62dc193b9c2a45d173"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_entity.h",
+      "bytes": 2639,
+      "sha256": "58e4e2781845add3812d0fdf41caec54105480dbe45caf5fdd1670ede950be32"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_file.c",
+      "bytes": 30339,
+      "sha256": "ce92978d1d0d84b654ef8956fa339608e53c33d7d86ae6daa9e063699e0d0361"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_file.h",
+      "bytes": 1526,
+      "sha256": "6ab301901738e0c5c44d1cf8fe006a4334732e5bca4745be302d676738436837"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_funcs.h",
+      "bytes": 1640,
+      "sha256": "5b867c24ab651346b1e9fc348dac688624bcc6aa5dd693a51838996976a502ca"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_main.c",
+      "bytes": 10980,
+      "sha256": "5dd15bde42256759c4af71de9cd034185bb16b02f41cf26d113037d811d5f112"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_main.h",
+      "bytes": 1948,
+      "sha256": "d86137809fbde331f20e9468844ab461e3fe3f68023771cc5f01b0c0f02d8ab3"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_move.c",
+      "bytes": 38558,
+      "sha256": "a5761e5aadaf55cdc21d3db9bac8889f3499f2ea29315027a0d4d937748b6fc3"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_move.h",
+      "bytes": 3026,
+      "sha256": "0361e7022794c8ad2790c84a34b2da1c96ec9af9f085941acdf568d0713c868c"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_optimize.c",
+      "bytes": 11362,
+      "sha256": "24d35736a348d29918eab98c8d3c454aa14e8a932efe23f7c290d688fd47f2b1"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_optimize.h",
+      "bytes": 1298,
+      "sha256": "34ddecb0760e501d52a2aa229ee527535e79457f38b7eb784f52abc5ad06d7a4"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_reach.c",
+      "bytes": 157854,
+      "sha256": "5caf3ac073c63b67e121d14852dceac7f71932e4deac9dd02d6e0028701ddeb1"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_reach.h",
+      "bytes": 2837,
+      "sha256": "a9c342cdb8f8939d167f0f3560f80d594e2be2bc55e670939fb2001cada5568b"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_route.c",
+      "bytes": 77681,
+      "sha256": "bd89f64ae41a3f9cb418a6526291cbbf925ac0f2611b79544885b0228602334e"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_route.h",
+      "bytes": 2960,
+      "sha256": "0a9ef0b9b741d1d9038a8ab374261e1e3c398d09395c1a8a28bf73205e42e938"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_routealt.c",
+      "bytes": 8552,
+      "sha256": "7fc6c82438d84ef571dc0d3bac0d4ffe2fc169d12cd70a152898704645f6c73f"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_routealt.h",
+      "bytes": 1596,
+      "sha256": "a6ff4551bbe551ef39018e7b85506fe9f0c04937c64a2dfbd7eebd6f2982b368"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_sample.c",
+      "bytes": 45577,
+      "sha256": "70063493d688902217332ff6649392819046e4f778efec2a6e78bb09ea40cfd4"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_aas_sample.h",
+      "bytes": 3145,
+      "sha256": "a67979869dfb0c191a29639dd2077875336292227340d59536264c2677084843"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_char.c",
+      "bytes": 26191,
+      "sha256": "2e9b7980ed96bbf4f86157a50809c0ad8a0c9ce56b65b328172042b6295d6cad"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_char.h",
+      "bytes": 2029,
+      "sha256": "c6b33036b5b45d7e44a23f5440aa65dbf458bd33a9e3f1ff29adb592e7dfc702"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_chat.c",
+      "bytes": 92267,
+      "sha256": "9e405709a823bbf52daf6a16be934ca7ad7b393d36601870c4f920f137dad2dd"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_chat.h",
+      "bytes": 5140,
+      "sha256": "dcc90f44f341a32d50df065db2e410139f36fa6620c33bd65eb69e0d5617d5bd"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_gen.c",
+      "bytes": 4088,
+      "sha256": "ccba162e84c388fa0563aa6ff195491ca6b018a2847aae05bac3ea80d4b5a7df"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_gen.h",
+      "bytes": 1382,
+      "sha256": "c967a6a1992171ec4f18c481f3f59becbc87bf4da543a5b740eb89c0db25a904"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_goal.c",
+      "bytes": 55140,
+      "sha256": "b6eea264e9a5510e0186226c48cc7850da3475bce0c0cbf9a6e22346eea0168e"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_goal.h",
+      "bytes": 5038,
+      "sha256": "d7e35d2beb92c24fc92ca4e7734555b85080bab9254f99776067e32f5692a274"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_move.c",
+      "bytes": 115866,
+      "sha256": "412f8505c184cf3331d92c0e52ccfde4424255c4e79613ac97e06275bbbdc495"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_move.h",
+      "bytes": 6192,
+      "sha256": "2b2783d7eefb85b05125831022177529a7b84351cc7fa6201d6e26fd4e4da89d"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_weap.c",
+      "bytes": 18287,
+      "sha256": "b13ad90a14299385f6ecb12b99110412ee840644b0faa208752ad8f5280cc96e"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_weap.h",
+      "bytes": 3342,
+      "sha256": "559fc1c25af99d3a0234670d1c7e2083d17e5c441ecff8d3480f7a54033250ab"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_weight.c",
+      "bytes": 28073,
+      "sha256": "558ecbe69c4f540167179bd5340a087956360efa39c220af41a6552ddd8762a9"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ai_weight.h",
+      "bytes": 3009,
+      "sha256": "1d837210d512bd81ed6f99af1454bdebc2fa69c81634e1efcbe0d81a9cc16c3e"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ea.c",
+      "bytes": 14264,
+      "sha256": "de6ee3ff61d46e4985ce444956ee31432afa1901ecd24b8fdf59b1eb026d420b"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_ea.h",
+      "bytes": 2380,
+      "sha256": "65b756e36aa7344fd4ceaa3a54276278c0037f93af99dad2aab28b1b823cfd58"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_interface.c",
+      "bytes": 29389,
+      "sha256": "8305bb62aa150efbeefc3a5aea3cb8bb2b43d6276b5c029ed6cc98ac12a35ec7"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/be_interface.h",
+      "bytes": 1961,
+      "sha256": "b47eb2acb19cfd8da8dd92473e2628e41fe0bd4052147e7491fd52f19050b0b3"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/botlib.h",
+      "bytes": 23592,
+      "sha256": "3b6eb402279a2edc091c7bed6e7e5ca43ef40a9a39c976103cf6a566f3075a95"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_crc.c",
+      "bytes": 6085,
+      "sha256": "dd309fd99eb649bb2ce6e9572dc0811b13cad8d3eb8ce16143433537cf5188b6"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_crc.h",
+      "bytes": 1249,
+      "sha256": "03eaa4f65629dc14cff47e2d1e3dc84807499000cd8b7af16027b6f559a4640e"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_libvar.c",
+      "bytes": 8680,
+      "sha256": "3f43f1571b324fcd1c6f73155d07f93b88c7afe2081e0fa1fc7daf0d0b6cda9d"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_libvar.h",
+      "bytes": 2762,
+      "sha256": "3d3e531faf3349da6054f11015c19a8f42c012ee333b2a3138d957cc018e9b47"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_log.c",
+      "bytes": 5495,
+      "sha256": "e5c85366d4d51d01ceda165a446649027eee6178be3f523215179afc8b042aa5"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_log.h",
+      "bytes": 1761,
+      "sha256": "421683c5dd894510a7cdf5425fa68d42e8e24f6587530b09a4536c6316056399"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_memory.c",
+      "bytes": 14119,
+      "sha256": "61f6722e203dde3a4f516205c9bbfcd0c3e6249d593ed797458349b7702ab9ef"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_memory.h",
+      "bytes": 3100,
+      "sha256": "c1b84dec7e74cc09a2389c3580c79fe3dde31639409b86230840ee3a204146c5"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_precomp.c",
+      "bytes": 92510,
+      "sha256": "a04b7d9bdd8dda5cc0eda1f4fb9b7c588e1e312d32b535d3d7a0b84af4945a6b"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_precomp.h",
+      "bytes": 6262,
+      "sha256": "510cf1b49926294e4ef4f1f597e12acb12ac79906f920c0bf8a848f9e0a33432"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_script.c",
+      "bytes": 42303,
+      "sha256": "cc64a366055ab5baa8dbcc3ad8f2eba7a0f68d7beb582688c011d85b550bf87f"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_script.h",
+      "bytes": 8341,
+      "sha256": "7b1e3b775ac5380dc2fb04686874aaf209e3c7141a939b44939ed0384dbbd5dd"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_struct.c",
+      "bytes": 12929,
+      "sha256": "5b155124f12d77878868b98bb906f343285ebd4abafe4b1bd0c4d56026dd9f5d"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_struct.h",
+      "bytes": 2621,
+      "sha256": "0fe01e7eb5f4eaa7892782324aef91b397161b6f1a8cdafa9baad5a6d56ae17c"
+    },
+    {
+      "path": "runtime/quake3e/code/botlib/l_utils.h",
+      "bytes": 1437,
+      "sha256": "b9887cccd6369a7a63a298cd322d96bbf571b8c09b5b084c337838580f1d0c0b"
+    },
+    {
+      "path": "runtime/quake3e/code/cgame/cg_public.h",
+      "bytes": 6592,
+      "sha256": "8d8a2b7412659855d021cd13543b869f4a6ed47ffc7247f5a17e5983a9a1d426"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_avi.c",
+      "bytes": 20279,
+      "sha256": "addb7df12f36ad71d07ad08c9f5ef2e6a352343ee6a0c99e005070cdb79343d8"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_cgame.c",
+      "bytes": 33800,
+      "sha256": "dfeb2c7c402f7dd7f2a33aea634decfb4e6fca1f30d35c8990993225a0c55361"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_cin.c",
+      "bytes": 48283,
+      "sha256": "e61be24d7edc3fec20f982e4eb58aeddc3f85cc40e9d0fd61b45336ddc9e0b2e"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_console.c",
+      "bytes": 23116,
+      "sha256": "6ce19bd1498a6cc3b1bf89423fbffc545396906bb3411b4f964dc309efbb2fda"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_curl.c",
+      "bytes": 29926,
+      "sha256": "b9bc6f18b831e101a5a228eb81db3208172f6481ce7c2046846e1477266ce61a"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_curl.h",
+      "bytes": 4930,
+      "sha256": "b023932fcbff37e9fb48fa02077ce15c93ded8e17c468a9f9984bbf2eb22c519"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_input.c",
+      "bytes": 32949,
+      "sha256": "dfd563c0f6b9713dc65dd06b3bef9a574c5f808223073e6f2bf5c500e8db7b06"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_jpeg.c",
+      "bytes": 16157,
+      "sha256": "c6f77deff60ad6d6519a55c0221a5e3ee4379c45ead1963b8fe0659dbe2bded7"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_keys.c",
+      "bytes": 19485,
+      "sha256": "d04180e6935296ea3131026af6ec42cd0a017fa91ecbd91e3c20e4891c5ecf9f"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_main.c",
+      "bytes": 133121,
+      "sha256": "ea9204d1b400ad462b6631cfb17e83bb448fe8449bba17a683166670caaed889"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_net_chan.c",
+      "bytes": 5125,
+      "sha256": "4f096476bb5633af53b76e84757a748620b07348c6cbad03bdb5875aa20268ca"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_parse.c",
+      "bytes": 25911,
+      "sha256": "f62ac4578d3b89193c3e3aa2c180b7445fc9306c7d2ca173f4142ef6685bf4b2"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_scrn.c",
+      "bytes": 15440,
+      "sha256": "84cf81f654563fb3dce62643d382d4675e01be614867136450ae09172653dd7a"
+    },
+    {
+      "path": "runtime/quake3e/code/client/cl_ui.c",
+      "bytes": 30597,
+      "sha256": "915413fa71a1bff81fae6715cb9338b77fd84b1009860e835311aea38156c8d6"
+    },
+    {
+      "path": "runtime/quake3e/code/client/client.h",
+      "bytes": 19961,
+      "sha256": "44d35db8846d32b4e5581101e184d8d6cd4f6e57ef07578f19e07297c851b330"
+    },
+    {
+      "path": "runtime/quake3e/code/client/keycodes.h",
+      "bytes": 4890,
+      "sha256": "80299384f174c3aba474ea726d4afbbad30afbb8cf1c31f22c2f48c94bb73359"
+    },
+    {
+      "path": "runtime/quake3e/code/client/keys.h",
+      "bytes": 1918,
+      "sha256": "dec9cc706d4fb4d9079cdce71d031572c42819356d26bfccfc9e78923a732f4a"
+    },
+    {
+      "path": "runtime/quake3e/code/client/snd_adpcm.c",
+      "bytes": 9168,
+      "sha256": "6bb80cc958c39a050aa03b4b5103a3d2eddbe53c44e58e29c1d679f0899b18d5"
+    },
+    {
+      "path": "runtime/quake3e/code/client/snd_codec.c",
+      "bytes": 5359,
+      "sha256": "958eff369edb49bf1728d23a08146c7eda387ebc5745dfdbd980de6adb87e702"
+    },
+    {
+      "path": "runtime/quake3e/code/client/snd_codec.h",
+      "bytes": 3006,
+      "sha256": "d6ba58cb319df3e64c59eaf0b42059810ad774886e6031350a5cab74fc823544"
+    },
+    {
+      "path": "runtime/quake3e/code/client/snd_codec_ogg.c",
+      "bytes": 10221,
+      "sha256": "4105f442e8037269740a5f361a125cb30f38a4b033fac60507d121103453dfe0"
+    },
+    {
+      "path": "runtime/quake3e/code/client/snd_codec_wav.c",
+      "bytes": 6662,
+      "sha256": "408dbd4ed6cf8a6cdecb23dbdfc3751dfc1830cdd3e4b5cb3266ecf3b19a1101"
+    },
+    {
+      "path": "runtime/quake3e/code/client/snd_dma.c",
+      "bytes": 39756,
+      "sha256": "95fb85ab2f6ff77736508a872f728e8d696dcce762b961b17fe666681e9092d6"
+    },
+    {
+      "path": "runtime/quake3e/code/client/snd_local.h",
+      "bytes": 7196,
+      "sha256": "451db195cb85bb1a7a53dfa89b7553191d9cdbe99c26de666c2b56c9cd0a4cc3"
+    },
+    {
+      "path": "runtime/quake3e/code/client/snd_main.c",
+      "bytes": 10151,
+      "sha256": "03f4e64f2c36e891210f71ad458eafed3573c90642be33dce54ee8cd29c5b09c"
+    },
+    {
+      "path": "runtime/quake3e/code/client/snd_mem.c",
+      "bytes": 8666,
+      "sha256": "ec758b17290ce3b99f72213c808688c88dd84be2ba1de71823c269a78eb9b13c"
+    },
+    {
+      "path": "runtime/quake3e/code/client/snd_mix.c",
+      "bytes": 18988,
+      "sha256": "daab7496eeba56d5b99ab9e2af001f8293df8800c922ed3b5ecdf22586304de9"
+    },
+    {
+      "path": "runtime/quake3e/code/client/snd_public.h",
+      "bytes": 2825,
+      "sha256": "f6a6a4fc9802f2e113ffe5dcbcbc6f65dfe80b299b86abbca2e53f6fd09db0d6"
+    },
+    {
+      "path": "runtime/quake3e/code/client/snd_wavelet.c",
+      "bytes": 6253,
+      "sha256": "3fef4b3fe6ee7016780726480f20961aef92204a34297e81643b61e4f62b37f5"
+    },
+    {
+      "path": "runtime/quake3e/code/game/bg_public.h",
+      "bytes": 19875,
+      "sha256": "16784ce4ac0ad1a65f946f6e32778eb1bff67d876b384286ecd4a93b4c82b575"
+    },
+    {
+      "path": "runtime/quake3e/code/game/g_public.h",
+      "bytes": 15152,
+      "sha256": "3544ba222847c99bbaa7aa86299a14c644c2722397967086e714e82f07052d9e"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/conf751.sh",
+      "bytes": 1244,
+      "sha256": "8e6a77707ade6348bfeaa73acd977cf80485f5db0cabca6ebadd24ebfc4628e2"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/conf840.sh",
+      "bytes": 983,
+      "sha256": "e8938ae9720d1e13245945592e35116446bac370cc436d5c813d9c11ae418e8c"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/windows/include/curl/curl.h",
+      "bytes": 132223,
+      "sha256": "7b5902c47c96103079360b399ed984c76c6e13b2572b3ba064014df1dc2ba1ee"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/windows/include/curl/curlver.h",
+      "bytes": 3123,
+      "sha256": "6c19356a256cfc179d799f168d19cdf3ff44636c3f42fb1dc34b6b9658c8f325"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/windows/include/curl/easy.h",
+      "bytes": 4138,
+      "sha256": "e06a521e4aee7174b52deeb01a5323b56b39dbd692970b09fd0a6a2209a72055"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/windows/include/curl/header.h",
+      "bytes": 2984,
+      "sha256": "199a72e4a6b280c6934ec63a9433b8a4d80d510ccf00cb23b38b4b61583588c0"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/windows/include/curl/mprintf.h",
+      "bytes": 2774,
+      "sha256": "97e5e94fd68c785367a915460a99518742dde8ae019d135f01f1cd019c545b86"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/windows/include/curl/multi.h",
+      "bytes": 18240,
+      "sha256": "bb3050cc9a9890fc31f318f9218ceeb0795564657559ae43ecb3c412da0915bd"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/windows/include/curl/options.h",
+      "bytes": 2471,
+      "sha256": "1b79655d1948442bb3cf7118eb2ac8b54493002a48b393ff37b519e853149f1b"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/windows/include/curl/stdcheaders.h",
+      "bytes": 1397,
+      "sha256": "9d0b5afefc537de44975cf6d74d73b81393aa477c5f27d32c63e628f5eadd609"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/windows/include/curl/system.h",
+      "bytes": 20132,
+      "sha256": "b340abd9278b7d355e5d6189cb40e37ebcf98001fc83d37795ec9cef4753b2ab"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/windows/include/curl/typecheck-gcc.h",
+      "bytes": 44265,
+      "sha256": "e90d3f9f73aed9c821819ac3390c70fa30c957620b440bfa6e0d384a64eda978"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/windows/include/curl/urlapi.h",
+      "bytes": 5630,
+      "sha256": "0edb42398cd5f21a07e1e874e1258fc434da4eee7e378945762841f15d7d2070"
+    },
+    {
+      "path": "runtime/quake3e/code/libcurl/windows/include/curl/websockets.h",
+      "bytes": 2825,
+      "sha256": "e41c756233d16de30677628048578750f648b313954421eedcdfd1c07d3524fc"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/README",
+      "bytes": 19098,
+      "sha256": "5dabdc59cefb781d3cd9eae74d2b30df96dad24da6b6cfea9469611314a45732"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jaricom.c",
+      "bytes": 5235,
+      "sha256": "7aa47c7dd88cc3f286fcd4413b984ff426a8cd393a21f86dbc246fdf479bedb6"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jcapimin.c",
+      "bytes": 9672,
+      "sha256": "1b8ed4206aebe20c6a92ae5971a4b6c47ac8ebf51ec08119e0eab414d80d1d4e"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jcapistd.c",
+      "bytes": 6102,
+      "sha256": "2b29c4bb63929de70cec9ec374bc89015e1c18094fca0f3720942561aeb185bf"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jcarith.c",
+      "bytes": 29205,
+      "sha256": "3b77363295029090f80798d1d3260d481b0b5daeaebafb7116033c8ce0f6e4d9"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jccoefct.c",
+      "bytes": 16800,
+      "sha256": "df78dd5ebbdd67de261e9e2c16f1f4ec2f3b760cff8fd81a2c67ccd1b3b69ee7"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jccolor.c",
+      "bytes": 20059,
+      "sha256": "f8c083e43a857c03200c31dbd27bc00cb5561178e76e8b8a7df8fe29366c7833"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jcdctmgr.c",
+      "bytes": 15771,
+      "sha256": "61261470d934160e5195cdc7c9353e30acb8acd3dfbaf4e2372f22581df0e436"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jchuff.c",
+      "bytes": 51928,
+      "sha256": "c59d1f050b1313e11ae60174a9c2a89f6ce80964a546aba4083b61152c9eaca8"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jcinit.c",
+      "bytes": 10912,
+      "sha256": "21a33ead7e37b3983ec0251674b384c5ab77856045727d06c865c871407a72d2"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jcmainct.c",
+      "bytes": 9953,
+      "sha256": "f7ba6af31ed7c4a8b72366aded3c2ff71622cc5197d4b75dc267eaa1ca53b4cc"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jcmarker.c",
+      "bytes": 19631,
+      "sha256": "308db3a5ee6a376a9a0237d808795909460e969d634cf11b219c1be12991343d"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jcmaster.c",
+      "bytes": 23685,
+      "sha256": "35185ebf17b201a8bcdbe05e1f484340e0b192ca08f4fb171556392d4815c403"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jcomapi.c",
+      "bytes": 8358,
+      "sha256": "59a3ef32739666034d01482857143098e50ccfb996067c94efb2b6ca30be3b0e"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jconfig.h",
+      "bytes": 1877,
+      "sha256": "36a75c0c254afd9a94e35c16344e0e4fd9de54e6c243de1dd8f38b00d4922930"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jcparam.c",
+      "bytes": 20715,
+      "sha256": "bf4b5cfcbf8279b0164d83737e27f8953206012d21034934d364cac9c0797501"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jcprepct.c",
+      "bytes": 12591,
+      "sha256": "ba216584f8bcc358bb474ea2d393f9cb53a63b9990f947e858e9bbbb28a901e5"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jcsample.c",
+      "bytes": 20479,
+      "sha256": "dec2c7ff12e142a22e4aec8a8a9eab695f90f062d81b9eabca9a6793bc80286b"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jctrans.c",
+      "bytes": 14864,
+      "sha256": "306cefef8fe559ba58402de36faeec371a31901d217a95904a13fa83bfe52e1c"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdapimin.c",
+      "bytes": 13966,
+      "sha256": "299871ead6bfd4bc1f08051224d8bd262f1b5d22787dcd219b2751804be6166b"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdapistd.c",
+      "bytes": 9669,
+      "sha256": "2b4a3529dc697f599e0cc305b938299b8d3ae34666c00e7231469e41a0f7473c"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdarith.c",
+      "bytes": 25073,
+      "sha256": "a31af119b2d470ab574fd6d9f7d223cb57604b54ebf2ac9eb5a5bad8f23c8e6f"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdatadst.c",
+      "bytes": 8947,
+      "sha256": "a316f646d5d77f75983c347fafcbe5aad20a833d221845c120b6070837f9c090"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdatasrc.c",
+      "bytes": 9643,
+      "sha256": "c6c7f00c65e2bce0b7ff3a556f28d6a3335d5b9a7bdc0a23e23a3c6512506def"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdcoefct.c",
+      "bytes": 25945,
+      "sha256": "72dc6768c7c6ec950d2258a9ddba09334631b7ffd6e3e57e7854b69edfde8420"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdcolor.c",
+      "bytes": 25850,
+      "sha256": "7dcfe1089df3508f4dc3ac904b7407df26245818db580fc21871bf6fe0d65f18"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdct.h",
+      "bytes": 18028,
+      "sha256": "57999091871665fa2d084543b039e80759fa9030f8520701bf56c482e67ff7b8"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jddctmgr.c",
+      "bytes": 12764,
+      "sha256": "7ebeb479f5081ef268720110dbc178fe17ef6c899691f150026e694ef77b6042"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdhuff.c",
+      "bytes": 50326,
+      "sha256": "492dda7395c7901c780a28f370ca0b3210cacca6fceef1d6bbcad7160ad9d2f5"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdinput.c",
+      "bytes": 25580,
+      "sha256": "dd4cca7b5212af90a65033d5b27047e386c8c859002e702bc67c8d9e3af367e7"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdmainct.c",
+      "bytes": 21284,
+      "sha256": "673a7064b2e82616730908a00fa2b0caa7ba41360c85606937e0c969b22b0373"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdmarker.c",
+      "bytes": 47329,
+      "sha256": "7b4baf51bf34ef391b3cc4d15766c2a445153109d0a466b80b28a596e8ecee0d"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdmaster.c",
+      "bytes": 19548,
+      "sha256": "58565d73471ecdf9946ae26ae54829912bd67f40a025b146214213f0f18c55d8"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdmerge.c",
+      "bytes": 16064,
+      "sha256": "e04f18a8be70c67673989ea51b14b73044f794719da08226513f82d3c82b05bf"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdpostct.c",
+      "bytes": 10013,
+      "sha256": "06834f92807a257b2d4fdad562b58c338d960e2510c9ef6822e08c3e2edb6fb1"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdsample.c",
+      "bytes": 11935,
+      "sha256": "1bf02ef169b4d3d0c68fc0169bf167ecc7c91587833478fcc1c381d6bb82efc9"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jdtrans.c",
+      "bytes": 5193,
+      "sha256": "547048241b8d9ece32ce3ec3016f93cd3453ef7119ccf5d142bb9c7a9e746e4b"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jerror.c",
+      "bytes": 8126,
+      "sha256": "ae4ab992ff6ce1b38d673f67f31654b32423c6a40213172e748f2d9189f3c7d1"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jerror.h",
+      "bytes": 14892,
+      "sha256": "4ca0fb46bee5e080ba810e271e8110769851726fc1d22d332609c36a2b93304f"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jfdctflt.c",
+      "bytes": 6225,
+      "sha256": "783c00712ba56dc982506a4d49af7104b939191119a84c918cf42d3499c18c2d"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jfdctfst.c",
+      "bytes": 8253,
+      "sha256": "ac1b34124acba2cc285d5cc360e54884598b78fa42fdcbd31132535359299661"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jfdctint.c",
+      "bytes": 163428,
+      "sha256": "76a9dae4e705da2aced11cc1367d4b585a755318b4d299796bac16446664d0c5"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jidctflt.c",
+      "bytes": 8600,
+      "sha256": "4e9a6036f352667151103b56e5395b34ea80476f5e2971d055c764d0946d6afd"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jidctfst.c",
+      "bytes": 13069,
+      "sha256": "bdfd2514ff8d6e4ae3da5e90a1fba531f21da6b1a0d76a97e99c0b91c555fbba"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jidctint.c",
+      "bytes": 190040,
+      "sha256": "800098c890c67fecf09b6626d6d74b27990d47257e0e00a148256770181341bd"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jinclude.h",
+      "bytes": 3596,
+      "sha256": "b90d871c90745306b300aeb43ec64f3efd990c8f3034cbe1a322ad4b2d6dde1f"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jmemmgr.c",
+      "bytes": 42144,
+      "sha256": "74ccfecce5b81ce5eb699c457a169474e5959dab07ce46df54821eef0392da57"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jmemnobs.c",
+      "bytes": 3023,
+      "sha256": "1a9bb1a7631d4e9b662ec7317e00bb924d8e269af961d9f6827155e96c86c11c"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jmemsys.h",
+      "bytes": 8428,
+      "sha256": "8bd96ad37e97ad83f5b5331fa2abd23ebb2d3c78da6935bb8343d212b7a3ad1f"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jmorecfg.h",
+      "bytes": 15371,
+      "sha256": "295042cc18628158d7fcaa3eda25f955735b3f435c1a8a2302d521d815b2398e"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jpegint.h",
+      "bytes": 18417,
+      "sha256": "af460a6f0c57866af6217e1f1376cd2bbd1ff86d70c3d748d67d8df0c05e7c67"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jpeglib.h",
+      "bytes": 50591,
+      "sha256": "632d3297311b43eb731e0037456225932704c1c1999540a2415789a462f8b152"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jquant1.c",
+      "bytes": 32133,
+      "sha256": "237de3646a26e27a3add2438077d6402edc8f8b569d27793479f2bba10ad10dc"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jquant2.c",
+      "bytes": 49773,
+      "sha256": "e7bb29fc549458fd0af896ed21d5b6286d2d29c2e7c0f3a2878b2f33a45ef04e"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jutils.c",
+      "bytes": 6901,
+      "sha256": "f733a5754c98d2897ec2f3c823c30728ca3e68c38162db00b1465ea67bacda9d"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/jversion.h",
+      "bytes": 410,
+      "sha256": "0caafe95c4a59919af9a899c5e4a90a9472d297791a6ef4ee0b7badde7a32281"
+    },
+    {
+      "path": "runtime/quake3e/code/libjpeg/libjpeg-changes.diff",
+      "bytes": 1126,
+      "sha256": "1791712d560288eabe69cc1e403847690e976e38a9754d773d7350edb85b9046"
+    },
+    {
+      "path": "runtime/quake3e/code/libogg/COPYING",
+      "bytes": 1494,
+      "sha256": "29460b3b44148114c28cc2480737368428747e68374d16cb8d910949ded03d19"
+    },
+    {
+      "path": "runtime/quake3e/code/libogg/include/ogg/config_types.h",
+      "bytes": 568,
+      "sha256": "7a6cd5dfcfe539a481e10761a7284e3d7ad0e09c15506c0491262c319455c087"
+    },
+    {
+      "path": "runtime/quake3e/code/libogg/include/ogg/ogg.h",
+      "bytes": 8582,
+      "sha256": "9158491901a1d0a8dda75b9fee3661b269c6ea337a75d1ee3f4d8e1ec62827e8"
+    },
+    {
+      "path": "runtime/quake3e/code/libogg/include/ogg/os_types.h",
+      "bytes": 4939,
+      "sha256": "310a09431492bf49f8d25cd7c492986c8e11a2b28dc3e75102bcdd8c48fc17b5"
+    },
+    {
+      "path": "runtime/quake3e/code/libogg/src/bitwise.c",
+      "bytes": 31303,
+      "sha256": "9b93649b943d5414fc7980bfc8d5a7a602945a5352d6c735839d263094238cc8"
+    },
+    {
+      "path": "runtime/quake3e/code/libogg/src/crctable.h",
+      "bytes": 24180,
+      "sha256": "16ea1d38ab17f2b57684185057dff785931f2bffd184e4967170fbb8138bfe5b"
+    },
+    {
+      "path": "runtime/quake3e/code/libogg/src/framing.c",
+      "bytes": 68522,
+      "sha256": "2dc4c557d37a517e43ceff24d6dfb1930fc68af56b25ef6681fc8d9057b261f6"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL.h",
+      "bytes": 4345,
+      "sha256": "67ae38855bfc05814538c8a6a3178c87e01d45e3400fef5d4af63d59a8a150d8"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_assert.h",
+      "bytes": 11336,
+      "sha256": "79017255c214410daed34a43222c432973012015d2207343d34400c030087214"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_atomic.h",
+      "bytes": 11134,
+      "sha256": "d5773c7957374ad540dbf91f1524ec1ea659105482173e7756953c319678d527"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_audio.h",
+      "bytes": 36647,
+      "sha256": "6f30153e3fc6d96ec44a08e6d67e7271ff7ac4490ebe61e02c4cfd515b76083a"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_bits.h",
+      "bytes": 3217,
+      "sha256": "13239cb5c377cf2fb4b88b6e1fe52f979499bf3d6d5ed0955a70aa91b0c87301"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_blendmode.h",
+      "bytes": 5235,
+      "sha256": "60df9f6b8ac243f8acf65c00588e4f47bad2076f7925f235f60c32fe1a069534"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_clipboard.h",
+      "bytes": 2037,
+      "sha256": "bf90f26bd04ff921a7a61529402e1e4a266df90c48b016a90168736cd11aa2de"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_config.h",
+      "bytes": 7033,
+      "sha256": "a1903c22c0f4261b3a77a49a7b4f59f7620ff0c2041b7457cd29c93255e18210"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_cpuinfo.h",
+      "bytes": 8880,
+      "sha256": "b7f4c1c49a4a7366d154e18b8a4ef8eacfcba90f6962ee2e10332d5e9b6a7e70"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_egl.h",
+      "bytes": 75259,
+      "sha256": "7f2dcdf35570f83a9affaf86a2d45623b3f4d38c004fde26bba435902c52bb86"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_endian.h",
+      "bytes": 6711,
+      "sha256": "8910f40447eb049a17f7ab67596ca19482db764ae633e17e0370c0e774baef66"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_error.h",
+      "bytes": 2347,
+      "sha256": "6ff76a3ff016a92241bb70768f68e88df75ce1f5a2bc461fca86d0ee787def77"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_events.h",
+      "bytes": 31674,
+      "sha256": "a0cbe0520786413dd33f8b02f28b71e410ca5117ee3cace41823de8b3717e105"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_filesystem.h",
+      "bytes": 5391,
+      "sha256": "12d5a67693f3978bf58d5e88720a9478ab608a07a5f2aa2879b85f7c227810e7"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_gamecontroller.h",
+      "bytes": 13921,
+      "sha256": "bccc8876dd1e214cbcc5997b03a66e5b90deae1eec5a24b5c476fcdde95731c2"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_gesture.h",
+      "bytes": 2244,
+      "sha256": "4cde8272e450bd55c8a1e6b99bfb108456a2070bb4973a2545ff77f74e7d7923"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_haptic.h",
+      "bytes": 40532,
+      "sha256": "f8de158fd1350383925e9dac7612b3f31b0b2877d422a4c7a71670f856cc7be3"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_hints.h",
+      "bytes": 54609,
+      "sha256": "f127b4428d072e80f81a4ce31a0342d1de53e0cace25621a0157f4e18db837f2"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_joystick.h",
+      "bytes": 14244,
+      "sha256": "a6015c8a2838bbaf9ac31151bc95ffaeb2cb4bd99059641f16c2ec07284efef3"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_keyboard.h",
+      "bytes": 6654,
+      "sha256": "a34a943a48a8c187d4a9c572ee51347707c275301665538093f8ad3f4c44ceb1"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_keycode.h",
+      "bytes": 15611,
+      "sha256": "d980cde9785312edea5489a3c270a9e777f044ddc821a0c8ac9a35b5a741af37"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_loadso.h",
+      "bytes": 2947,
+      "sha256": "7e66c3ed9874536359399f292d83d49f0708ad3ff3dc865c5ac4a7d1567324db"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_log.h",
+      "bytes": 6702,
+      "sha256": "8062b658af6d9f707b19ad83194ed266e2fce6ea78e7ad04925dcddeb23212c2"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_main.h",
+      "bytes": 5555,
+      "sha256": "6cc5391f91d5e4c47366175253ea1e6686992ca610fd0c0bea7e05b18c3d06d4"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_messagebox.h",
+      "bytes": 4755,
+      "sha256": "51f415f6876a2d200080f796b2e2f77c0dbe926d086b67d193820f068dabad97"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_mouse.h",
+      "bytes": 11226,
+      "sha256": "8b0bb88cd018a768f66537124d0768982cbf1a062606c469d61b7b19b70b1e0c"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_mutex.h",
+      "bytes": 6916,
+      "sha256": "463b563288169d594206e894b71e9fd84dd6e6fcdd62d08f6eed9f5967461f11"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_name.h",
+      "bytes": 1188,
+      "sha256": "15d6db3707a9dfd433968ddb5972823db10a5b2cbf5771b27199e4f44e73feff"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_opengl.h",
+      "bytes": 84776,
+      "sha256": "747ffbdf37ed16f0f0b84defa90c3124b0ef5ac4d5161a34ceddcb27207e7459"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_opengl_glext.h",
+      "bytes": 742674,
+      "sha256": "29130cb3a471efe84662956e5b3baa832c8190d39219c45d395e2f8e03a74e98"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_opengles.h",
+      "bytes": 1293,
+      "sha256": "fef2a03cb24c7185d64c583b37fd73eb639223e48c1cc9c71fef11786c648a4b"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_opengles2.h",
+      "bytes": 1604,
+      "sha256": "e2b1eea8611c34ac4da04adfb5b056efe9f825c81583546b646ed38e100ae790"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_opengles2_gl2.h",
+      "bytes": 32497,
+      "sha256": "71b5d3a980620d720a0ef370dc4b5235969656fdf792df14d10057b46c36b760"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_opengles2_gl2ext.h",
+      "bytes": 100745,
+      "sha256": "943e1a8493f8c5e7aa17eec595fc57d91b637e89946257479a592f66f70cc49d"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_opengles2_gl2platform.h",
+      "bytes": 943,
+      "sha256": "fd1be15f093143f9bf89d395baa514606cdaf95dfce07f527e4da38130155c9b"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_opengles2_khrplatform.h",
+      "bytes": 10304,
+      "sha256": "7bb9971b5733771d0095f3e60b7eee34191c0a143cbfdd306d5c5d351d20dc6b"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_pixels.h",
+      "bytes": 17658,
+      "sha256": "a26271de62209b690203f5d220364a7da8d18b2abda3f33a87e6879c3fa5729e"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_platform.h",
+      "bytes": 5401,
+      "sha256": "d3b5d3b603fdbadcc17b9735d739b4141bb5ec7107c26bc1cdabb7787b1b0739"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_power.h",
+      "bytes": 2538,
+      "sha256": "6942e0f41f04bbd334a4616c6ca6c54a2de28c903707d7639a3c017a4d49d96c"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_quit.h",
+      "bytes": 2164,
+      "sha256": "87a7a8d03016cd38b4cffcdc7ca98468434d3e19c1e32b1f74b538af2528665b"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_rect.h",
+      "bytes": 5013,
+      "sha256": "729e36c842df73f81588143eee04966fcddd1a724adb57cdf46e51aa4d553b45"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_render.h",
+      "bytes": 43819,
+      "sha256": "f8ea7ca4ac8f2f83b5979f63e5b74bb8a0d3eb806c522ab95aca4990a36cb694"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_revision.h",
+      "bytes": 81,
+      "sha256": "5654ffa3f7e3a8588dafce8a17c3758ae1102f33c6455ca740ccb46707f575cb"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_rwops.h",
+      "bytes": 9488,
+      "sha256": "eec8e1b25240a329a84d26fe16fa3d02108c6154be0337e0ac456fe26374d97f"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_scancode.h",
+      "bytes": 15667,
+      "sha256": "45f148fa3e112b0f819536b64252317f581548e844e98a7ceaa5705f6708c0ee"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_sensor.h",
+      "bytes": 7796,
+      "sha256": "c1cc99f028cd3c1eb140ed9388ce216c2cd5dc65b137d48d0b793f2b2ab87678"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_shape.h",
+      "bytes": 5825,
+      "sha256": "25a7949ce6773b446e1734dd38d040510b7d77744959a84c839b85371cc3c726"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_stdinc.h",
+      "bytes": 22770,
+      "sha256": "9549b5f8e8ef37da7b7c096261a377d001f1d80fb57cfcb63184019ce012d2bb"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_surface.h",
+      "bytes": 21186,
+      "sha256": "ee3f1f95000ada783951bb69cbd0eee7ab542681709db371b75ee8c565210a45"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_system.h",
+      "bytes": 9431,
+      "sha256": "932d6f5f5bd61ef111fb12d6b46960fa744a78be5f12af6922da8652bb30c5b5"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_syswm.h",
+      "bytes": 9579,
+      "sha256": "ac0e0e631230fde4fcfa8911ecaecef1a6b968fd6c5772e3191931274b528896"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_test.h",
+      "bytes": 2069,
+      "sha256": "20b8f045e7739267c1b27fbe9b8e837032670412d822113d58bbfdc146b4f5f8"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_test_assert.h",
+      "bytes": 3348,
+      "sha256": "62606c6810ebd5536ceb3525a3a17034414152c80ebd0963bc5f9300ab5acb3b"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_test_common.h",
+      "bytes": 5937,
+      "sha256": "93909899f8667511c61a697a02272c440b3b0ea82b749907d854f4c6178901a6"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_test_compare.h",
+      "bytes": 2232,
+      "sha256": "6a67ac878f2e9465a4a1cd109d95473d1b19254774ee6c423a911be3871ff230"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_test_crc32.h",
+      "bytes": 3509,
+      "sha256": "7f45d9f4838418d122f234f2d05f370e22b93919f95d7934becd8fac11864a5d"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_test_font.h",
+      "bytes": 2520,
+      "sha256": "9a8bb4a15c6e86375ffe696b47a7cca262581cb24f4beae9ae927b73a7510176"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_test_fuzzer.h",
+      "bytes": 13506,
+      "sha256": "a5e8c6acbdeaefba39a4390e4ffb29ca8565b9742bc7ff7dbd9db06c86cc6e78"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_test_harness.h",
+      "bytes": 4746,
+      "sha256": "48007ac428ad18c4d39c2892c1f11a13f96668296c0a40782f5ab64f66f0c8d6"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_test_images.h",
+      "bytes": 2293,
+      "sha256": "371497ba8e7e0d04496a64b1ec4bd195d351678316ff7aeff4c6c9289349b572"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_test_log.h",
+      "bytes": 2021,
+      "sha256": "52f7e2891a53193d89c3d41ead5c64520d60cda814a1a1f3d813e93916ea2d89"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_test_md5.h",
+      "bytes": 4759,
+      "sha256": "7893cd9aa7db15234f8b635920d8d313b5da25cc02c86995bb42966fad6e8267"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_test_memory.h",
+      "bytes": 1850,
+      "sha256": "3dfe8a56b2ee8bde7a274e3f851213de2f369d98c7a77a45dbe5b94717cac8ee"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_test_random.h",
+      "bytes": 3271,
+      "sha256": "b4156b922a677ec4ffe6716b72b03861a5d62e2dc19dc0c6b1b4499728f6f2e9"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_thread.h",
+      "bytes": 13320,
+      "sha256": "ef48398d5fa4845f9403a3814e5c95d362d857107b0eea293dbc920b510be723"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_timer.h",
+      "bytes": 3569,
+      "sha256": "85a0f789949f7fde570152810d3d201a7d6ba02f510b94070b1162b676a6afd6"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_touch.h",
+      "bytes": 3048,
+      "sha256": "9d2b80f205283b7a3987078a3e5a2f856827713a76fe1cbb8719935338ff1b9c"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_types.h",
+      "bytes": 1060,
+      "sha256": "5e68c94acb365f4d41f7c3f71eba06914b45d4cef7b2295c73d963acf17ba024"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_version.h",
+      "bytes": 5324,
+      "sha256": "c73d358bcdde743f19feaa896c729e668602ecbd5fccc650a07297d6731647be"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_video.h",
+      "bytes": 47788,
+      "sha256": "ca99eeceb1efe3e2a956402ee22a43275d7a7b4060dd280a6f8bb38a1ed2de0d"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/SDL_vulkan.h",
+      "bytes": 11075,
+      "sha256": "28c0b14ab7329e1ccdd9aedf7faca66080de91f17a0537ff196a1750c75eab17"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/begin_code.h",
+      "bytes": 4974,
+      "sha256": "e8b887e340daaf0350e6ca969f03d65b3a101ed045864264673a51ca68a51600"
+    },
+    {
+      "path": "runtime/quake3e/code/libsdl/include/SDL2/close_code.h",
+      "bytes": 1520,
+      "sha256": "e04f03dbfe7eb65103da3c78a45535770f7cdc0e5eac2b69d4561586468868ac"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/COPYING",
+      "bytes": 1498,
+      "sha256": "1300208dc709bce1f7b1bf5295acb4df8eca42a67a301ce4317c9b901560092a"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/include/vorbis/codec.h",
+      "bytes": 8629,
+      "sha256": "8acf5f2b6434cd249c15253b2285181c057f2e9b8ddc749e5104f8af6d49085f"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/include/vorbis/vorbisenc.h",
+      "bytes": 17425,
+      "sha256": "9b2ca300d2a562d5c07df61071f4129cca7f2c59f565bdb5b41bb46528bfaca2"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/include/vorbis/vorbisfile.h",
+      "bytes": 8195,
+      "sha256": "0bb085928afad6223c9b933f471676b983e6ae0ebd824db2c4b6f508cf8e9a0c"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/analysis.c",
+      "bytes": 3207,
+      "sha256": "3d3665e9e28aca06ef2b5b8499486807165e916683c03219245553e768e2f688"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/backends.h",
+      "bytes": 5294,
+      "sha256": "9a96b5825db7cd7eae8f98784ff38a3fc0ffa21c8c71d48ea41b3fd154bd611f"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/bitrate.c",
+      "bytes": 8730,
+      "sha256": "dee8cf6ba17bfc6853ed833097b761f1dcce4a0a452e154a2ad26fdc58f08eda"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/bitrate.h",
+      "bytes": 2021,
+      "sha256": "0ce4eb6aff007a7dc723e3d5a82a8ecae2c1e78661ae78516ea831cdc41e67d8"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/block.c",
+      "bytes": 31644,
+      "sha256": "7fed5b58ea532e1585b6d705b4fe5b2c97a6c9a2577f742c5f38ca0a34b6539f"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/books/coupled/res_books_51.h",
+      "bytes": 471865,
+      "sha256": "57dd568fe528542f67fc5da8f38ca3a1e6c8b4335a61c478fdf48301b5e476e6"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/books/coupled/res_books_stereo.h",
+      "bytes": 645317,
+      "sha256": "57c22bad8775c606358c78388351dd6f3f8febe43bc0c995cd19aa2fc7ce99a7"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/books/floor/floor_books.h",
+      "bytes": 51098,
+      "sha256": "8a3edb483830f6335d9fd28393f59ef6bd9ed0de0ac36385358df153d9580005"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/books/uncoupled/res_books_uncoupled.h",
+      "bytes": 248985,
+      "sha256": "58d3fbda45b6e0fdfb6f6ea896649706f4eb661f89990d7f92fa0cf992932311"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/codebook.c",
+      "bytes": 13869,
+      "sha256": "a51abc947cd0c895f5a8bf0d1729590a2577efd98b888f3cabb125152f2296df"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/codebook.h",
+      "bytes": 5075,
+      "sha256": "ddb088f2517a92951a220c3c348f03a25b558b8671e1f1b4601d90f8562aeef9"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/codec_internal.h",
+      "bytes": 5558,
+      "sha256": "587a80e43725954f6a834022d90065e1c3df65ec37698e66e1f466caf3a279bd"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/envelope.c",
+      "bytes": 11046,
+      "sha256": "3af8d407a5555f4d534fff1e2d7439ed4d06dd0202c5b20c923d34cb5fbc44d1"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/envelope.h",
+      "bytes": 2195,
+      "sha256": "db1e4998624c65e8b3c7399a0d9b5d9adf9fe7bada746bd325e05b0a6b8a9cda"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/floor0.c",
+      "bytes": 7112,
+      "sha256": "783faa0787f3ef59d463eec7a2af90d7dbea93c98c9d051e8d8b27580fdb72f5"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/floor1.c",
+      "bytes": 32024,
+      "sha256": "227972a9ac5747e5277c30883250602fd1128be88f8e7182b82f6f47805e88e1"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/highlevel.h",
+      "bytes": 1897,
+      "sha256": "d894e59f0e1436f65a5f7b95e814d44ac64c37a34593a8ba9fcc5a7cd6a93ff1"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/info.c",
+      "bytes": 20553,
+      "sha256": "298ea1bbe38e06849815ef66348d7a6248e9717c3ce1f41fe133626f9f78a887"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/lookup.c",
+      "bytes": 3339,
+      "sha256": "b7223cda4a8914b8f83eae0b35f19d37b28ee57036e566f473f87bf51f1a8bc1"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/lookup.h",
+      "bytes": 1280,
+      "sha256": "1c9a163300c9ee92275011c68f0ed0173e848ef2bcbb90154d0d6c66a804a877"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/lookup_data.h",
+      "bytes": 10227,
+      "sha256": "10e8be7bd76ce0c3b3e66d6f51bee6159cb1435ca0e43d87772cae660a1b3b7c"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/lpc.c",
+      "bytes": 4645,
+      "sha256": "56c68d0374e01e9c2b847cb8123548ad56cb37a5901963b26a3088102e74f2af"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/lpc.h",
+      "bytes": 1202,
+      "sha256": "0b7976bb80d2249288ed3828caf37a9a9df4070f7ca3455f53bedadff25666ea"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/lsp.c",
+      "bytes": 13054,
+      "sha256": "d34f11cbd968d7b9b620481a17a55c4def8457ec50aaac9e0d96ad3d8a3e526d"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/lsp.h",
+      "bytes": 1209,
+      "sha256": "a552a8072d754d0fcb1ab7bb05471ad7270a5f374a49c24f7eb63828a4533c93"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/mapping0.c",
+      "bytes": 29573,
+      "sha256": "c0ac20938ec08e460f76a2df8d69d1b3523916315af23ffca665c2730c526ee3"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/masking.h",
+      "bytes": 40239,
+      "sha256": "321ee2d1303084c5bd2cb6fd82b19b32c2e683e1daca89ef945d57fcb76ccef7"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/mdct.c",
+      "bytes": 16055,
+      "sha256": "3cedefe21dd3be65214d7e2680c6508986f81336397dcdf0bfc9017019971a85"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/mdct.h",
+      "bytes": 2025,
+      "sha256": "72b6a68498b26158440a05f570e598cbaad2765094188449d75ebd05dd283a89"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/misc.h",
+      "bytes": 2045,
+      "sha256": "9c622133ca32988f24f5454edeacfcac369c08d8b8064fade5398bdddd5abc5a"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/floor_all.h",
+      "bytes": 7654,
+      "sha256": "4baba71cbc84dbb97f9d58d22c0e2667aa4cf1fc5e999605f7c4b53bdba2c906"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/psych_11.h",
+      "bytes": 2371,
+      "sha256": "404718eaf1c2984dc474dd6e38a7501b041223b06b2a21c8eda542aa237ed711"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/psych_16.h",
+      "bytes": 6456,
+      "sha256": "be7b26d30bfc85f9569133654c5684132dd8c0a08833ab47069e4c921a720e25"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/psych_44.h",
+      "bytes": 33065,
+      "sha256": "b5fa95e992fa9b271ad02df9801a41993d79e65522b0238c240f0a3e18f66cc0"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/psych_8.h",
+      "bytes": 4144,
+      "sha256": "557939cd93e64c51e4413283557af6a254a4990e14957ba4077c9296b850d859"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/residue_16.h",
+      "bytes": 4996,
+      "sha256": "e5dff797196994bcd1f50bcf778cb324a96f309a8cbd00d98336e82b2b9b3bf8"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/residue_44.h",
+      "bytes": 10204,
+      "sha256": "87389b3978c3d2f5625edf95b93733201c4f132b4146c99069e6f594fc71f55b"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/residue_44p51.h",
+      "bytes": 12531,
+      "sha256": "c03a05af1f816b050a7c26bad10ba986092f34e012f858d0d61712508e8003a5"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/residue_44u.h",
+      "bytes": 9405,
+      "sha256": "9b170cd94c7494954fdba5f52d16868498adcb1c95194f229018a297dd8b45e2"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/residue_8.h",
+      "bytes": 3309,
+      "sha256": "01331bfe3a7917340dedf46b2830bdb43c001033f0def1f6bb14aaa02e9f822b"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/setup_11.h",
+      "bytes": 2891,
+      "sha256": "84919e919cbccff06b8d5c00df1a3293f0c009e804e541375eb05b5bab66ae76"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/setup_16.h",
+      "bytes": 3427,
+      "sha256": "b10f4fb06904d5fd2337bb8e9bd482b08a8026160df7c56ee32cc7fd12fef18e"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/setup_22.h",
+      "bytes": 2912,
+      "sha256": "f75375c09d0e8793173a1d155ebd639dcf7478c6e4afb2498648e019e55cb4ae"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/setup_32.h",
+      "bytes": 3145,
+      "sha256": "239fb81a745e1a3290390aec75c8898e544f8a75f61b149085d4dc3ca8fff348"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/setup_44.h",
+      "bytes": 3110,
+      "sha256": "f0fa07e417010f83d3ff31d2cf4f96bd25aa47af565e8433e7a89d6a57595894"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/setup_44p51.h",
+      "bytes": 2029,
+      "sha256": "5f1a71916865c7134993a1d1a97fb222406240fd7d714aae8be488b953d8faa8"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/setup_44u.h",
+      "bytes": 2040,
+      "sha256": "fe724830852b95f411f466cd7bdf6e9370ed11f2eaba25f8f46a28e7198ccad9"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/setup_8.h",
+      "bytes": 3010,
+      "sha256": "5b3c98b6f8afcded5926c2d6dcf00cee47ca8da6de493439cc664810b9ccd055"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/modes/setup_X.h",
+      "bytes": 4421,
+      "sha256": "12606718b69d0f99532311dba7b3b0d1cf1a53a2cd8e79153f0d8caf65f50f37"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/os.h",
+      "bytes": 5365,
+      "sha256": "d6d1b2b6c02bfa1b6c4b6caf9773b953d77555fdf63d4c4f4c349122a1fecc2f"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/psy.c",
+      "bytes": 37109,
+      "sha256": "ce76455842777ca249c4edc6d9e01d13471d840d849fe706be6f7b36ba899e05"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/psy.h",
+      "bytes": 4781,
+      "sha256": "3386a6d167b2a9e82a7d44e0f8e175aea2408cbd93029f214aebdc4a22bd0eee"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/registry.c",
+      "bytes": 1816,
+      "sha256": "af257dd57029622c836b01081b13d034823d62aee9c633c20432c938d508f61c"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/registry.h",
+      "bytes": 1278,
+      "sha256": "9b2b7af1c41cc3a1d2a0b8270c203acf8ebdc5c08c8694a9637443d30fd90b40"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/res0.c",
+      "bytes": 25801,
+      "sha256": "57977d4bae316e7eb0595ab65d593f72ef7566650a59020d6b7c6d7e55223fd5"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/scales.h",
+      "bytes": 2850,
+      "sha256": "1b28a0cc6a488e645f47213f678a8c154edc247763ebcf59c8c86295148806b5"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/sharedbook.c",
+      "bytes": 18410,
+      "sha256": "7d4941563f05f9302f4978d5442bba1f512c003f8b014aad76392267db97dbe8"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/smallft.c",
+      "bytes": 23439,
+      "sha256": "de29b633d30740e93337efa2566c9599e12d75fbeca98b6def446a5495c90605"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/smallft.h",
+      "bytes": 1251,
+      "sha256": "43709dd0f1e6d03238d2af7a2cd53398f70447f385eec3dd27c219b09167fc63"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/synthesis.c",
+      "bytes": 5359,
+      "sha256": "227012387f0c0e24ad4e6a98c7fc4c102bfe51d73d0a788f00c5d5072b32c110"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/vorbisfile.c",
+      "bytes": 78726,
+      "sha256": "cdd2b50e18039569eb33f91dd623c642d03244497e300f205274e60bc86d9cf3"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/window.c",
+      "bytes": 130781,
+      "sha256": "7bdb99e07476a5db492f2062b99bf7045a805a07bf31d5e0f781233a7f8b76d0"
+    },
+    {
+      "path": "runtime/quake3e/code/libvorbis/lib/window.h",
+      "bytes": 1111,
+      "sha256": "c0e09b2e21cf77e240f0864a27cdf96e1f6a65ae9ecf71df56317f2de775f0f5"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/cm_load.c",
+      "bytes": 26004,
+      "sha256": "2c2a5ce494353b55f4213651d39645e5142901b940b321a8ccdc83937c4fbd07"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/cm_local.h",
+      "bytes": 6692,
+      "sha256": "39c1a6baad664a812a529cb7f43a4df3b6b5792ba2984c96e3f199afd84eb729"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/cm_patch.c",
+      "bytes": 46264,
+      "sha256": "abed29a3f6e035b80db6088f36a6b85d02ae64a20a6e964b015e493a1cb0fd0f"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/cm_patch.h",
+      "bytes": 3303,
+      "sha256": "0279251d83024b01687257fbe432af58c048b24e3f538b7c18070d804c1b73c3"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/cm_polylib.c",
+      "bytes": 15950,
+      "sha256": "3821c67f892bbaaf9b442422d58a6dc8a48fb1f86c14354c2964ac2f4d6188a6"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/cm_polylib.h",
+      "bytes": 2249,
+      "sha256": "84d0a932ea4e8c651a58cff72214b18024966423768fbd15e85fdc597df0121a"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/cm_public.h",
+      "bytes": 2754,
+      "sha256": "4ab449199a6bb3b1a6aa5da9322050784c8fd1c153564fcbea03714a87899565"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/cm_test.c",
+      "bytes": 11614,
+      "sha256": "4d112c4b5bd28107876035e34eba1fd3e9980f7308645cdde4b331380ae72eef"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/cm_trace.c",
+      "bytes": 40006,
+      "sha256": "f6eab0926b2daefccb95eb47095d5527e88a9292c406a362b5eeb77f0c87b627"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/cmd.c",
+      "bytes": 22236,
+      "sha256": "b13187e82848437f8a22f2865e0b27170017073ed0017d8e7245d9f7d3ca085b"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/common.c",
+      "bytes": 119727,
+      "sha256": "a3ffc10ec90e6f368cc81de3e169232542bd17718cbdc31fb809391ecf551486"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/cvar.c",
+      "bytes": 45151,
+      "sha256": "e426a90ab72c240bc03742d81688ecc1df8101ed63efc5b4fe05cbf5bf507693"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/files.c",
+      "bytes": 141489,
+      "sha256": "f3390c5d9626865ec4c6212a9b8f56cc86f605e00607531ce944b4cee3eb03a5"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/history.c",
+      "bytes": 6370,
+      "sha256": "6c1755d5fe0b37951cd993d66dd644330fabe89d54692c9021ef9f733622ae4c"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/huffman.c",
+      "bytes": 11308,
+      "sha256": "dd4fe38b90cfca5c53530581f042fab47aa3c78b84b04e7e614ec617d37cc66a"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/huffman_static.c",
+      "bytes": 15205,
+      "sha256": "8c1d83caf782c6832a1a126bbb02edf50ad35a6d20fdaa707e3c51a995bd6a00"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/json.h",
+      "bytes": 10529,
+      "sha256": "8c27689599e2ccd17cedeca90db7439fc783c5c3bd6bb11fad6fec08c7a6db73"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/keys.c",
+      "bytes": 14099,
+      "sha256": "cda20a01d3f8fbcb280eb50dba519f1e0e91227269b9ff7168055ea8a8c83fe2"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/md4.c",
+      "bytes": 5161,
+      "sha256": "2c1caa2cad7f073c5f5bdaee841e7c7c5ff9a52833e6953636d2aa5c40c136c5"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/md5.c",
+      "bytes": 11592,
+      "sha256": "fefc94239fa9922e50d4a9c74fe4c931a2a38293a645ca63ac3b6be7810e1cd5"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/msg.c",
+      "bytes": 33388,
+      "sha256": "4cc76303498c157f487bd648a9f489efb2c93ecd84bda4bc882dabb29f3a9213"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/net_chan.c",
+      "bytes": 21755,
+      "sha256": "aa9ff07e9b3b53f2574f01e8df7fd5a7909c8f4e8a888e8f6783ae15dfe50584"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/net_ip.c",
+      "bytes": 48724,
+      "sha256": "8c531eb4e584128525eaa9dfb23b912428ac1354997ff6ba07221639ddc42667"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/puff.c",
+      "bytes": 35634,
+      "sha256": "414c536f85bc044363fc72af4b199b013101d6fc37336371075c36e72362371b"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/puff.h",
+      "bytes": 1618,
+      "sha256": "0ce93bff62df7f71c12b367c73e9ec1b457874b32a958cbfdba6112f6f58d6d7"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/q_math.c",
+      "bytes": 29265,
+      "sha256": "5ae7560646b81840b00f81ec63889861d67d0ad4230194a6c3943463b28740bc"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/q_platform.h",
+      "bytes": 6667,
+      "sha256": "c83750b97c84b504822e7f91b0062b16a7e515e9dae8fccd6d51d75a52e62798"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/q_shared.c",
+      "bytes": 41995,
+      "sha256": "54f3936e5cb5b1bc4f43c8c8a0649bc7d339a95a8d41b9a5aa99cde312e9603b"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/q_shared.h",
+      "bytes": 44995,
+      "sha256": "b67c535a6bce72fbeb6c6d8f579a39f7f9805e5b68fac204853bbb294b8d72aa"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/qcommon.h",
+      "bytes": 44189,
+      "sha256": "92d55680d6556f9a167692a90c1c8ed5ecb16e7eb9dbd3225d0094c970eceaf7"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/qfiles.h",
+      "bytes": 12422,
+      "sha256": "2fc6798943cdae7fc8199b22e3f89818b033a162a7ef79cd1b9d73f18aa53c2e"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/surfaceflags.h",
+      "bytes": 3693,
+      "sha256": "ac4056c262de3e6048c683b20c6974281fa17f20591af3cf7206205f48c1ccf7"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/unzip.c",
+      "bytes": 151874,
+      "sha256": "430553215d3cb6b0253d54c7317c4c9f589082a44ab1a3795fabf51e2380d318"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/unzip.h",
+      "bytes": 13886,
+      "sha256": "8f0a93c5e4200bff958d90af5c10a37ed9b8f0221acd7a1695730b9df598a053"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/vm.c",
+      "bytes": 54756,
+      "sha256": "58d815edae6ecb8c7c69d05cce110cb81d1377cbed221d639131189c8f239b32"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/vm_aarch64.c",
+      "bytes": 80613,
+      "sha256": "0886d355c20fac6fe565800aae6af162728adbb91b9563b0f15dadf3388d1e94"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/vm_armv7l.c",
+      "bytes": 65796,
+      "sha256": "27d70a5cc61791563abf090ea81e35f6c626ee1d8b85bc505f0b1059967a1e00"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/vm_interpreted.c",
+      "bytes": 13308,
+      "sha256": "4d42fae6564599d4fc6735a3a8ddc7fde6135834066e3fe3d26e0b74985f6fbe"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/vm_local.h",
+      "bytes": 5836,
+      "sha256": "b5a9f7a19ab9ea0b27dc48e872d2bfea03d1190223cabd18e946a74331f25433"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/vm_optimize.h",
+      "bytes": 35417,
+      "sha256": "02533fc789b9f90bcf608e0205578ea899058336d64b44e8f7952809270abbaf"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/vm_powerpc.c",
+      "bytes": 89696,
+      "sha256": "b354e7f8e4019c19cc85eb96237b90e0cdfa16fb8bdfe8ffa74d98eceae53615"
+    },
+    {
+      "path": "runtime/quake3e/code/qcommon/vm_x86.c",
+      "bytes": 99715,
+      "sha256": "03d16a0d44889bfda5fab18aa3d28b80099671000c815dd42072221fac8ed037"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/iqm.h",
+      "bytes": 3207,
+      "sha256": "8dc3da0fe6e7dcbd5a9176cca1c34fdd671ff3b429478ab32d61371e2c442461"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/qgl.h",
+      "bytes": 12938,
+      "sha256": "a004c344a2784d0608bc9fb15d2402c5834b529e714229c7e53be9c73e34edb1"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_animation.c",
+      "bytes": 15186,
+      "sha256": "748169cdb25832fff3a0b2ea305276f8daefe44991110538fd8709c98cae3a85"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_arb.c",
+      "bytes": 62352,
+      "sha256": "c1a47810c5f3803d7659fce21c41e2e68ce061badec46813ccde9994667561e6"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_backend.c",
+      "bytes": 38737,
+      "sha256": "dbddc7be294286627b420762d3ae3edc8d9b61e6d5e559a2e42b92f966c8b389"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_bsp.c",
+      "bytes": 70784,
+      "sha256": "747935b48c70bce6790ac3a8d8bcc20e58c0df17cd13e752323a96d87af9e4c2"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_cmds.c",
+      "bytes": 12742,
+      "sha256": "228067781cbf1e434b745c8a23d8615cb791ee0a616fbcc740f3f9a9e02e4b11"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_common.h",
+      "bytes": 4990,
+      "sha256": "c2c4c51f2ea396718c87ccd034519cee9b5e73dd46fa815c75ddf9f51819adc5"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_curve.c",
+      "bytes": 16601,
+      "sha256": "6a88874ff3287e66d9300a5ed545b391f9ec1402fd33153aaf1a61709cc6fb0a"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_flares.c",
+      "bytes": 13624,
+      "sha256": "6c205cbed916ff502a14290a026299c209791692b0c726510f78576f1444a43d"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_image.c",
+      "bytes": 43034,
+      "sha256": "c3b96ca71bb2c5778d0cad2f65b440ad82d60c026cadd5c072dd97aa2f55e7fb"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_init.c",
+      "bytes": 71112,
+      "sha256": "5d82960900d1d99a9dcb7ce72f6e41c6ee199f522eb9a4759515ca0850048289"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_light.c",
+      "bytes": 12771,
+      "sha256": "06cdd66924308f726befddb46987f3e90c513caa84e1b3a7bbec2de32c62ef6c"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_local.h",
+      "bytes": 57040,
+      "sha256": "7a725653c5bd4ced9830b4194bf231c57d30bf7eb20de5b838aff4610d6f77e8"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_main.c",
+      "bytes": 46153,
+      "sha256": "bbfe52a48e3a777f69f33ac2ae2a0aa961687b83bd32d0ab59e85504ed251308"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_marks.c",
+      "bytes": 14645,
+      "sha256": "2f3eb526299a89d2d9e32f59ec0ca9489e8eb4a2a44dbad9c17320cd610dc1be"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_mesh.c",
+      "bytes": 11879,
+      "sha256": "97c1d980dd466afedb3be7a961ce59b62798f92007d899e06737df4a364f8fa1"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_model.c",
+      "bytes": 31999,
+      "sha256": "eff972cf0ae260ec5125abcecc3d1ddf5389294423167cdc3ffce454581b910f"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_model_iqm.c",
+      "bytes": 49520,
+      "sha256": "91dc028fc51bcbe8e1113202c2823d19ec19dff6e182c8331deb40e940c6b687"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_scene.c",
+      "bytes": 13851,
+      "sha256": "4e3d87aa4b8a74391dfceb93280660d0e357b42783e0e94bfe0b160a764afa31"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_shade.c",
+      "bytes": 26270,
+      "sha256": "946d6babd8deb293c4c2200b7dae09662fd53fce8a9f3446d4074349253d2a11"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_shade_calc.c",
+      "bytes": 32034,
+      "sha256": "27e87088f489a968d69afd883bcea3c6eb62b64096bb229c8aeb828ec8677251"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_shader.c",
+      "bytes": 105489,
+      "sha256": "47d3f822717529933569ec40d713daa34f5a4165be92f22ddf40c6a1cc556824"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_shadows.c",
+      "bytes": 8455,
+      "sha256": "4c79a714461225bcbbfa99c00504e052f0487eefc02ac69ff01cc15023478a0c"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_sky.c",
+      "bytes": 21265,
+      "sha256": "bba9a0e84a8e9eb3c13b0ec223b7ed450b5e1a019a7f3d06d6dc4a07e528eaf9"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_surface.c",
+      "bytes": 37164,
+      "sha256": "6d6a86617a70f97c9e19f0858bb9c5b91bf91862757eb2efaabab0172e5eebb6"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_vbo.c",
+      "bytes": 40936,
+      "sha256": "847dd90f29b2081f7a10f8a88b6dd1b3374576fdd1a29bab0c1cfb76cd984b8d"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer/tr_world.c",
+      "bytes": 23054,
+      "sha256": "2bca56258e2d7a93d09ec5da4fe7a6b4e5b0d8fb48bf661978f392f00213ba69"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glext.h",
+      "bytes": 809935,
+      "sha256": "ace1ed076c7b59be190d8ee0ff2b2d9040373e1b9c73333d46b324206f53cdf6"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/bokeh_fp.glsl",
+      "bytes": 4451,
+      "sha256": "ccdb84fe2e0695db4a5b711b7ffbca87f742a0d38d8a9067ed0a1e04c62faf52"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/bokeh_vp.glsl",
+      "bytes": 275,
+      "sha256": "624c7b8283544ed772cd6ea67c807fde2a09846c11e5d1be3bbbd1205838346f"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/calclevels4x_fp.glsl",
+      "bytes": 1745,
+      "sha256": "8bf4709a54eac6a7c30e74b81b043c73019e90afa9928b3f17a82b1711d050cf"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/calclevels4x_vp.glsl",
+      "bytes": 275,
+      "sha256": "624c7b8283544ed772cd6ea67c807fde2a09846c11e5d1be3bbbd1205838346f"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/depthblur_fp.glsl",
+      "bytes": 2548,
+      "sha256": "355498c82a24c9bd2eba0f3cabc7c7bbb531515dfdcc0fd337bbf09cd1eaf569"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/depthblur_vp.glsl",
+      "bytes": 453,
+      "sha256": "cf1d5bbc72ff30d348e1d77be215de86371604a456a053fbf5056e1a0aaba3ad"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/dlight_fp.glsl",
+      "bytes": 526,
+      "sha256": "adb2ecd8719ab1dca634272e1dd64c65d71f833362b16c0c2b18cf18db4c8ee9"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/dlight_vp.glsl",
+      "bytes": 2075,
+      "sha256": "fc5a10c772feda14e1522454b767fe2a30f41d4e4881b06be0f608fcb2e8b69e"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/down4x_fp.glsl",
+      "bytes": 1701,
+      "sha256": "f27af39da8a9d0d200772662e93946b5721934928fd699e08b2b6a8d48e062ea"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/down4x_vp.glsl",
+      "bytes": 275,
+      "sha256": "624c7b8283544ed772cd6ea67c807fde2a09846c11e5d1be3bbbd1205838346f"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/fogpass_fp.glsl",
+      "bytes": 152,
+      "sha256": "19c7a75b2ce279e9fcec63dbf356e03fbeea07c31aa860aa07d8b217019c17b4"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/fogpass_vp.glsl",
+      "bytes": 3381,
+      "sha256": "8cb8117bd1685027bb9063f22fa4b533beab05d9730eb940fe11ac69d2f5aef3"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/generic_fp.glsl",
+      "bytes": 541,
+      "sha256": "0298baad9bffa00d14d032fa55e8f43e9727899bdf83cca56a359bbc96d0ee9c"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/generic_vp.glsl",
+      "bytes": 6493,
+      "sha256": "54ae9ddc19b517d5c4b9d5a10c9a67b11b29461050da1d22875e98d2d09aec3d"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/lightall_fp.glsl",
+      "bytes": 14237,
+      "sha256": "1f64aa41ac1cf725dc0d877a3965f4bdec63eaa5b3391f5df5e059f64d2db88c"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/lightall_vp.glsl",
+      "bytes": 7671,
+      "sha256": "df35bbe1f43d0365a900a04b9d0045e12b23b701ee84a4d8953cafaf53f6d705"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/pshadow_fp.glsl",
+      "bytes": 1870,
+      "sha256": "f652160ddfcf5604c5e04563c9bec3e2a179648042b4bb565c0ad353ad7ed18f"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/pshadow_vp.glsl",
+      "bytes": 326,
+      "sha256": "7a0fbc7eed417ff9910f4a47b7806db69931753c6d955b7a38f8c7a32914f073"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/shadowfill_fp.glsl",
+      "bytes": 979,
+      "sha256": "99f18bd914043a424c187f6822685f70794ff16f21df566caf263e6c156ebe3d"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/shadowfill_vp.glsl",
+      "bytes": 2904,
+      "sha256": "d5c89c69c17084e73228e4ac234a55d34fc48357ffd7df8dd85e0a5064cfd1ca"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/shadowmask_fp.glsl",
+      "bytes": 4766,
+      "sha256": "1622f33a051e9c22cabf9faeb43197aa131bcfebce21507d10bda3da9a160f2c"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/shadowmask_vp.glsl",
+      "bytes": 487,
+      "sha256": "179d5944d55b82831515064910bbb8ff06dbaf537cb7cc7638dcd7d8b39c8fd4"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/ssao_fp.glsl",
+      "bytes": 3156,
+      "sha256": "244c26f4d6b73a15ba6e2d2cf0240af4e7fc1d6d9d8c2c9a382af8c7a09fe76d"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/ssao_vp.glsl",
+      "bytes": 287,
+      "sha256": "7c5da7657ef57dfd4b4eaba16d8ebaaa076753aa78d77ef8148caa7823cbbc0d"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/texturecolor_fp.glsl",
+      "bytes": 177,
+      "sha256": "e90bc3d28d493ca25f1a97e2318541b35de50b4cb566d83d12c04d12340b3566"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/texturecolor_vp.glsl",
+      "bytes": 265,
+      "sha256": "d176fc3e5380f0afceb319ea06ff19e7d6b4aad5d9a085d024abf4ed77ee4304"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/tonemap_fp.glsl",
+      "bytes": 1618,
+      "sha256": "0f7466fa79ebb0ce04bc692822a9e6ee7cd506d281f055b168d18dd016221f68"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/glsl/tonemap_vp.glsl",
+      "bytes": 814,
+      "sha256": "a6c7a88a1598e8b56eab1cdb056d9a822b62917a76d086b3b38ea3f0ce9fb65d"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/qgl.h",
+      "bytes": 20482,
+      "sha256": "ee800a8ffe90b0ed8a289525355c277828ed847001c96b2c1bc3db2ac34f3309"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/stringify.c",
+      "bytes": 1004,
+      "sha256": "fdd04489753c2ddf749fa0faacc84d6cb763a060ad69f6041d11c4d526e96708"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_animation.c",
+      "bytes": 15082,
+      "sha256": "b88e6bca8777067dc5861804ede06c659b352a0fd72a899267dca2af5a06729b"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_backend.c",
+      "bytes": 50071,
+      "sha256": "11b07f8950a313f92b495cfc993622fe86e1bc5c65b753d14118bd396dd295cd"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_bsp.c",
+      "bytes": 85220,
+      "sha256": "bafc271b593e10b46dd937a266d422122d18049fa9b548102eaa2bac898f90d7"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_cmds.c",
+      "bytes": 14671,
+      "sha256": "61ac1c8e178f1c7045cb574a029041cc90426d536aa7f37579c0e2f9974f80a5"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_common.h",
+      "bytes": 5584,
+      "sha256": "2dec0b4cf45f267f4c010f3abc2462012c5dbe40cca7f05b88ac48e670bc2e0a"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_curve.c",
+      "bytes": 19749,
+      "sha256": "38884e74fb5932a6fb75524a6481ff62a01def30cfa242acecd21045220cca8e"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_dsa.c",
+      "bytes": 8711,
+      "sha256": "ed34afa9bd71b93099c20a1bd972e75913051fe41273d122552a9fb6f4e5f75b"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_dsa.h",
+      "bytes": 4130,
+      "sha256": "a67ba85fc828113cfa9bea30e64aa1a224e3dd4c6f5d51cfa5793120e15ffa50"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_extensions.c",
+      "bytes": 9435,
+      "sha256": "d5d643dc70bed1e5b13c27dfec4a381fd461ece400c8b937921a53bdf9f63bb5"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_extramath.c",
+      "bytes": 8845,
+      "sha256": "e03ec5ea5cd1ea4502fd67e7b20483a84fafa254182476be100156b22756e8e6"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_extramath.h",
+      "bytes": 3691,
+      "sha256": "5731e780b78c890bf3ed112b92617615fde1a798101aeade3ed02d0afb12f7b9"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_extratypes.h",
+      "bytes": 1604,
+      "sha256": "067279f2620752c0183495ea97e3a4cae18c9879b8ec048a84469ed70b02d8ec"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_fbo.c",
+      "bytes": 19139,
+      "sha256": "01edc8ca88f33762f45a682f5b29993a9f6a354d6386a4cb2a97fe59da79256d"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_fbo.h",
+      "bytes": 2263,
+      "sha256": "6459b316fbce8163327f62e6f46a98f1b462c280a8d00a65bb05e65fece0a928"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_flares.c",
+      "bytes": 15891,
+      "sha256": "96cc1ca45f792b0b9ceea3bbee180384096a51b7a1a864d125148a37ba8e1b48"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_glsl.c",
+      "bytes": 44549,
+      "sha256": "f59cd5c8e029f47e75f1b870c05819cd746b80181f780b9300a27ad638edcff0"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_image.c",
+      "bytes": 80905,
+      "sha256": "157640c1a8f07ea0e5a256fd441e5cee16d56c562e3042056f9454dab6591f17"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_image_dds.c",
+      "bytes": 14109,
+      "sha256": "2edfa7b3db09a06070ceebfe7683be1fb580e87f9cb6a15f3fea923b9a735725"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_init.c",
+      "bytes": 58045,
+      "sha256": "a65629215f306a987851b6b0936b7593d155bbe9a0f526689b8b6ddc1e1331fe"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_light.c",
+      "bytes": 13516,
+      "sha256": "b22b12140063b345384c5c123bfd3e715441360406c7aaf2cb6dafb7094bd4f8"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_local.h",
+      "bytes": 68435,
+      "sha256": "99e4ea07a28b29a077c1bfeec0c204b5f63a72fca909504a1ca1190909dc4049"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_main.c",
+      "bytes": 76989,
+      "sha256": "38c831dc30ab7c822e49fa1240bd508cb96b44769147e76e5896a19dcba1bde0"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_marks.c",
+      "bytes": 14972,
+      "sha256": "bf5a64e669fb54b2036763fa54afcd26c83c08719fa81a2f24f4c8bf0f13959c"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_mesh.c",
+      "bytes": 11035,
+      "sha256": "758e6d3e6e6a876e604a7fe8373eddf90fd2ec7b615fa9f5f4575d36490810a8"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_model.c",
+      "bytes": 38995,
+      "sha256": "beaa4223a1359885d33c646627536eed5cd84bc63939dbe7ad9558cfcbecd41c"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_model_iqm.c",
+      "bytes": 58380,
+      "sha256": "e3d244706c527d7107829719ad1f3ad4abdfe084fda8a0994b105f66f3ed839c"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_postprocess.c",
+      "bytes": 13959,
+      "sha256": "c25e6107fb735ed5db474da4289ab840f01bd7ef4f12a3042c34119c404a3e13"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_postprocess.h",
+      "bytes": 1378,
+      "sha256": "683009b5da3635d29e9c5eb6d56bce62a711c2af4faefa810352c69dfe2426c2"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_scene.c",
+      "bytes": 16075,
+      "sha256": "189abc4365346cfb0e7a8b1bf8ff6387fee7c3741b128e2eb885ad90d634b237"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_shade.c",
+      "bytes": 44618,
+      "sha256": "036c49e9fdb8eb9e56ee704b4cb25ba56885273911c0e65457e0477262e54c6b"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_shade_calc.c",
+      "bytes": 20838,
+      "sha256": "45bb9a5fb9cde9e89515d4c8f720e45883c36f9f8e8f6f86d3260266e943d949"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_shader.c",
+      "bytes": 111670,
+      "sha256": "df7fb77ff736cf7abc7ffd03bbadd9520d7903a1e75765941012423990a7a8f1"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_shadows.c",
+      "bytes": 7916,
+      "sha256": "9a9a8bb06d92958eaf0e731daf01daf0f34199a776c2aa41758a05cbf4a5508b"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_sky.c",
+      "bytes": 23019,
+      "sha256": "8ca471464e55c51f47b96fe22b17e9b49cde39671574acfb221cddbdda657960"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_surface.c",
+      "bytes": 36066,
+      "sha256": "2e62f140db097ee62aca5765e0f2436b547c38071a1fad0bb1529561ae189f0f"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_vbo.c",
+      "bytes": 30411,
+      "sha256": "fa570ac04eadfe64acaee1f55ac3261d8761948a558dfbb8b6f7428b0ebb73b4"
+    },
+    {
+      "path": "runtime/quake3e/code/renderer2/tr_world.c",
+      "bytes": 20106,
+      "sha256": "31959ddb1cc751b4ec7dbcd7ceda68ac8becdac58e0cb253319a1e707da71006"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/tr_font.c",
+      "bytes": 17320,
+      "sha256": "d73b74092e822173485c14448eba4699ada788ea47c0a523224336fbf1c17a4c"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/tr_image_bmp.c",
+      "bytes": 6296,
+      "sha256": "8c809923bac19977805e207273254757cf9be502d2f8d0a9d1b06df9d88d8cb8"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/tr_image_jpg.c",
+      "bytes": 1216,
+      "sha256": "398cecd3d75e92945284cbac006155c71aae8119e392fbbe368dc87da4e5b234"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/tr_image_pcx.c",
+      "bytes": 3994,
+      "sha256": "4e35ca7bd45aa8b5b69906668e39c7f81c5b8826e8477efb49353746f00618b0"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/tr_image_png.c",
+      "bytes": 43494,
+      "sha256": "a07529fd251a5ab7ee30069aad9fa23de1fd9b9f04633129153703a48d228c89"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/tr_image_tga.c",
+      "bytes": 9404,
+      "sha256": "5512e6d66106b3b638393fd4ddec681fe44c4f99b2b207a93d04c567952497e6"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/tr_noise.c",
+      "bytes": 2906,
+      "sha256": "42c84a194d3ea488f459c8a3b25534d8938a4c3249ae3621c10fab0a24562b57"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/tr_public.h",
+      "bytes": 10091,
+      "sha256": "4c00f8283a78b035b11692d5ab6b8e07f63ffe2d98982e893b02d17866723395"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/tr_types.h",
+      "bytes": 7506,
+      "sha256": "2aee6d7fe4bc4c5153ad69754d3f5276eabfb3360c4bc33d995f5c238f0a17e3"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/vulkan/vk_platform.h",
+      "bytes": 2912,
+      "sha256": "6bc08085985094224a327df89802ec72451e138587e9ec6675a0bd4c940dcce9"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/vulkan/vulkan.h",
+      "bytes": 1569,
+      "sha256": "ba0fdad27dac9a0e8f3caf328e6b77e8895b026d5cc0e201bbdce19d0f2b4aa7"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/vulkan/vulkan_core.h",
+      "bytes": 764286,
+      "sha256": "576a6f76d14da3c9c967c6c0dee6966fe9a021555305984d1d1680ba9b58ded2"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/vulkan/vulkan_win32.h",
+      "bytes": 13792,
+      "sha256": "23dc7d72f486ec8cd4509773a80693f34d10f040e399af2dbea8bd3d5ed6d659"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/vulkan/vulkan_xlib.h",
+      "bytes": 1839,
+      "sha256": "645148a6ab195647e21169cd12478c50d88a6ad9cf51588e878469ba1834cc8a"
+    },
+    {
+      "path": "runtime/quake3e/code/renderercommon/vulkan/vulkan_xlib_xrandr.h",
+      "bytes": 1371,
+      "sha256": "ac14f830b248d48274bc382451e4af8867e18dca37e44f40f90badd30ecc96dd"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/iqm.h",
+      "bytes": 3207,
+      "sha256": "8dc3da0fe6e7dcbd5a9176cca1c34fdd671ff3b429478ab32d61371e2c442461"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/overnight_camera_table.h",
+      "bytes": 117292,
+      "sha256": "c2c4292a885ffe9d2a6a19dcf86a695f61c53fc9c0238770af9b7c958fe5dfef"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/bin2hex.c",
+      "bytes": 1990,
+      "sha256": "367e78709b1534e4f2e0fbac4b09b90fc2efa7d121063965ab8e060a61cdae31"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/blend.frag",
+      "bytes": 928,
+      "sha256": "6a56708a8c8c2b510c74dfa29a005f8cec7532fec59b96646463a855b5be893c"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/bloom.frag",
+      "bytes": 1972,
+      "sha256": "e7276a09ec3f43d30c78f92a10d7589804a10d66ab94019694f1ddedb628d3ad"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/blur.frag",
+      "bytes": 836,
+      "sha256": "d4e111cbd4bfd6b7080430bcac41328fbfa148b2c69207759ed58e191ea625f6"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/color.frag",
+      "bytes": 436,
+      "sha256": "7eb98afc034045f01ba900ba6c0bb19f3d7781b38531b1332bd1b5a651b5d730"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/color.vert",
+      "bytes": 594,
+      "sha256": "e3f21c04bea96cd7d747baa7eabf1105cacc20eb378834931cbc20b9cdd06018"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/compile.bat",
+      "bytes": 9070,
+      "sha256": "7bf801c857f9baf43061c22747c13413f1cc529dd05aebc96947f1c815e579db"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/dot.frag",
+      "bytes": 306,
+      "sha256": "7ebd5843a8405108e20d0c079a22dfc2dba1c0c75ed37fcfec3c34a8bbee8b5a"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/dot.vert",
+      "bytes": 370,
+      "sha256": "d604b140c7d37771afdefe2e299ae6eae01f973738afacc5baabc2d9bbae557d"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/fog.frag",
+      "bytes": 1412,
+      "sha256": "ca79bdb03eeaef396167e9dfe4684a03d76481f9527160752ddf9d19b38c3fd1"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/fog.vert",
+      "bytes": 1616,
+      "sha256": "ebdf380b444824223016ae49afd593afbe2dde904f31413ef7fef258e2db32a9"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/gamma.frag",
+      "bytes": 2135,
+      "sha256": "7f8568adbaafa3aefb83aa183c7b7ea9a564c0b0e5fcfbeb835d669f6da3cad2"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/gamma.vert",
+      "bytes": 460,
+      "sha256": "5ad8c8074b992b0ff7b8a4e04c4346f0f5956b50f05036862a30e6b49986c4a4"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/gen_frag.tmpl",
+      "bytes": 17062,
+      "sha256": "e38a78468290f7c4caea3d57148ca1f054128e7679bdda37b5a636881dbe76b1"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/gen_vert.tmpl",
+      "bytes": 3173,
+      "sha256": "6e13bd2c284e57f15316c9ca0116d4d0f5e93bcae0185273c06e99158ff43c96"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/light_frag.tmpl",
+      "bytes": 3857,
+      "sha256": "a884988fd4f05e7cc57076787f37d8ff3e693ec1d874498d8f556b6fde172bda"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/light_vert.tmpl",
+      "bytes": 1631,
+      "sha256": "76f40878521927d83471322042b2582f09c005f3d99ea87bf310b4dbe3cb884d"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/neural_mlp.comp",
+      "bytes": 81579,
+      "sha256": "3b1445a547f7a24ecf89aadc0b46d0fd7aa26c42f705fcae75e3fbd38d5ecf0a"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/neural_mlp_slim.comp",
+      "bytes": 47932,
+      "sha256": "4e7d291f4aa69a275229abc8a3e0f95a2677c175543db716c728efc993de3c0f"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/shaders/spirv/shader_data.c",
+      "bytes": 1962510,
+      "sha256": "027423e39821081aca61ce7e65800a30fddc9288fb368470225a66576b61da2a"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/surface_batch_cameras.h",
+      "bytes": 131,
+      "sha256": "5e362189e120829bf2dc456a57b8898ec3ce0036d1906c025b31e5d4df420730"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/surface_batch_identity.h",
+      "bytes": 255,
+      "sha256": "9f286972bbf632bfc46d99a21d59a8dc6747c1aac775d327156f76067b8f4edb"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/surface_cnn_identity.h",
+      "bytes": 2821,
+      "sha256": "e054a20691db1ecaea89c6bdf6ed652a8d46a6686167634c5de9fa72d1a74f22"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/surface_experiment_identity.h",
+      "bytes": 3545,
+      "sha256": "82d250666a9eb15aa809b8db32eaef69351bb30c6c5753a96e8827f324351a37"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/surface_pixel_identity.h",
+      "bytes": 525,
+      "sha256": "56e7e9c6b08f093e081ac18eee7d621edbfd2076355937547dd7502a563210b2"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/surface_shader_data.h",
+      "bytes": 486744,
+      "sha256": "c2da908f7fb724a005668fb34c88fae04eeade09e57d0574ba269f987413be51"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_animation.c",
+      "bytes": 15241,
+      "sha256": "19bc12109c055e7b67637cfd8aeecf716714d0247317dad64facf6a8dba2346a"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_backend.c",
+      "bytes": 44509,
+      "sha256": "0b95a88a0ab8ab2dd44bea892565ee7b0649ad6a43a5cbc67bd527edd4c2ece3"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_bsp.c",
+      "bytes": 81497,
+      "sha256": "d9f1295b8c645da2beab0609b9f66c7345d81c0044111f050c6591116e236a46"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_cmds.c",
+      "bytes": 11369,
+      "sha256": "ef39ed3def582e1fcdbeef310ec7422827ff80252ef7c89a0d358824009bfcce"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_common.h",
+      "bytes": 4692,
+      "sha256": "22db4a008809f4db0f96003a2465a26d4d323974d80100db2eddf586c1fe8e6e"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_curve.c",
+      "bytes": 16601,
+      "sha256": "6a88874ff3287e66d9300a5ed545b391f9ec1402fd33153aaf1a61709cc6fb0a"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_image.c",
+      "bytes": 51051,
+      "sha256": "0fe52f4eb5955a7a16bc530cac0dd0a5f51eeb963a4edffc65c42b320b5070d7"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_init.c",
+      "bytes": 75389,
+      "sha256": "5ac776613c0489aaa25053604f74eb08dc299c1c2e86deb20de7862bc3565cbc"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_light.c",
+      "bytes": 12393,
+      "sha256": "417bd4bcdfe37dc7012ff9150310ec622f346be958791ecf69c443ececbe34af"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_local.h",
+      "bytes": 57280,
+      "sha256": "16e18dcc3647c883a88edd4252d54be67699cad2a3676095032a91814ff291f5"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_main.c",
+      "bytes": 47355,
+      "sha256": "5a20760536c9417aec98d922e70d5adba6f260a10eaa1a6cdff41d8582f8b18d"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_marks.c",
+      "bytes": 14645,
+      "sha256": "2f3eb526299a89d2d9e32f59ec0ca9489e8eb4a2a44dbad9c17320cd610dc1be"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_mesh.c",
+      "bytes": 11929,
+      "sha256": "f39b2623a798525cd695d1eaf3c3389e992ab5726e855f7b9f1124b45e5bb44c"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_model.c",
+      "bytes": 31993,
+      "sha256": "124e74f9a195fb21eedadbc703e626a37c05bc4beb339fec28a08badbc88ed0c"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_model_iqm.c",
+      "bytes": 49568,
+      "sha256": "506e627f7bedc56b959885eadb4ae8da700c8b97963f6638830418e429a91cf9"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_scene.c",
+      "bytes": 20661,
+      "sha256": "9101e22a50ef04dc249bab88994f3de62bce11ada3d9de6c80ab5a1821902fa7"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_shade.c",
+      "bytes": 37194,
+      "sha256": "70401dc3d96e575c36e608a3fe4d18c5b719c77a6b65509ee2e97dba51dbf4c2"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_shade_calc.c",
+      "bytes": 32029,
+      "sha256": "66725044385470c9e2c66458f43816431e5dabd2bd52cad472a6e7c0ea33fc9b"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_shader.c",
+      "bytes": 126165,
+      "sha256": "26849cdb9c63716caa32cd791b33454096d18dcb3c2c36b83b632ee6bb50e398"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_shadows.c",
+      "bytes": 10723,
+      "sha256": "b5d1e7c809cac169737dafe72a759f2c4e3535c6037131462e31967ab113df02"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_sky.c",
+      "bytes": 22023,
+      "sha256": "ebef342de115a98d5b32754eb7a943cc2dcf5f239d188fa7f5820e3b055a13b9"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_surface.c",
+      "bytes": 39573,
+      "sha256": "81d7e0786a6ca81dd732d01b9f1cbf44c5f04456116da41c8e2eabf83d48c311"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/tr_world.c",
+      "bytes": 23070,
+      "sha256": "da948f7c41778ca58038ca0c3c59dd71feb96e2d0caaddbbae94fdaf87d144ea"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/transport_reference_contract.h",
+      "bytes": 393,
+      "sha256": "e2935051b9d651ceb3c28f7f22012ab948e7804ca31840283925aaff1f7ac713"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk.c",
+      "bytes": 343569,
+      "sha256": "5aea2ac5af949dc9324dfa92292ce1e3447b3e8a4227940940cfd9a24235bfbd"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk.h",
+      "bytes": 19798,
+      "sha256": "a409351e17eb5f6d47a78500726570a40440d43ec9c194f70cca907401b35745"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk_flares.c",
+      "bytes": 15840,
+      "sha256": "e54b71b445bf869f11422b69beeb8d0c49b8bc76c136fb5c05d21c6a92552074"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk_surface_adapter.inc",
+      "bytes": 40542,
+      "sha256": "1f2c3db14e5d1f2d4ecebb20cc64e21c56cf6339477176225f693f51e3c9eb73"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk_surface_assets.inc",
+      "bytes": 17365,
+      "sha256": "da17ba0c589ec38b2eb4cac5933575f5da98029af9b7bddc5657cdb5e55f5fd9"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk_surface_benchmark.inc",
+      "bytes": 13061,
+      "sha256": "7a13a08d156cda8c93c15cb9b408082ec4db5e810d8e81ee88b05b7d8c2129d7"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk_surface_cnn.inc",
+      "bytes": 9219,
+      "sha256": "a252d096cc89bb534b284bdb226b1ef7f27166c366d95ce48ab4127efbf6d389"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk_surface_cnn_capture.inc",
+      "bytes": 9716,
+      "sha256": "c009bfa426098b78d2734e782021213bc184648c924a8771670c486e7727fa65"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk_surface_cnn_loader.inc",
+      "bytes": 3148,
+      "sha256": "5286f7528acaeedbe1de753900370bcf81d489d65961fe9e7e1a6eacbab8b820"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk_surface_multires_capture.inc",
+      "bytes": 6173,
+      "sha256": "84a5e3366b65d7627db0639a31a7bc415f3e69bc06ed7f77e46ae7060b03ae31"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk_surface_pixel.inc",
+      "bytes": 8055,
+      "sha256": "f9d3cccc66d273a18281d8fa16b7af629e6d20234c0b54e8f77881a11dc4b671"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk_surface_pixel_capture.inc",
+      "bytes": 7760,
+      "sha256": "cd4496fd9af2b6a4ffe5a89c7fab5fc258c4b398d4ddc5002e8ffe47c161b9dc"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk_surface_resources.inc",
+      "bytes": 84029,
+      "sha256": "8f1f638367734a2d3092febc29ad98c9b2bde57a1b438128507933e18adbdcce"
+    },
+    {
+      "path": "runtime/quake3e/code/renderervk/vk_vbo.c",
+      "bytes": 24401,
+      "sha256": "07313c84c2b861404ba79e2a1f2dd61840ddfb72a5c466a34e7c3695dc54712e"
+    },
+    {
+      "path": "runtime/quake3e/code/sdl/sdl_gamma.c",
+      "bytes": 3114,
+      "sha256": "7d7ac757399cbc53e62978ec7818a7e671e8adf4000fb7b833a713be22b83001"
+    },
+    {
+      "path": "runtime/quake3e/code/sdl/sdl_glimp.c",
+      "bytes": 20914,
+      "sha256": "6801f99181e58f2bf5368860ff228fa6e2269ddc10e03d74a8e888cc0afad3c4"
+    },
+    {
+      "path": "runtime/quake3e/code/sdl/sdl_glw.h",
+      "bytes": 1594,
+      "sha256": "49cd67a9c1a483fec66777b78612a343ffdc694223ad1c59741bff4223569db6"
+    },
+    {
+      "path": "runtime/quake3e/code/sdl/sdl_icon.h",
+      "bytes": 9670,
+      "sha256": "be307005823b57b145f3b109a0a0203139dae7c5513a4a6878b5e7e2c51d7a1b"
+    },
+    {
+      "path": "runtime/quake3e/code/sdl/sdl_input.c",
+      "bytes": 42997,
+      "sha256": "9d9080337e9dbca294e51b06655966765b04eb23246716a58a2559e76ae8172c"
+    },
+    {
+      "path": "runtime/quake3e/code/sdl/sdl_snd.c",
+      "bytes": 12286,
+      "sha256": "e1c7ac8f3cf504a7048396bf69188596cd4264f64a43e51aabce6b322b364ad0"
+    },
+    {
+      "path": "runtime/quake3e/code/server/server.h",
+      "bytes": 17465,
+      "sha256": "e18b93c841fa386becb1d33356514f5204c4af5447af1a96ad0407a02ad5c43f"
+    },
+    {
+      "path": "runtime/quake3e/code/server/sv_bot.c",
+      "bytes": 17529,
+      "sha256": "c9a93ec30fd2318974997ec7e820a563925be4bb76c4d3823cd6fe818ccb380c"
+    },
+    {
+      "path": "runtime/quake3e/code/server/sv_ccmds.c",
+      "bytes": 37589,
+      "sha256": "2db00369b617fbb9fbd15310671d144f06c0b6f49920e575463da113e618c1dc"
+    },
+    {
+      "path": "runtime/quake3e/code/server/sv_client.c",
+      "bytes": 67852,
+      "sha256": "042c702ae77e5fd05bd7b77e47602a4daa415f16c0194a71bc4b0e472ee25c60"
+    },
+    {
+      "path": "runtime/quake3e/code/server/sv_filter.c",
+      "bytes": 24780,
+      "sha256": "b8ee6123c6345edebc6b155ea523d05ca50d1164d32090db68f4d47d69ad3ea7"
+    },
+    {
+      "path": "runtime/quake3e/code/server/sv_game.c",
+      "bytes": 33934,
+      "sha256": "2155d48d52c2ecd861c94831292466ef889de80591b994c06656ff6a252740ab"
+    },
+    {
+      "path": "runtime/quake3e/code/server/sv_init.c",
+      "bytes": 27998,
+      "sha256": "78a997889b099a3ed07caa131d2d20701b646f2e72469410caad94949733116c"
+    },
+    {
+      "path": "runtime/quake3e/code/server/sv_main.c",
+      "bytes": 40420,
+      "sha256": "91c967d11cd2e72e247bc1b545e0d56ccf776984eeca4fe2979763a9ff83c805"
+    },
+    {
+      "path": "runtime/quake3e/code/server/sv_net_chan.c",
+      "bytes": 7076,
+      "sha256": "f8d51f3f734c991d8142dfbe639f44529d11db03aeb9079198709412134cf58a"
+    },
+    {
+      "path": "runtime/quake3e/code/server/sv_rankings.c",
+      "bytes": 37149,
+      "sha256": "6680ed125844ab336b7cd5450965b0fdf5375dec669e5cc9ae65ae005eb5213b"
+    },
+    {
+      "path": "runtime/quake3e/code/server/sv_snapshot.c",
+      "bytes": 22228,
+      "sha256": "8731be69b7e4f5cf73cfcb60c9e33395b96fc71742b8872a60a46a66d3761587"
+    },
+    {
+      "path": "runtime/quake3e/code/server/sv_world.c",
+      "bytes": 17421,
+      "sha256": "29b007f6735e73e36cebc5006fc61b1a3bd33efd9a93a6e779dfcb860cc27c91"
+    },
+    {
+      "path": "runtime/quake3e/code/server/tlds.h",
+      "bytes": 6365,
+      "sha256": "4c43eb75694a74ff95ab4b19ecd6e9af787d6160c1bce3f1697c1115343eb6f4"
+    },
+    {
+      "path": "runtime/quake3e/code/ui/ui_public.h",
+      "bytes": 4620,
+      "sha256": "b66016a824b4695c2c03758bb6e9eafd7201a4091e3d1b53d0c5e00d0f14240f"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/linux_glimp.c",
+      "bytes": 52882,
+      "sha256": "33b404a6498dfd180ecb266f7a9f6e9b6425bc076e3cb478a3795ec3e24493ab"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/linux_joystick.c",
+      "bytes": 5339,
+      "sha256": "1218e004b42723c637d32d4221d9d92b8acf92cda34fc3257f4c301b000592ae"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/linux_local.h",
+      "bytes": 1566,
+      "sha256": "88489c1034f2e9bbd48dcebddabdc2704334901825df4217b5433f9aa2c24c00"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/linux_qgl.c",
+      "bytes": 5168,
+      "sha256": "50ff313cd2003e0fbe58093ab9fc15946843a7e00e7ad2d59ec4135fa3399a3c"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/linux_qvk.c",
+      "bytes": 4034,
+      "sha256": "0bc1cf949ee6e043bced5e14995865c795b25cddb58021f33d06f302e36facde"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/linux_signals.c",
+      "bytes": 2488,
+      "sha256": "ac97814de96f1eb510eaaaaa2263ee62dabb8e7784658fbc603630b23bbc95ec"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/linux_snd.c",
+      "bytes": 36222,
+      "sha256": "a7d6083b9f4dd053c1c2e6037dec5856a035111b1bfe6f27d10c6064109ace13"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/quake3.png",
+      "bytes": 764,
+      "sha256": "6ce863ef6fb62bb28add47e6ffeacd0f5cda5ac176a4dc9e85af43155e24a371"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/quake3.svg",
+      "bytes": 2887,
+      "sha256": "5a12ed1a8dc6683a0adf3f12c7fea28a53e919f0fd415a98432c30dc97be6d02"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/unix_glw.h",
+      "bytes": 3005,
+      "sha256": "54b329fff4263240497342d99f279a18f004afad472fc03bfa3d3158aa2ddaf7"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/unix_main.c",
+      "bytes": 23947,
+      "sha256": "68aaaf4ae83957187154e8099b61a4e21026f5dabeea05ba9d3eac6ba2649b05"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/unix_shared.c",
+      "bytes": 12758,
+      "sha256": "de39dea597f56f8ae465b5b55dc6ee0c8b466b150a564b2cecdb08a55ddce000"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/x11_dga.c",
+      "bytes": 2045,
+      "sha256": "1549cc5ecac88b3a8d64bd48271109f719e91a79dad19137f38ee207666df647"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/x11_randr.c",
+      "bytes": 14572,
+      "sha256": "a0e6c60f7c643ae3b8f4099246ba54052bc2057c12feeda00a92d66f53e9893b"
+    },
+    {
+      "path": "runtime/quake3e/code/unix/x11_vidmode.c",
+      "bytes": 6725,
+      "sha256": "de200fdc24884800cb3f49c1dcfc26455e8aa1050232d3a6873deae64d40e938"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/background.bmp",
+      "bytes": 197688,
+      "sha256": "08b473fc149c512f991188ed24258961660a1144ac5fc2da43b3ad79711bd4d5"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/clear.bmp",
+      "bytes": 5174,
+      "sha256": "a3c80ec435a2113d670d02c658081170172eadd97136abaace875c6bf8fa267d"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/glw_win.h",
+      "bytes": 1936,
+      "sha256": "de1e410614d9905a7484439d0ce08c9de9bc11a8fde70d3e4a02f33e6a5e1f97"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2005/botlib.vcproj",
+      "bytes": 10438,
+      "sha256": "b43939902de24c0bcd48f6b6d49819de515962711181c5b79dbae5b21b698fb8"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2005/clean.cmd",
+      "bytes": 93,
+      "sha256": "d007fe85ab1c38d7b0d7adf50f70809b7d6f476f5dffb2bb83d9e1a0378ca4f8"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2005/glsl_stringify.vbs",
+      "bytes": 601,
+      "sha256": "b61f41eed8e1acfc4c2669c02cc39c21237bacdf1691046247b1d9a327f0f471"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2005/libjpeg.vcproj",
+      "bytes": 9742,
+      "sha256": "ec5c819a768c2c140121b8e9a66a67d65fa94c23a741434511ebf062597ca015"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2005/libogg.vcproj",
+      "bytes": 6295,
+      "sha256": "cbb1acce386c203d6849de5908add94b5ff5422e833adbf32b797e9c6a433c10"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2005/libvorbis.vcproj",
+      "bytes": 11081,
+      "sha256": "37b04e262022a4401658cca583c858c09d4db106398e54dce964ea7d69a1e863"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2005/quake3e-ded.vcproj",
+      "bytes": 13822,
+      "sha256": "4288bcbe68439e1981819da99fe76683f8d6ce6b2b1205d2748f109108bf0005"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2005/quake3e.sln",
+      "bytes": 7824,
+      "sha256": "16ca2d36757ef81372e9b77cd9b86175009065b6c44c404291894a619e56e487"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2005/quake3e.vcproj",
+      "bytes": 18573,
+      "sha256": "891189f0e76cd5866fc30c260a50d8209056de07c6bed9043d57ef43783b1c33"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2005/ref_trin.def",
+      "bytes": 21,
+      "sha256": "62e9bfe9ee07ae308716edc8bd150ab0e882ad4c810aa73d5e8c6cb5735e8dd9"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2005/renderer.vcproj",
+      "bytes": 8722,
+      "sha256": "0da62d82d55f7c1d6b9471ebee829a2e0cd9af113d34f3c0c2c9b24cb1819db9"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2005/renderer2.vcproj",
+      "bytes": 27817,
+      "sha256": "71d92215112613216f7967c62ef698c8a1a8e8e2843d7ca13282cb8070f5f2d1"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2005/renderervk.vcproj",
+      "bytes": 8898,
+      "sha256": "9947a7aedc4b9273efb6e03ff7ec871c67516ace00c7931d12ae42f8ea7b610f"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/botlib.vcxproj",
+      "bytes": 14258,
+      "sha256": "cddb60841491bb53ab9890450c1d012b98979daf4c33dfa7354c4e24a74332d7"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/botlib.vcxproj.filters",
+      "bytes": 7284,
+      "sha256": "8c5fafad928f194ee09eefb637cd0d49401557b5640c039f81a8825e1fbd2d3f"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/clean.cmd",
+      "bytes": 176,
+      "sha256": "9765a9d8f56c5da12865562f9eed82e8e5a5f1f844d2c5d26a2cc15fe8d99940"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/glsl_stringify.vbs",
+      "bytes": 601,
+      "sha256": "b61f41eed8e1acfc4c2669c02cc39c21237bacdf1691046247b1d9a327f0f471"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/libjpeg.vcxproj",
+      "bytes": 13619,
+      "sha256": "20926575eac3dfe9a708845f8768f886193233b488e596cba9067c52ffcfba92"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/libjpeg.vcxproj.filters",
+      "bytes": 6437,
+      "sha256": "9e2aa00eefc4a51949ff5b77fb3c0599fd42c5b58d2614bce2d221480a096d21"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/libogg.vcxproj",
+      "bytes": 11681,
+      "sha256": "907fa5f25d35cb3627518e493969fef51897eea452fc2e50725b3e2c9568be5e"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/libogg.vcxproj.filters",
+      "bytes": 1144,
+      "sha256": "08115e353cd6e44cd44a079ef144e84277e34c45fa2d5fcd1d6b668c7de93802"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/libvorbis.vcxproj",
+      "bytes": 14735,
+      "sha256": "8011a9dc5260c67f961768a4e983c3cd08b9ecc1aadd1dccab18f6fe4dc3ff54"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/libvorbis.vcxproj.filters",
+      "bytes": 5576,
+      "sha256": "6b4cd41a92279156b538a22e4cdd3a74c954e690b181f87d128a34c6c97ae356"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/quake3ded.vcxproj.filters",
+      "bytes": 7280,
+      "sha256": "21c6494806dd65e6fe797e6c29363c303982137b4d11dd34edf6f7ddba9ab618"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/quake3e-ded.vcxproj",
+      "bytes": 21155,
+      "sha256": "8d5aff2504dbf78911751e34506aa7a5fba224032290c97866fd6a0384058bc2"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/quake3e-ded.vcxproj.filters",
+      "bytes": 7363,
+      "sha256": "58f0013d78667820664416418655b4f69d6dd4cf3e6dc3e1bf90b43ebf96908f"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/quake3e.sln",
+      "bytes": 10389,
+      "sha256": "d64240395e14c93c518da2f70d419d67e68e389a7c2c1afbf4fe7d04d0efd3a2"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/quake3e.vcxproj",
+      "bytes": 26796,
+      "sha256": "d49490c6e43abf927b81ad0fa1cbefad9be1ecdcb76a4a6896ec1c5756a3ee92"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/quake3e.vcxproj.filters",
+      "bytes": 11537,
+      "sha256": "6cb446c2cdc4452094a9a35b2929dd88365e8b1959236499eb28cb04f06db539"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/ref_trin.def",
+      "bytes": 21,
+      "sha256": "62e9bfe9ee07ae308716edc8bd150ab0e882ad4c810aa73d5e8c6cb5735e8dd9"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/renderer.vcxproj",
+      "bytes": 14082,
+      "sha256": "ba80477a8b30bab0c871c5753859a20c9018c57ef28cd72a57f4d905a47d5fb5"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/renderer.vcxproj.filters",
+      "bytes": 4990,
+      "sha256": "5d9de03c8e9fa105c426f6eeadd98316d5ccef5aeeed3b719a6f5254b98952a2"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/renderer2.vcxproj",
+      "bytes": 37534,
+      "sha256": "0a229d15bf1e5a6bb8eee3fb1f2ef90a4cc67be310a9984c9be36b908918a6e7"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/renderer2.vcxproj.filters",
+      "bytes": 10128,
+      "sha256": "933731ec9ec649be54fc4cf229b3ab3bbd46c82f6a0f3f0004633eb3265c5c33"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/renderervk.vcxproj",
+      "bytes": 14104,
+      "sha256": "fd14f0f10264da620d4723d1fd9145463b05dbaaacfc91c10ff4ef7c0f2a167d"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/msvc2017/renderervk.vcxproj.filters",
+      "bytes": 5164,
+      "sha256": "6f1c47e387b20619576a63aa4f78b6e2044301080d486e9dd39b08941137776b"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/q3.manifest",
+      "bytes": 869,
+      "sha256": "2afa1b8faf87b662fed5e937bdc90e47c4d894f3f075c7288a30cf8b0ad4cdeb"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/qe3.ico",
+      "bytes": 25614,
+      "sha256": "ae0424bed40bb8415e4c1c0400b981cfe1535db27673ef141a3034683727df71"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/resource.h",
+      "bytes": 1759,
+      "sha256": "cebe1c0db5f886ae23b4f43517e31b0ab5000ba29433b9ddf66fd2f3f9b3c688"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/win_gamma.c",
+      "bytes": 7790,
+      "sha256": "1136ddc1b546e434e43e8e93771d67b2fd714e36c028d9998350414a529e7238"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/win_glimp.c",
+      "bytes": 39436,
+      "sha256": "794f59ef55f93968c37e793c766ce5b71fe0e2dba4e98eb2bfef94581469a4fc"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/win_input.c",
+      "bytes": 38849,
+      "sha256": "4c602e8ab11d9db2cbf76a792bc474b5cc3cf0e7a6e408322e9a71902930475a"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/win_local.h",
+      "bytes": 4502,
+      "sha256": "31c1e75ab45f0df6756af082ac645057b1dbf8b91ade1838defb9bf10aac86eb"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/win_main.c",
+      "bytes": 19681,
+      "sha256": "acdd04bef5a3504be914bf7544ebbf3c94c1d828bc408f6844a067ed83da5c68"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/win_minimize.c",
+      "bytes": 4283,
+      "sha256": "65e8130ca6ee46e984fbe73ed9f62a3a990b2f90459c672ddfbe18067dda3af5"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/win_qgl.c",
+      "bytes": 4474,
+      "sha256": "f0b0d3c6a8efe6f94c3f269d9e04da2e12f33ef947b3e24469fa8bbab5763b7e"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/win_qvk.c",
+      "bytes": 4918,
+      "sha256": "84eafefba8e52285d63583dde47fa2e4d491bfae0a79e069883d9bad249914a1"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/win_resource.rc",
+      "bytes": 1849,
+      "sha256": "d5a31e155e9501aafd1b89ade42c58afd3170edf8414ee0acd5a4b508a4c6a90"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/win_shared.c",
+      "bytes": 6179,
+      "sha256": "3ffef33fa5e015424d4bd0242aa6389c6f00e2df486c0905f5aa46a6c14224d1"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/win_snd.c",
+      "bytes": 31113,
+      "sha256": "79d82a896aa4e8c262feea18550437582fd90c8eeedc33cef81ec659ed865332"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/win_syscon.c",
+      "bytes": 29339,
+      "sha256": "c4d85481cd0ff86485bc58daff02f565acf7b267db2c034f539b737c17e209da"
+    },
+    {
+      "path": "runtime/quake3e/code/win32/win_wndproc.c",
+      "bytes": 28624,
+      "sha256": "fe19589cf8c9e49c8e973ce1691475a583eb14d29e11b138d590a85c78944573"
+    },
+    {
+      "path": "runtime/quake3e/docs/LinuxSupport/CHANGES-1.32.txt",
+      "bytes": 6655,
+      "sha256": "f0feb9712a60e225ba4470aafc4ec83355178b6685416f78f86f4c1e91303653"
+    },
+    {
+      "path": "runtime/quake3e/docs/LinuxSupport/index.html",
+      "bytes": 19011,
+      "sha256": "b8341920dbd1566114a0204e17adfc22f59d6a48f82eb170af75422cd8bccb1f"
+    },
+    {
+      "path": "runtime/quake3e/docs/LinuxSupport/udp_wide_README.txt",
+      "bytes": 729,
+      "sha256": "391b42470c49b820f7619651cd6479896a3367e9584d97e950c9cdbc72453391"
+    },
+    {
+      "path": "runtime/quake3e/docs/LinuxSupport/udp_wide_broadcast.patch",
+      "bytes": 1889,
+      "sha256": "3916c731c8f6c06cfe612e3e5385aee76b16a60891a172d251c04f92f37cf56d"
+    },
+    {
+      "path": "runtime/quake3e/docs/filter.txt",
+      "bytes": 3824,
+      "sha256": "672c5e61f9f81a23fb0878f07e3d57e7b572146a3b1cd67873ba159dc314b5c4"
+    },
+    {
+      "path": "runtime/quake3e/docs/firewall/fw-openwrt.txt",
+      "bytes": 702,
+      "sha256": "2fcae6e014bf14be29581b3c13fdaf15dbd3fd6a8afc7fa22ac7e17e4a599bf4"
+    },
+    {
+      "path": "runtime/quake3e/docs/firewall/fw-q3host.sh",
+      "bytes": 554,
+      "sha256": "90a73eb22910e3dfff846875c390d688f53f8c0463aad99e986a20581ee77d83"
+    },
+    {
+      "path": "runtime/quake3e/docs/q3url_add.cmd",
+      "bytes": 471,
+      "sha256": "0dfff5928657a0d71aeaa10ff2631ed5c3c439084f2c6a3501f73b3ec6340aa4"
+    },
+    {
+      "path": "runtime/quake3e/docs/q3url_rem.cmd",
+      "bytes": 174,
+      "sha256": "165b75e3cc53a7b1409e73fcac048b1fa47edada9eb864bef30a6d5fa78ff3f6"
+    },
+    {
+      "path": "runtime/quake3e/docs/quake3e-FAQ.txt",
+      "bytes": 411,
+      "sha256": "f01f75a1fec845fb521a4ec17bd7e120a1b5f4baa0329d376e9ae688f38050af"
+    },
+    {
+      "path": "runtime/quake3e/docs/quake3e-changes.txt",
+      "bytes": 61192,
+      "sha256": "95573d64c54e08ca421666fcae57b230fac051dd68944d14d11f456a0c869e74"
+    },
+    {
+      "path": "runtime/quake3e/docs/quake3e.htm",
+      "bytes": 15846,
+      "sha256": "25f448afd341b3e5a10e6c9e19c1559666e059339eea3b9f311d99a5441ba07b"
+    },
+    {
+      "path": "runtime/quake3e/docs/quake3e.md",
+      "bytes": 15823,
+      "sha256": "3725f6b2477417379e784332cb699acc4133fc29405dc4e256b93e7363f1a8b7"
+    },
+    {
+      "path": "runtime/quake3e/id-readme.txt",
+      "bytes": 6910,
+      "sha256": "38d59788130e0c7e4a4548f55d435a26ca9d38401b7feb398c9a81c3c6b50970"
+    },
+    {
+      "path": "runtime/quake3e/make-macosx-app.sh",
+      "bytes": 9462,
+      "sha256": "cb93d444d104a4b5efa1b9fb5d53146945496eaee67bb5275f117e5bf6c02c3d"
+    },
+    {
+      "path": "runtime/quake3e/make-macosx-ub2.sh",
+      "bytes": 4602,
+      "sha256": "188908c9696af35aa399d6fd69f39d980ed6dcde61611e4b89700bd06e887875"
+    },
+    {
+      "path": "runtime/run.ps1",
+      "bytes": 8611,
+      "sha256": "a1a2f1b6e1fc2ff098c0be6c164a28a6612114055df4395b867a774df965fb1e"
+    },
+    {
+      "path": "runtime/surface/appearance_directional.glsl",
+      "bytes": 2395,
+      "sha256": "4d7390a43a901688231acc6c9367a260a43938a09563361dc7d4be4ed14e16d1"
+    },
+    {
+      "path": "runtime/surface/appearance_neural.glsl",
+      "bytes": 4294,
+      "sha256": "635b159780095334d88cc5a9c99d1779631006d817cd6530d2e0eae3d00f8d40"
+    },
+    {
+      "path": "runtime/surface/appearance_small16.glsl",
+      "bytes": 4742,
+      "sha256": "d8cf54d2297178b5394b7da94ba1786005ee49973367498fcf5a50c0fe7da1d3"
+    },
+    {
+      "path": "runtime/surface/appearance_small32.glsl",
+      "bytes": 4747,
+      "sha256": "9e4808cd30e740ef83f84921f735f1ca4066345c6c7ab5619c2097d5553634ad"
+    },
+    {
+      "path": "runtime/surface/resolve_directional.comp",
+      "bytes": 3214,
+      "sha256": "dbaf5243e9702ed09344639e99e3ccaa00e925386f792bff228fce8b2f429644"
+    },
+    {
+      "path": "runtime/surface/resolve_neural.comp",
+      "bytes": 3327,
+      "sha256": "db8a938c8bb95ae1cdcd67cd3052a13925ac21ded39ecbf79840b88e574dc483"
+    },
+    {
+      "path": "runtime/surface/resolve_small16.comp",
+      "bytes": 3328,
+      "sha256": "e71a954c86b39d882d39b5e115bc9995b1c2d77aa83b28f8447cb506106593ad"
+    },
+    {
+      "path": "runtime/surface/resolve_small32.comp",
+      "bytes": 3338,
+      "sha256": "e2c67e126434be8475da82f4c39847f7e489f41579a6e0a65c174645740bdfcf"
+    },
+    {
+      "path": "runtime/surface/resolve_small32_linear.comp",
+      "bytes": 1955,
+      "sha256": "c2e43ef72b03f40288ed1abb47e7eab0dce46d60cf6a51de2da849ba00a2a738"
+    },
+    {
+      "path": "runtime/surface/scene_identity.h",
+      "bytes": 314,
+      "sha256": "e4e3b49785736affe98a642ab909105f91a85fecbdb5b5c53f701f47016dbae4"
+    },
+    {
+      "path": "runtime/surface/surface_canonical_math.glsl",
+      "bytes": 748,
+      "sha256": "898cda07411512223f57080f310ab771ddb19f85cd93a3700da33397f546d112"
+    },
+    {
+      "path": "runtime/surface/surface_contract.h",
+      "bytes": 1387,
+      "sha256": "febdbba31f36f9c6b1f9ce514b83124502fd95caf6a36c842792674438f171c0"
+    },
+    {
+      "path": "runtime/surface/surface_frame.glsl",
+      "bytes": 1384,
+      "sha256": "89c9d8e49336ad78d1df6d04aa75f39e9d62234b57beeb7809c0f1552f906108"
+    },
+    {
+      "path": "runtime/surface/surface_gate.glsl",
+      "bytes": 2072,
+      "sha256": "fab1a1368d2ee8983e85dfbe95a430a43f55ef348ca01cac08a2c9110c9635ce"
+    },
+    {
+      "path": "runtime/surface/surface_geometry.glsl",
+      "bytes": 9322,
+      "sha256": "12aeb8618edcd5cf158cb33ab41d2455e5ded57f141ec53b19c0056b5ce15371"
+    },
+    {
+      "path": "runtime/surface/upscale_bilinear_fast.comp",
+      "bytes": 2509,
+      "sha256": "8c370dfd115702c163efa05ebaba988d0afc30740f0b5fa5ab89c06da3939dd3"
+    },
+    {
+      "path": "runtime/surface/upscale_cnn_conv0.comp",
+      "bytes": 4009,
+      "sha256": "d5358531ec3c38b0c78b667542f74e196e834c1ac3668f332538ae27ef2136e4"
+    },
+    {
+      "path": "runtime/surface/upscale_cnn_conv1.comp",
+      "bytes": 4571,
+      "sha256": "25f160d3fbad122749466d309a87e0fa51c3a76e6d3531a3925022576bcc173f"
+    },
+    {
+      "path": "runtime/surface/upscale_cnn_display.comp",
+      "bytes": 1380,
+      "sha256": "40da916a50df531383edd52b8b395ee676e7290438ee770914090c57c2cafd72"
+    },
+    {
+      "path": "runtime/surface/upscale_cnn_head.comp",
+      "bytes": 5223,
+      "sha256": "f9980c2ba5ed9361bf02ad98e222366470178332fe9336ecfe092535c5bcefef"
+    },
+    {
+      "path": "runtime/surface/upscale_light.comp",
+      "bytes": 13621,
+      "sha256": "abaee6fee89cb467554f09a23ae3b377951e7cea380acb0214b5b33151048056"
+    },
+    {
+      "path": "runtime/surface/upscale_light_fast.comp",
+      "bytes": 16280,
+      "sha256": "aec20457e1e2d353ffea2a0378df1577ccba599b2d7c9f3c96759d6cb57a5208"
+    },
+    {
+      "path": "runtime/surface/upscale_pixel_bilinear.comp",
+      "bytes": 2089,
+      "sha256": "857cab996f494f4a932a6380206afba05b8adcbeb1b0529a3d1dcf4d17bb3669"
+    },
+    {
+      "path": "runtime/surface/upscale_pixel_residual.comp",
+      "bytes": 4935,
+      "sha256": "aaa90645734cca8dc90a7fdf48c3c2b8a919076b6e680654400712c088f56d80"
+    },
+    {
+      "path": "runtime/surface/visibility.frag",
+      "bytes": 250,
+      "sha256": "a06a1cfc7f440a769abd905c68d3493d3ba41f6d0b4f83c6161adb81a367aed9"
+    },
+    {
+      "path": "runtime/surface/visibility.vert",
+      "bytes": 843,
+      "sha256": "258fef98bab8188251f574c36f0467c4dd29230ba514c714c2d237301f9f18f9"
+    },
+    {
+      "path": "runtime/surface/visibility_firsthit.comp",
+      "bytes": 5560,
+      "sha256": "bacd8a259ac491423255fe1e5c8aef22f9669d73f2e885c12e5148278620204a"
+    },
+    {
+      "path": "runtime/surface/visibility_firsthit_gated.comp",
+      "bytes": 6728,
+      "sha256": "d25995ab0a8116a505f1f631593ef181d88824921d8ba9a6f96e3e6902e6bd0c"
+    },
+    {
+      "path": "tools/refresh_manifest.py",
+      "bytes": 1231,
+      "sha256": "1036296621d7886611211ea9ebc1dd8a80b4b15d7fc72d842899df484b9dcb22"
+    },
+    {
+      "path": "tools/verify_assets.py",
+      "bytes": 1366,
+      "sha256": "aee615fdf5cc169fd8818ac955c180b371db9a91c471003bd07962d29eb3b9a0"
+    },
+    {
+      "path": "tools/verify_release.py",
+      "bytes": 1312,
+      "sha256": "63cfabf18c64c8e2f617b8743a943da6ea48def73f66b51c339f5af115bef64f"
+    }
+  ],
+  "regenerated_source_files": [
+    "runtime/quake3e/code/renderervk/surface_shader_data.h",
+    "runtime/quake3e/code/renderervk/shaders/spirv/shader_data.c"
+  ],
+  "compiled_game_dataset_credentials_excluded": true,
+  "license_decision_for_original_artifacts_pending": false,
+  "license_for_original_artifacts": "MIT within the scope of LICENSE.md; inherited third-party and derivative terms retained"
+}

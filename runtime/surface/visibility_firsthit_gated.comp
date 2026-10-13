@@ -1,0 +1,145 @@
+#version 450
+#extension GL_GOOGLE_include_directive : require
+#include "surface_geometry.glsl"
+#include "surface_gate.glsl"
+
+// Optional exact-output physical-center gated HR visibility.
+// HR guides outside the physical center gate deliberately become MISS/zero.
+// Independent compute-only visibility set. Resolve uses its sampled-image set.
+layout(r32ui, binding=3) uniform writeonly uimage2D firstHitIDs;
+layout(rg32f, binding=4) uniform writeonly image2D firstHitBarycentrics;
+layout(std430, binding=8) readonly buffer SurfaceBVH { uint data[]; } bvh;
+layout(local_size_x=8, local_size_y=8) in;
+
+const uint MISS = 0xffffffffu;
+const int STACK_CAPACITY = 64;
+// One exact physical center test for each HR pixel in this quarter-ray group.
+// No LR approximation: suppressed pixels have exactly zero final alpha/color.
+shared uint gatedCenters[16];
+
+bool firstHeaderValid() {
+    if(bvh.data.length()<16) return false;
+    uint n=bvh.data[4], t=bvh.data[5];
+    return bvh.data[0]==0x56424c4eu && bvh.data[1]==0x31303030u
+        && bvh.data[2]==64u && bvh.data[3]==1u
+        && n>0u && n<=40000u && t>0u && t<=20000u && t==frame.info.w
+        && bvh.data[6]==t && bvh.data[7]==0u && bvh.data[8]==16u
+        && bvh.data[9]==16u+n*12u && bvh.data[10]==12u && bvh.data[11]==64u
+        && bvh.data[12]==floatBitsToUint(0.0001) && bvh.data[13]==floatBitsToUint(1e-12)
+        && bvh.data[14]==1u && bvh.data[15]==0u
+        && uint(bvh.data.length())==bvh.data[9]+t;
+}
+
+vec3 firstBounds(uint node, uint offset) {
+    uint p=bvh.data[8]+node*12u+offset;
+    return vec3(uintBitsToFloat(bvh.data[p]),uintBitsToFloat(bvh.data[p+1u]),uintBitsToFloat(bvh.data[p+2u]));
+}
+
+bool firstBox(uint node, vec3 origin, vec3 direction, float closest) {
+    vec3 lower=firstBounds(node,0u), upper=firstBounds(node,4u);
+    precise float nearDistance=0.0001, farDistance=closest;
+    for(int axis=0;axis<3;axis++) {
+        precise float d=direction[axis], o=origin[axis];
+        if(abs(d)<1e-20) {
+            if(o<lower[axis]||o>upper[axis]) return false;
+            continue;
+        }
+        precise float a=(lower[axis]-o)/d, b=(upper[axis]-o)/d;
+        if(a>b) {float tmp=a;a=b;b=tmp;}
+        nearDistance=max(nearDistance,a);farDistance=min(farDistance,b);
+        if(nearDistance>farDistance) return false;
+    }
+    return true;
+}
+
+bool firstTriangle(uint index, vec3 origin, vec3 direction, out float distance, out vec2 bary) {
+    SurfaceTriangle triangle=geometry.triangles[index];
+    precise vec3 p0=surfacePosition(triangle,0);
+    precise vec3 e1=surfacePosition(triangle,1)-p0;
+    precise vec3 e2=surfacePosition(triangle,2)-p0;
+    precise vec3 p=surfaceCanonicalCross(direction,e2);
+    precise float determinant=surfaceCanonicalDot(e1,p);
+    if(abs(determinant)<1e-12) return false;
+    precise float inverse=1.0/determinant;
+    precise vec3 fromCorner=origin-p0;
+    precise float b1=surfaceCanonicalDot(fromCorner,p)*inverse;
+    if(b1<0.0||b1>1.0) return false;
+    precise vec3 q=surfaceCanonicalCross(fromCorner,e1);
+    precise float b2=surfaceCanonicalDot(direction,q)*inverse;
+    precise float sum=b1+b2;
+    if(b2<0.0||sum>1.0) return false;
+    precise float rayDistance=surfaceCanonicalDot(e2,q)*inverse;
+    if(!(rayDistance>0.0001)) return false;
+    distance=rayDistance;bary=vec2(b1,b2);
+    return true;
+}
+
+// This is the canonical quarter-sample ray, using the oracle's float operation
+// order. The reflection origin and basis match surface_frame.glsl.
+vec3 firstRay(ivec2 subpixel) {
+    precise vec2 nativePixel=(vec2(subpixel)+vec2(0.5))*0.5;
+    return surfaceCanonicalNormalize(surfaceCanonicalVirtualQ(nativePixel));
+}
+
+void main() {
+    ivec2 pixel=ivec2(gl_GlobalInvocationID.xy);
+    if(any(greaterThanEqual(pixel,ivec2(frame.info.xy)*2))) return;
+    // Host admits this optional pipeline only at the frozen FHD extent. Both
+    // quarter dimensions are multiples of eight, so every thread reaches the
+    // barrier. A uniform last-resort extent rejection cannot strand a group.
+    if(frame.info.x!=1920u || frame.info.y!=1080u) {
+        imageStore(firstHitIDs,pixel,uvec4(MISS,0u,0u,0u));
+        imageStore(firstHitBarycentrics,pixel,vec4(0.0));
+        return;
+    }
+    uint localIndex=gl_LocalInvocationIndex;
+    if(localIndex<16u) {
+        ivec2 center=ivec2(gl_WorkGroupID.xy)*4
+                    +ivec2(int(localIndex%4u),int(localIndex/4u));
+        bool incident=surfaceIncident(frame.origin.xyz,
+                         normalize(surfaceRealRayUnnormalized(vec2(center)+0.5)));
+        gatedCenters[localIndex]=incident?1u:0u;
+    }
+    barrier();
+    uint centerSlot=(gl_LocalInvocationID.x/2u)+(gl_LocalInvocationID.y/2u)*4u;
+    uint hitID=MISS;vec2 hitBary=vec2(0.0);
+    bool valid=firstHeaderValid();
+    if(valid && gatedCenters[centerSlot]!=0u) {
+        precise vec3 origin=surfaceVirtualOrigin();
+        precise vec3 direction=firstRay(pixel);
+        precise float closest=1e30;
+        int stack[STACK_CAPACITY];int size=1;stack[0]=0;
+        uint visited=0u;
+        while(size>0) {
+            uint node=uint(stack[--size]);
+            if(node>=bvh.data[4]||++visited>bvh.data[4]) {valid=false;break;}
+            if(!firstBox(node,origin,direction,closest)) continue;
+            uint p=bvh.data[8]+node*12u;
+            int left=int(bvh.data[p+8u]),right=int(bvh.data[p+9u]);
+            uint start=bvh.data[p+10u],count=bvh.data[p+11u];
+            if(count>0u) {
+                if(count>8u||start>bvh.data[6]||count>bvh.data[6]-start) {valid=false;break;}
+                for(uint k=0u;k<count;k++) {
+                    uint index=bvh.data[bvh.data[9]+start+k];
+                    if(index>=frame.info.w) {valid=false;break;}
+                    float distance;vec2 bary;
+                    if(firstTriangle(index,origin,direction,distance,bary)
+                       && (distance<closest||(distance==closest&&index<hitID))) {
+                        closest=distance;hitID=index;hitBary=bary;
+                    }
+                }
+                if(!valid) break;
+            } else {
+                if(left<0||right<0||uint(left)>=bvh.data[4]||uint(right)>=bvh.data[4]
+                   ||size+2>STACK_CAPACITY) {valid=false;break;}
+                // Same traversal order as first_hit.cpp: push right, then left.
+                stack[size++]=right;stack[size++]=left;
+            }
+        }
+    }
+    // Host validation must report malformed assets before dispatch. This guard
+    // prevents out-of-bounds accesses if that contract is accidentally violated.
+    if(!valid) {hitID=MISS;hitBary=vec2(0.0);}
+    imageStore(firstHitIDs,pixel,uvec4(hitID,0u,0u,0u));
+    imageStore(firstHitBarycentrics,pixel,vec4(hitBary,0.0,0.0));
+}

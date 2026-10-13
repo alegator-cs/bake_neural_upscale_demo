@@ -1,0 +1,248 @@
+{
+  "schema": "C16_RELEASE_REPRODUCTION_PROVENANCE_2",
+  "files": [
+    {
+      "release_path": "cameras/COHORT.json",
+      "bytes": 591871,
+      "sha256": "86717d10f5ba0be97dfb506e482091b35147e91f4748446a1cb7a957ca736100",
+      "adaptation": "Authentic 408 accepted actual camera records; no target pixels or private paths"
+    },
+    {
+      "release_path": "capture/check_capture.py",
+      "bytes": 3873,
+      "sha256": "8e28f2a5c68c85b51db57adcf69bf06c26651642073769bd591203f0d02ae7ac",
+      "adaptation": "Source-only native capture packet/checklist or historical metadata verification; no execution"
+    },
+    {
+      "release_path": "capture/make_packets.py",
+      "bytes": 7332,
+      "sha256": "35d4854c7fbf4f6276d7be10e7db172ec9343ef0d2aeca29571be30846cd3397",
+      "adaptation": "Source-only native capture packet/checklist or historical metadata verification; no execution"
+    },
+    {
+      "release_path": "capture/README.md",
+      "bytes": 8827,
+      "sha256": "4a4a617b4d9efc455614dea9beec063e2016847362869d2db4083fed7919c52a",
+      "adaptation": "Source-only native capture packet/checklist or historical metadata verification; no execution"
+    },
+    {
+      "release_path": "capture/SOURCE_VERIFICATION.json",
+      "bytes": 11778,
+      "sha256": "c608fed9ddb4c8885f4416b0e457b1ebd24642a140262474f6e1c21b31795a3f",
+      "adaptation": "Source-only native capture packet/checklist or historical metadata verification; no execution"
+    },
+    {
+      "release_path": "docs/REPRODUCTION.md",
+      "bytes": 18506,
+      "sha256": "c49ed24a097d01aaff123dc9e60b60afedc66e1134c2a93885d0e6b638c864ce",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "map/compile_map.ps1",
+      "bytes": 1269,
+      "sha256": "d9ba04eac921bc78d0cad9db0f38c36cf2f3deb8206bef47efe711d4a2ebbf06",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "map/generate_map.ps1",
+      "bytes": 4050,
+      "sha256": "fd320f18bc1fafb2122f4ead5a4f56e830cdb6ed391a35f4828dcca251d0ffb0",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "map/neural_test.map",
+      "bytes": 16144,
+      "sha256": "4bbe3db3aee0278576222a02a3b2cd0194e6d4376bc525396388a0ff31be67a6",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "models/c16_model.py",
+      "bytes": 8471,
+      "sha256": "39dabf8148069941ae10a09dbeba9e87774f4b7bf2fd4a783867803828f55bde",
+      "source_bytes": 8471,
+      "source_sha256": "39dabf8148069941ae10a09dbeba9e87774f4b7bf2fd4a783867803828f55bde",
+      "adaptation": "byte-for-byte copy"
+    },
+    {
+      "release_path": "models/residual_model.py",
+      "bytes": 11675,
+      "sha256": "1a662b7afe929704fb32729ae9b8e0177e9c11f74aa3a96c30d7e07c590fa234",
+      "source_bytes": 11675,
+      "source_sha256": "1a662b7afe929704fb32729ae9b8e0177e9c11f74aa3a96c30d7e07c590fa234",
+      "adaptation": "byte-for-byte copy"
+    },
+    {
+      "release_path": "models/small_model.py",
+      "bytes": 12453,
+      "sha256": "57482582a4b951477679e24a88e8a38b9b4300597dcfc67410485f7acd1095de",
+      "source_bytes": 12453,
+      "source_sha256": "57482582a4b951477679e24a88e8a38b9b4300597dcfc67410485f7acd1095de",
+      "adaptation": "byte-for-byte copy"
+    },
+    {
+      "release_path": "models/surface_model.py",
+      "bytes": 27391,
+      "sha256": "f511ace1294266dc03afa595190e5c0eb304fcd6635faad392a3ed5578fbea24",
+      "source_bytes": 27391,
+      "source_sha256": "f511ace1294266dc03afa595190e5c0eb304fcd6635faad392a3ed5578fbea24",
+      "adaptation": "byte-for-byte copy"
+    },
+    {
+      "release_path": "protocols/a_directional.json",
+      "bytes": 1083,
+      "sha256": "7fa210a8813644fcc29207003250af3ab83b96cb2d224e102236d97e7d490554",
+      "adaptation": "Accepted numerical settings; private provenance/admission descriptors omitted"
+    },
+    {
+      "release_path": "protocols/a_small32.json",
+      "bytes": 1130,
+      "sha256": "1337efa8f3497b656357282ae312b4b9818a568a4bba07a95addf54bc4e4cb98",
+      "adaptation": "Accepted numerical settings; private provenance/admission descriptors omitted"
+    },
+    {
+      "release_path": "protocols/c16.json",
+      "bytes": 1320,
+      "sha256": "bfef308d06d40a7082fe89c74eddbacba3075bd40259979489eeebef86aec8ef",
+      "adaptation": "Accepted numerical settings; private provenance/admission descriptors omitted"
+    },
+    {
+      "release_path": "requirements-training.txt",
+      "bytes": 252,
+      "sha256": "67256c6f22709d0d6fa6c22080e64997fe30abd0edadde91bfb6df669998cc79",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "scene/allocation_manifest.json",
+      "bytes": 11458,
+      "sha256": "8edb8e2d51c13de678034dc559d595e88314b561c840a2b040b13d754af28e85",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "scene/build_scene.py",
+      "bytes": 7731,
+      "sha256": "ad403d00ec8ff47db0c766c07bd8bf8ed747cf2b2e3e04f8393b0dae30b9c253",
+      "source_bytes": 28381,
+      "source_sha256": "1dfbf40f7942050893a7a81375421bd8d673ec83289ff8fc5e7dd9fcef79656f",
+      "adaptation": "Extracted material/cube/sphere/area/build_scene functions unchanged; portable save-only CLI"
+    },
+    {
+      "release_path": "scene/camera_contract.py",
+      "bytes": 3086,
+      "sha256": "f270c1c6b570334ab809c29e3a38d98c429f879d4c1018ba5e60c223502b48a2",
+      "source_bytes": 3086,
+      "source_sha256": "f270c1c6b570334ab809c29e3a38d98c429f879d4c1018ba5e60c223502b48a2",
+      "adaptation": "byte-for-byte copy"
+    },
+    {
+      "release_path": "scene/chart_metadata_16384.npy",
+      "bytes": 1536,
+      "sha256": "f0a93d627f9be5e46e5c12a73bf7a39b45d82f8bf5cb4bfb1d55d27fab68a2fe",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "scene/export_mesh.py",
+      "bytes": 9861,
+      "sha256": "911ed87e2195553abfb2c335547f74703f117d79e4ebbdc838e8d661e2faa3b7",
+      "source_bytes": 9161,
+      "source_sha256": "4e089faac802835e7dfb986c4e4272956c7bf13ad4d81ad2aec456b54c2cad6f",
+      "adaptation": "Preserved numeric geometry exporter; portable input/output CLI and UI-redacted template identity admission"
+    },
+    {
+      "release_path": "scene/FILE_UI_REDACTION.json",
+      "bytes": 1486,
+      "sha256": "44f02dd3ef9b20731f3712f7e799a1fc69a59890ccfbb383c4fb2ed02abf4e41",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "scene/geometry_manifest.json",
+      "bytes": 50706,
+      "sha256": "62526f7de5e77c92fffe326626c57d639cf5585be30d8a0803b67812165a072b",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "scene/indirect_alcove.blend",
+      "bytes": 1685920,
+      "sha256": "8e98ac44c4dab9e52821b3bfff9a510b418f460fb99a9c3223e7829a1296c45c",
+      "source_bytes": 1685920,
+      "source_sha256": "c844dfc2401c5fb3b8e30d9f4f375dbeca4fbb8d5aeb21ff66e6876bc2237f93",
+      "adaptation": "Only saved FileSelectParams.dir UI state redacted; exact block/byte proof in FILE_UI_REDACTION.json"
+    },
+    {
+      "release_path": "scene/mesh_v1.npz",
+      "bytes": 1225834,
+      "sha256": "cbc50451b331a947bdd17ec77b3706efae39364d6f9fda933e87cf8f1a5b33e6",
+      "source_bytes": 1225834,
+      "source_sha256": "cbc50451b331a947bdd17ec77b3706efae39364d6f9fda933e87cf8f1a5b33e6",
+      "adaptation": "byte-for-byte copy"
+    },
+    {
+      "release_path": "scene/render_teacher.py",
+      "bytes": 8078,
+      "sha256": "e0233b6c98820a19351562d99ebc691204446197680080e84553be27befb596a",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "scene/SCENE.json",
+      "bytes": 6264,
+      "sha256": "5d87ab8c199fe5d10e3c1d888f0c3cb8a214fa24723d16e304bdc8bf550ee65b",
+      "adaptation": "Public shape/material/transport metadata; private paths omitted"
+    },
+    {
+      "release_path": "smoke.py",
+      "bytes": 7023,
+      "sha256": "1ecfcd8f3a487fae2c703092599faa500be0913ec955023a5c671f4118825caa",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "training/a_numerics.py",
+      "bytes": 9217,
+      "sha256": "496d9ef67f6d68486f68ff01b4f1c16c44b0246962943e52101ee5fa307f85e7",
+      "adaptation": "Numerical functions extracted byte-for-byte; project admission wrappers omitted"
+    },
+    {
+      "release_path": "training/c16_data.py",
+      "bytes": 10513,
+      "sha256": "a24df625dd78b29b2a7ff0a92de01b1e8feac27834246c1b22e636e045e4577e",
+      "source_bytes": 10809,
+      "source_sha256": "7c5bc7e3b12ae9627bac98d498aa0e68c8dd5b5edfd043534abbbaeb79b2f32c",
+      "adaptation": "Original numeric baseline and target-only sampler unchanged; local root-only admission import/path restriction omitted, portable manifest validation handles paths"
+    },
+    {
+      "release_path": "training/common.py",
+      "bytes": 4806,
+      "sha256": "e95f2d35e555937277dde0365058832f66397b8d14123b4462074c26ab1a9be5",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "training/prepare_manifest.py",
+      "bytes": 4337,
+      "sha256": "e98c948d38eda74aead65aacc28e2c227d45aa85b9bd180d9e465971faf946e2",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "training/registry.example.json",
+      "bytes": 697,
+      "sha256": "3da71ac16d34da7dc1a4df45206c8898e220e64e613f85af1b97dd26b316233b",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "training/train_a.py",
+      "bytes": 5414,
+      "sha256": "c8f76a5e2571a5fe8316876eb1e12bfed99852ea9e4e8abd7fdb601d971080c3",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    },
+    {
+      "release_path": "training/train_c16.py",
+      "bytes": 4601,
+      "sha256": "48bbc89a46903e156889eb63f2a693f9a4559ca813cd8722898b461a1b827c0b",
+      "adaptation": "Portable release adapter or public metadata; no complete new training/render run claimed"
+    }
+  ],
+  "full_retraining_byte_identity_verified": false,
+  "portable_adapters_end_to_end_verified": false,
+  "preserved_inference_asset_bytes_reproducible": true,
+  "license_assignment_pending": true,
+  "portable_identity_byte_inspector_available": true,
+  "manual_strict_identity_recipe_available": true,
+  "fresh_fit_receipt_automatic_admission": false
+}

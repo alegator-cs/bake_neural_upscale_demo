@@ -1,0 +1,55 @@
+#version 450
+#extension GL_GOOGLE_include_directive : require
+#include "surface_frame.glsl"
+#include "surface_gate.glsl"
+
+// Separate ordinary interpolation control: no model/geometry/guide loads.
+// Keep center-gate and linear diagnostic outputs for initial capture parity.
+layout(binding=11) uniform sampler2D lrLinearTexture;
+layout(rgba32f,binding=5) uniform writeonly image2D outputImage;
+layout(rgba32f,binding=12) uniform writeonly image2D geometryLinearImage;
+layout(r32ui,binding=13) uniform writeonly uimage2D hrCenterGateImage;
+layout(local_size_x=8,local_size_y=8) in;
+
+vec4 upDisplay(vec4 linearAssociated) {
+    float alpha=clamp(linearAssociated.a,0.0,1.0);
+    vec3 straight=max(linearAssociated.rgb,vec3(0.0))/max(alpha,1e-8);
+    return vec4(alpha*pow(straight/(vec3(1.0)+straight),vec3(1.0/2.2)),alpha);
+}
+
+void main() {
+    ivec2 pixel=ivec2(gl_GlobalInvocationID.xy),hrSize=ivec2(frame.info.xy);
+    if(any(greaterThanEqual(pixel,hrSize))) return;
+    ivec2 lrSize=textureSize(lrLinearTexture,0);
+    if(any(lessThan(lrSize,ivec2(1)))
+       ||any(notEqual(imageSize(outputImage),hrSize))
+       ||any(notEqual(imageSize(geometryLinearImage),hrSize))
+       ||any(notEqual(imageSize(hrCenterGateImage),hrSize))) {
+        imageStore(outputImage,pixel,vec4(1.0,0.0,1.0,1.0));
+        imageStore(geometryLinearImage,pixel,vec4(0.0));
+        imageStore(hrCenterGateImage,pixel,uvec4(0u));
+        return;
+    }
+    vec2 low=(vec2(pixel)+vec2(0.5))*(vec2(lrSize)/vec2(hrSize))-vec2(0.5);
+    ivec2 cell=ivec2(floor(low));
+    vec2 phase=low-floor(low);
+    vec4 linear=vec4(0.0);
+    // Same TL/TR/BL/BR accumulation order as the original control.
+    for(int p=0;p<4;p++) {
+        ivec2 offset=ivec2(p%2,p/2);
+        ivec2 lowPixel=clamp(cell+offset,ivec2(0),lrSize-ivec2(1));
+        float spatial=(offset.x==0?1.0-phase.x:phase.x)
+                     *(offset.y==0?1.0-phase.y:phase.y);
+        linear+=texelFetch(lrLinearTexture,lowPixel,0)*spatial;
+    }
+    linear.rgb=max(linear.rgb,vec3(0.0));
+    linear.a=clamp(linear.a,0.0,1.0);
+    if(linear.a<=1e-8) linear.rgb=vec3(0.0);
+    bool incident=surfaceIncident(frame.origin.xyz,
+                                  normalize(surfaceRealRayUnnormalized(vec2(pixel)+0.5)));
+    imageStore(hrCenterGateImage,pixel,uvec4(incident?1u:0u,0u,0u,0u));
+    // HR gate is diagnostic only: ordinary bilinear keeps interpolated LR alpha.
+    imageStore(geometryLinearImage,pixel,linear);
+    imageStore(outputImage,pixel,upDisplay(linear));
+}
+

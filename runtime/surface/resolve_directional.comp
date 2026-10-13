@@ -1,0 +1,48 @@
+#version 450
+#extension GL_GOOGLE_include_directive : require
+#include "surface_geometry.glsl"
+layout(std430,binding=2) readonly buffer Appearance {uint data[];} appearance;
+uvec4 readChart(int c) {uint i=64u+uint(c)*4u;return uvec4(appearance.data[i],appearance.data[i+1u],appearance.data[i+2u],appearance.data[i+3u]);}
+float readAtlas(int i) {return uintBitsToFloat(appearance.data[64u+appearance.data[10]*4u+uint(i)]);}
+float readWeight(int i) {return uintBitsToFloat(appearance.data[64u+appearance.data[10]*4u+appearance.data[4]*appearance.data[6]+uint(i)]);}
+#define SF_CHART(i) readChart(i)
+#define SF_ATLAS(i) readAtlas(i)
+#define SF_WEIGHT(i) readWeight(i)
+#include "appearance_directional.glsl"
+#include "surface_gate.glsl"
+layout(binding=3) uniform usampler2D idTexture;
+layout(binding=4) uniform sampler2D baryTexture;
+layout(rgba32f,binding=5) uniform writeonly image2D outputImage;
+layout(std430,binding=6) buffer Diagnostics {float data[];} diagnostics;
+layout(local_size_x=8,local_size_y=8) in;
+void main() {
+    ivec2 pixel=ivec2(gl_GlobalInvocationID.xy);
+    if(any(greaterThanEqual(pixel,ivec2(frame.info.xy))))return;
+    vec3 rgb[4];bool covered[4];
+    for(int s=0;s<4;s++) {
+        ivec2 sub=pixel*2+ivec2(s%2,s/2);
+        uint id=texelFetch(idTexture,sub,0).r;
+        covered[s]=id<frame.info.w;rgb[s]=vec3(0);
+        uint base=((uint(pixel.y)*frame.info.x+uint(pixel.x))*4u+uint(s))*48u;
+        if((frame.info.z&1u)!=0u) {for(uint k=0u;k<48u;k++) diagnostics.data[base+k]=0.0;diagnostics.data[base]=-1.0;}
+        if(covered[s]) {
+            vec2 bary=texelFetch(baryTexture,sub,0).xy;
+            SurfaceHit h=surfaceFromRaster(id,bary,(vec2(sub)+.5)*.5);
+            rgb[s]=sfShade(int(h.chart),h.uv,h.position,h.normal,h.reflected,h.roughness,h.metallic,h.ndotv,h.derivatives,true);
+            if((frame.info.z&1u)!=0u) {
+                diagnostics.data[base]=float(id);diagnostics.data[base+1u]=h.barycentric.x;diagnostics.data[base+2u]=h.barycentric.y;
+                diagnostics.data[base+3u]=h.depth;diagnostics.data[base+4u]=h.uv.x;diagnostics.data[base+5u]=h.uv.y;
+                for(uint k=0u;k<3u;k++) {diagnostics.data[base+6u+k]=h.normal[k];diagnostics.data[base+9u+k]=h.reflected[k];diagnostics.data[base+17u+k]=h.position[k];diagnostics.data[base+24u+k]=rgb[s][k];}
+                diagnostics.data[base+12u]=h.ndotv;
+                vec4 d=sfDerivativeFeatures(h.derivatives,SF_CHART(int(h.chart)));
+                for(uint k=0u;k<4u;k++) {diagnostics.data[base+13u+k]=h.derivatives[k];diagnostics.data[base+28u+k]=d[k];}
+                diagnostics.data[base+20u]=h.roughness;diagnostics.data[base+21u]=h.metallic;
+                diagnostics.data[base+22u]=float(h.chart);diagnostics.data[base+23u]=h.validDerivatives?1.0:0.0;diagnostics.data[base+27u]=1.0;
+                float values[12];sfAtlas(int(h.chart),h.uv,values);
+                for(uint k=0u;k<12u;k++)diagnostics.data[base+32u+k]=values[k];
+            }
+        }
+    }
+    bool incident=surfaceIncident(frame.origin.xyz,normalize(surfaceRealRayUnnormalized(vec2(pixel)+.5)));
+    imageStore(outputImage,pixel,sfResolve(rgb,covered,incident));
+}

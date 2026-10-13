@@ -1,0 +1,2366 @@
+#version 450
+
+layout(local_size_x = 8, local_size_y = 8, local_size_z = 1) in;
+
+layout(binding = 0, rgba16) uniform writeonly image2D outHDR;
+layout(binding = 1, r8) uniform writeonly image2D outRoomId;
+layout(binding = 3) uniform sampler2D roomTexture;
+layout(binding = 4) uniform sampler2D detailTexture;
+layout(binding = 5) uniform sampler2D sceneColor;
+
+#define MAX_NEURAL_ROOMS 32
+#define MAX_NEURAL_OBJECTS 8
+#define NEURAL_MLP_WEIGHT_COUNT 27
+#define NEURAL_REFLECTION_INPUTS 130
+#define NEURAL_REFLECTION_HIDDEN 256
+#define NEURAL_REFLECTION_OUTPUTS 4
+#define NEURAL_REFLECTION_POSE_CODE 64
+#define NEURAL_REFLECTION_DUMMY_HIDDEN 53
+#define NEURAL_REFLECTION_DUMMY_WEIGHT_COUNT 10021
+#define NEURAL_REFLECTION_DUMMY_W1_OFFSET 0
+#define NEURAL_REFLECTION_DUMMY_B1_OFFSET (NEURAL_REFLECTION_INPUTS * NEURAL_REFLECTION_DUMMY_HIDDEN)
+#define NEURAL_REFLECTION_DUMMY_W2_OFFSET (NEURAL_REFLECTION_DUMMY_B1_OFFSET + NEURAL_REFLECTION_DUMMY_HIDDEN)
+#define NEURAL_REFLECTION_DUMMY_B2_OFFSET (NEURAL_REFLECTION_DUMMY_W2_OFFSET + NEURAL_REFLECTION_DUMMY_HIDDEN * NEURAL_REFLECTION_DUMMY_HIDDEN)
+#define NEURAL_REFLECTION_DUMMY_W3_OFFSET (NEURAL_REFLECTION_DUMMY_B2_OFFSET + NEURAL_REFLECTION_DUMMY_HIDDEN)
+#define NEURAL_REFLECTION_DUMMY_B3_OFFSET (NEURAL_REFLECTION_DUMMY_W3_OFFSET + NEURAL_REFLECTION_DUMMY_HIDDEN * NEURAL_REFLECTION_OUTPUTS)
+#define NEURAL_REFLECTION_MEDIUM_HIDDEN 128
+#define NEURAL_REFLECTION_MEDIUM_WEIGHT_COUNT 33796
+#define NEURAL_REFLECTION_MEDIUM_W1_OFFSET 0
+#define NEURAL_REFLECTION_MEDIUM_B1_OFFSET (NEURAL_REFLECTION_INPUTS * NEURAL_REFLECTION_MEDIUM_HIDDEN)
+#define NEURAL_REFLECTION_MEDIUM_W2_OFFSET (NEURAL_REFLECTION_MEDIUM_B1_OFFSET + NEURAL_REFLECTION_MEDIUM_HIDDEN)
+#define NEURAL_REFLECTION_MEDIUM_B2_OFFSET (NEURAL_REFLECTION_MEDIUM_W2_OFFSET + NEURAL_REFLECTION_MEDIUM_HIDDEN * NEURAL_REFLECTION_MEDIUM_HIDDEN)
+#define NEURAL_REFLECTION_MEDIUM_W3_OFFSET (NEURAL_REFLECTION_MEDIUM_B2_OFFSET + NEURAL_REFLECTION_MEDIUM_HIDDEN)
+#define NEURAL_REFLECTION_MEDIUM_B3_OFFSET (NEURAL_REFLECTION_MEDIUM_W3_OFFSET + NEURAL_REFLECTION_MEDIUM_HIDDEN * NEURAL_REFLECTION_OUTPUTS)
+#define NEURAL_REFLECTION_WEIGHT_COUNT 100356
+#define NEURAL_REFLECTION_W1_OFFSET 0
+#define NEURAL_REFLECTION_B1_OFFSET (NEURAL_REFLECTION_INPUTS * NEURAL_REFLECTION_HIDDEN)
+#define NEURAL_REFLECTION_W2_OFFSET (NEURAL_REFLECTION_B1_OFFSET + NEURAL_REFLECTION_HIDDEN)
+#define NEURAL_REFLECTION_B2_OFFSET (NEURAL_REFLECTION_W2_OFFSET + NEURAL_REFLECTION_HIDDEN * NEURAL_REFLECTION_HIDDEN)
+#define NEURAL_REFLECTION_W3_OFFSET (NEURAL_REFLECTION_B2_OFFSET + NEURAL_REFLECTION_HIDDEN)
+#define NEURAL_REFLECTION_B3_OFFSET (NEURAL_REFLECTION_W3_OFFSET + NEURAL_REFLECTION_HIDDEN * NEURAL_REFLECTION_OUTPUTS)
+#define NEURAL_REFLECTION_DECAL_TAG 4096
+#define NEURAL_REFLECTION_DECAL_GEOM_INPUTS 19
+#define NEURAL_REFLECTION_DECAL_ATLAS_WIDTH 32
+#define NEURAL_REFLECTION_DECAL_ATLAS_HEIGHT 32
+#define NEURAL_REFLECTION_DECAL_ALPHA_HIDDEN 12
+#define NEURAL_REFLECTION_DECAL_COLOR_HIDDEN1 24
+#define NEURAL_REFLECTION_DECAL_COLOR_HIDDEN2 16
+#define NEURAL_REFLECTION_DECAL_ATLAS_OFFSET 0
+#define NEURAL_REFLECTION_DECAL_ALPHA_W1_OFFSET (NEURAL_REFLECTION_DECAL_ATLAS_OFFSET + NEURAL_REFLECTION_DECAL_ATLAS_WIDTH * NEURAL_REFLECTION_DECAL_ATLAS_HEIGHT * 4)
+#define NEURAL_REFLECTION_DECAL_ALPHA_B1_OFFSET (NEURAL_REFLECTION_DECAL_ALPHA_W1_OFFSET + 20 * NEURAL_REFLECTION_DECAL_ALPHA_HIDDEN)
+#define NEURAL_REFLECTION_DECAL_ALPHA_W2_OFFSET (NEURAL_REFLECTION_DECAL_ALPHA_B1_OFFSET + NEURAL_REFLECTION_DECAL_ALPHA_HIDDEN)
+#define NEURAL_REFLECTION_DECAL_ALPHA_B2_OFFSET (NEURAL_REFLECTION_DECAL_ALPHA_W2_OFFSET + NEURAL_REFLECTION_DECAL_ALPHA_HIDDEN)
+#define NEURAL_REFLECTION_DECAL_COLOR_W1_OFFSET (NEURAL_REFLECTION_DECAL_ALPHA_B2_OFFSET + 1)
+#define NEURAL_REFLECTION_DECAL_COLOR_B1_OFFSET (NEURAL_REFLECTION_DECAL_COLOR_W1_OFFSET + 28 * NEURAL_REFLECTION_DECAL_COLOR_HIDDEN1)
+#define NEURAL_REFLECTION_DECAL_COLOR_W2_OFFSET (NEURAL_REFLECTION_DECAL_COLOR_B1_OFFSET + NEURAL_REFLECTION_DECAL_COLOR_HIDDEN1)
+#define NEURAL_REFLECTION_DECAL_COLOR_B2_OFFSET (NEURAL_REFLECTION_DECAL_COLOR_W2_OFFSET + NEURAL_REFLECTION_DECAL_COLOR_HIDDEN1 * NEURAL_REFLECTION_DECAL_COLOR_HIDDEN2)
+#define NEURAL_REFLECTION_DECAL_COLOR_W3_OFFSET (NEURAL_REFLECTION_DECAL_COLOR_B2_OFFSET + NEURAL_REFLECTION_DECAL_COLOR_HIDDEN2)
+#define NEURAL_REFLECTION_DECAL_COLOR_B3_OFFSET (NEURAL_REFLECTION_DECAL_COLOR_W3_OFFSET + NEURAL_REFLECTION_DECAL_COLOR_HIDDEN2 * 4)
+
+layout(std430, binding = 2) readonly buffer NeuralRooms {
+	int roomCount;
+	int weightCount;
+	int viewMode;
+	int activeRoom;
+	ivec4 activeObjectMeta; // x=count, y=bitmask, z=active-marker debug, w=mode flags
+	ivec4 activeObjectIds0;
+	ivec4 activeObjectIds1;
+	vec4 viewSeed;
+	vec4 cameraOrigin;
+	vec4 cameraForward;
+	vec4 cameraRight;
+	vec4 cameraUp;
+	int roomId[MAX_NEURAL_ROOMS];
+	int hasWeights[MAX_NEURAL_ROOMS];
+	vec4 roomColor[MAX_NEURAL_ROOMS];
+	float weights[MAX_NEURAL_ROOMS * NEURAL_MLP_WEIGHT_COUNT];
+	int objectCount;
+	int objectId[MAX_NEURAL_OBJECTS];
+	int objectRoomId[MAX_NEURAL_OBJECTS];
+	int objectHasWeights[MAX_NEURAL_OBJECTS];
+	float objectWeights[MAX_NEURAL_OBJECTS * NEURAL_MLP_WEIGHT_COUNT];
+	ivec4 reflectionMeta; // x=loaded, y=input count, z=hidden, w=selected capture
+	vec4 reflectionParams; // x=sine omega
+	float reflectionFeatureMean[NEURAL_REFLECTION_INPUTS];
+	float reflectionFeatureInvStd[NEURAL_REFLECTION_INPUTS];
+	float reflectionWeights[NEURAL_REFLECTION_WEIGHT_COUNT];
+	float reflectionBbox[12]; // surface cx/cy/ex/ey, volume, combined
+	float reflectionPoseCode[NEURAL_REFLECTION_POSE_CODE];
+} neural;
+
+struct RtHit {
+	float t;
+	vec3 p;
+	vec3 n;
+	vec3 baseColor;
+	vec3 emission;
+	float reflective;
+	int roomId;
+	int materialId;
+};
+
+float relu(float x) {
+	return max(x, 0.0);
+}
+
+float luminanceRgb(vec3 c) {
+	return dot(c, vec3(0.2126, 0.7152, 0.0722));
+}
+
+float hash21(vec2 p) {
+	p = fract(p * vec2(123.34, 456.21));
+	p += dot(p, p + 45.32);
+	return fract(p.x * p.y);
+}
+
+float valueNoise(vec2 p) {
+	vec2 i = floor(p);
+	vec2 f = fract(p);
+	vec2 u = f * f * (3.0 - 2.0 * f);
+	float a = hash21(i);
+	float b = hash21(i + vec2(1.0, 0.0));
+	float c = hash21(i + vec2(0.0, 1.0));
+	float d = hash21(i + vec2(1.0, 1.0));
+	return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+}
+
+vec3 evalFallback(vec2 uv) {
+	float x0 = uv.x * 2.0 - 1.0;
+	float x1 = uv.y * 2.0 - 1.0;
+	vec4 h = vec4(
+		relu( 1.7 * x0 - 0.9 * x1 + 0.10),
+		relu(-1.1 * x0 + 1.4 * x1 + 0.20),
+		relu( 0.8 * x0 + 0.6 * x1 - 0.15),
+		relu(-0.4 * x0 - 0.7 * x1 + 0.35)
+	);
+
+	vec3 y = vec3(
+		dot(h, vec4( 0.7, -0.2, 0.3,  0.1)) + 0.10,
+		dot(h, vec4(-0.1,  0.6, 0.2,  0.4)) + 0.05,
+		dot(h, vec4( 0.2,  0.1, 0.8, -0.3)) + 0.20
+	);
+
+	return clamp(y, 0.0, 1.0);
+}
+
+vec3 evalRoomNetworkInput(int roomIndex, vec2 networkInput) {
+	int base = roomIndex * NEURAL_MLP_WEIGHT_COUNT;
+	vec2 x = networkInput * 2.0 - 1.0;
+	vec4 h;
+	vec3 y;
+
+	h.x = relu(dot(vec2(neural.weights[base + 0], neural.weights[base + 1]), x) + neural.weights[base + 8]);
+	h.y = relu(dot(vec2(neural.weights[base + 2], neural.weights[base + 3]), x) + neural.weights[base + 9]);
+	h.z = relu(dot(vec2(neural.weights[base + 4], neural.weights[base + 5]), x) + neural.weights[base + 10]);
+	h.w = relu(dot(vec2(neural.weights[base + 6], neural.weights[base + 7]), x) + neural.weights[base + 11]);
+
+	y.x = dot(h, vec4(neural.weights[base + 12], neural.weights[base + 13], neural.weights[base + 14], neural.weights[base + 15])) + neural.weights[base + 24];
+	y.y = dot(h, vec4(neural.weights[base + 16], neural.weights[base + 17], neural.weights[base + 18], neural.weights[base + 19])) + neural.weights[base + 25];
+	y.z = dot(h, vec4(neural.weights[base + 20], neural.weights[base + 21], neural.weights[base + 22], neural.weights[base + 23])) + neural.weights[base + 26];
+
+	return clamp(y, 0.0, 1.0);
+}
+
+vec3 evalRoomNetwork(int roomIndex, vec2 uv) {
+	return evalRoomNetworkInput(roomIndex, uv);
+}
+
+vec3 evalObjectNetworkInput(int objectIndex, vec2 networkInput) {
+	int base = objectIndex * NEURAL_MLP_WEIGHT_COUNT;
+	vec2 x = networkInput * 2.0 - 1.0;
+	vec4 h;
+	vec3 y;
+
+	h.x = relu(dot(vec2(neural.objectWeights[base + 0], neural.objectWeights[base + 1]), x) + neural.objectWeights[base + 8]);
+	h.y = relu(dot(vec2(neural.objectWeights[base + 2], neural.objectWeights[base + 3]), x) + neural.objectWeights[base + 9]);
+	h.z = relu(dot(vec2(neural.objectWeights[base + 4], neural.objectWeights[base + 5]), x) + neural.objectWeights[base + 10]);
+	h.w = relu(dot(vec2(neural.objectWeights[base + 6], neural.objectWeights[base + 7]), x) + neural.objectWeights[base + 11]);
+
+	y.x = dot(h, vec4(neural.objectWeights[base + 12], neural.objectWeights[base + 13], neural.objectWeights[base + 14], neural.objectWeights[base + 15])) + neural.objectWeights[base + 24];
+	y.y = dot(h, vec4(neural.objectWeights[base + 16], neural.objectWeights[base + 17], neural.objectWeights[base + 18], neural.objectWeights[base + 19])) + neural.objectWeights[base + 25];
+	y.z = dot(h, vec4(neural.objectWeights[base + 20], neural.objectWeights[base + 21], neural.objectWeights[base + 22], neural.objectWeights[base + 23])) + neural.objectWeights[base + 26];
+
+	return clamp(y, 0.0, 1.0);
+}
+
+vec3 evalReferenceNetwork(int roomId, vec2 uv) {
+	vec2 x = uv * 2.0 - 1.0;
+	vec4 h;
+	vec3 y;
+
+	if (roomId == 1) {
+		h.x = relu(dot(vec2( 0.95, -0.20), x) + 0.22);
+		h.y = relu(dot(vec2(-0.35,  0.70), x) + 0.10);
+		h.z = relu(dot(vec2( 0.15, -1.10), x) + 0.24);
+		h.w = relu(dot(vec2(-0.60, -0.35), x) + 0.08);
+		y.x = dot(h, vec4(0.55, 0.10, 0.20, 0.14)) + 0.20;
+		y.y = dot(h, vec4(0.18, 0.28, 0.10, 0.10)) + 0.08;
+		y.z = dot(h, vec4(0.08, 0.08, 0.12, 0.06)) + 0.06;
+		return clamp(y, 0.0, 1.0);
+	}
+
+	if (roomId == 3) {
+		h.x = relu(dot(vec2(-0.40,  0.95), x) + 0.18);
+		h.y = relu(dot(vec2( 0.80,  0.15), x) + 0.12);
+		h.z = relu(dot(vec2(-0.85, -0.25), x) + 0.30);
+		h.w = relu(dot(vec2( 0.20, -1.00), x) + 0.20);
+		y.x = dot(h, vec4(0.08, 0.16, 0.12, 0.05)) + 0.05;
+		y.y = dot(h, vec4(0.16, 0.28, 0.12, 0.20)) + 0.10;
+		y.z = dot(h, vec4(0.48, 0.18, 0.38, 0.16)) + 0.22;
+		return clamp(y, 0.0, 1.0);
+	}
+
+	h.x = relu(dot(vec2( 1.45, -0.35), x) + 0.12);
+	h.y = relu(dot(vec2(-1.10,  0.95), x) + 0.22);
+	h.z = relu(dot(vec2( 0.25,  1.30), x) - 0.04);
+	h.w = relu(dot(vec2(-0.75, -0.85), x) + 0.30);
+	y.x = dot(h, vec4(0.58, 0.06, 0.10, -0.03)) + 0.08;
+	y.y = dot(h, vec4(0.10, 0.45, 0.18,  0.08)) + 0.11;
+	y.z = dot(h, vec4(0.04, 0.16, 0.62,  0.20)) + 0.20;
+	return clamp(y, 0.0, 1.0);
+}
+
+vec3 errorHeat(float error) {
+	float e = clamp(error * 8.0, 0.0, 1.0);
+	float red = smoothstep(0.35, 1.0, e);
+	float green = smoothstep(0.05, 0.65, e) * (1.0 - smoothstep(0.75, 1.0, e));
+	float blue = 1.0 - smoothstep(0.0, 0.45, e);
+
+	return vec3(red, green, blue);
+}
+
+vec3 evalFuzz(vec2 uv, vec3 mlp, vec3 roomColor) {
+	float pose = neural.viewSeed.y;
+	float turn = neural.viewSeed.z;
+	float strafe = neural.viewSeed.w;
+	float t = neural.viewSeed.x;
+	vec2 poseDrift = vec2(sin(pose * 0.37 + turn * 0.61), cos(pose * 0.29 - strafe * 0.43));
+	vec2 viewDrift = vec2(sin(turn * 0.71 + strafe), cos(strafe * 0.53 - turn));
+	vec2 warpedUv = uv + (mlp.gb - 0.5) * 0.12 + poseDrift * 0.19 + viewDrift * 0.10;
+	vec2 coarseCell = floor(warpedUv * vec2(84.0, 48.0) + floor(vec2(pose, turn) * 23.0));
+	vec2 fineCell = floor((warpedUv + mlp.rb * 0.25) * vec2(260.0, 148.0) + floor(vec2(turn, strafe) * 41.0));
+	float coarse = hash21(coarseCell + floor(vec2(t * 5.0 + pose, t * 3.0 + turn)));
+	float fine = hash21(fineCell + vec2(strafe * 29.0, pose * 17.0 + t * 23.0));
+	float scan = sin((uv.x + mlp.r * 0.27 + turn * 0.11) * 90.0 + t * 5.5 + strafe * 1.3);
+	float shimmer = smoothstep(0.15, 0.95, mix(coarse, fine, 0.45));
+	vec3 poseTint = 0.5 + 0.5 * sin(vec3(0.0, 2.1, 4.2) + pose * 0.11 + turn * 0.37 + strafe * 0.23);
+	vec3 base = mix(roomColor, mlp, 0.65);
+	vec3 fuzz = vec3(
+		shimmer,
+		0.5 + 0.5 * scan,
+		1.0 - shimmer
+	);
+
+	return clamp(base * (0.56 + 0.38 * shimmer) + fuzz * 0.24 + poseTint * 0.18 + vec3(scan) * 0.05, 0.0, 1.0);
+}
+
+vec3 roomColorById(int id) {
+	if (id == 1) {
+		return vec3(0.92, 0.58, 0.42);
+	}
+	if (id == 3) {
+		return vec3(0.48, 0.58, 0.86);
+	}
+	return vec3(0.54, 0.72, 0.46);
+}
+
+int roomIdForPoint(vec3 p) {
+	if (p.y < -512.0) {
+		return 1;
+	}
+	if (p.y > 512.0) {
+		return 3;
+	}
+	return 2;
+}
+
+vec3 lightPosition(int i) {
+	if (i == 0) return vec3(-224.0, -1040.0, 352.0);
+	if (i == 1) return vec3( 224.0, -1040.0, 352.0);
+	if (i == 2) return vec3(-224.0,     0.0, 352.0);
+	if (i == 3) return vec3( 224.0,     0.0, 352.0);
+	if (i == 4) return vec3(-224.0,  1040.0, 352.0);
+	return vec3(224.0, 1040.0, 352.0);
+}
+
+vec3 lightColor(int i) {
+	if (i == 0) return vec3(1.00, 0.48, 0.30);
+	if (i == 1) return vec3(1.00, 0.36, 0.24);
+	if (i == 2) return vec3(0.38, 1.00, 0.58);
+	if (i == 3) return vec3(0.20, 0.82, 1.00);
+	if (i == 4) return vec3(0.30, 0.52, 1.00);
+	return vec3(0.62, 0.42, 1.00);
+}
+
+float lightIntensity(int i) {
+	if (i == 0) return 1550.0;
+	if (i == 1) return 1300.0;
+	if (i == 2) return 1650.0;
+	if (i == 3) return 1450.0;
+	if (i == 4) return 1500.0;
+	return 1350.0;
+}
+
+void roomBox(int i, out vec3 mn, out vec3 mx, out int kind) {
+	kind = 2;
+	if (i == 0) { mn = vec3(-576.0, -1600.0, -64.0); mx = vec3( 576.0, -512.0,   0.0); kind = 0; return; }
+	if (i == 1) { mn = vec3(-576.0, -1600.0, 512.0); mx = vec3( 576.0, -512.0, 576.0); kind = 1; return; }
+	if (i == 2) { mn = vec3(-576.0, -1600.0,   0.0); mx = vec3(-512.0, -512.0, 512.0); return; }
+	if (i == 3) { mn = vec3( 512.0, -1600.0,   0.0); mx = vec3( 576.0, -512.0, 512.0); return; }
+	if (i == 4) { mn = vec3(-576.0,  -512.0, -64.0); mx = vec3( 576.0,  512.0,   0.0); kind = 0; return; }
+	if (i == 5) { mn = vec3(-576.0,  -512.0, 512.0); mx = vec3( 576.0,  512.0, 576.0); kind = 1; return; }
+	if (i == 6) { mn = vec3(-576.0,  -512.0,   0.0); mx = vec3(-512.0,  512.0, 512.0); return; }
+	if (i == 7) { mn = vec3( 512.0,  -512.0,   0.0); mx = vec3( 576.0,  512.0, 512.0); return; }
+	if (i == 8) { mn = vec3(-576.0,   512.0, -64.0); mx = vec3( 576.0, 1600.0,   0.0); kind = 0; return; }
+	if (i == 9) { mn = vec3(-576.0,   512.0, 512.0); mx = vec3( 576.0, 1600.0, 576.0); kind = 1; return; }
+	if (i == 10) { mn = vec3(-576.0,  512.0,   0.0); mx = vec3(-512.0, 1600.0, 512.0); return; }
+	if (i == 11) { mn = vec3( 512.0,  512.0,   0.0); mx = vec3( 576.0, 1600.0, 512.0); return; }
+	if (i == 12) { mn = vec3(-576.0, -1600.0,   0.0); mx = vec3( 576.0,-1536.0, 512.0); return; }
+	if (i == 13) { mn = vec3(-576.0,  1536.0,   0.0); mx = vec3( 576.0, 1600.0, 512.0); return; }
+	if (i == 14) { mn = vec3(-576.0,  -544.0,   0.0); mx = vec3( -96.0, -512.0, 512.0); kind = 3; return; }
+	if (i == 15) { mn = vec3(  96.0,  -544.0,   0.0); mx = vec3( 576.0, -512.0, 512.0); kind = 3; return; }
+	if (i == 16) { mn = vec3( -96.0,  -544.0, 224.0); mx = vec3(  96.0, -512.0, 512.0); kind = 3; return; }
+	if (i == 17) { mn = vec3(-576.0,   512.0,   0.0); mx = vec3( -96.0,  544.0, 512.0); kind = 3; return; }
+	if (i == 18) { mn = vec3(  96.0,   512.0,   0.0); mx = vec3( 576.0,  544.0, 512.0); kind = 3; return; }
+	mn = vec3(-96.0, 512.0, 224.0); mx = vec3(96.0, 544.0, 512.0); kind = 3;
+}
+
+bool intersectBox(vec3 ro, vec3 rd, vec3 mn, vec3 mx, out float tHit, out vec3 nHit) {
+	float tNear = -100000.0;
+	float tFar = 100000.0;
+	vec3 nearNormal = vec3(0.0);
+
+	for (int a = 0; a < 3; a++) {
+		if (abs(rd[a]) < 0.0000001) {
+			if (ro[a] < mn[a] || ro[a] > mx[a]) {
+				return false;
+			}
+		} else {
+			float t1 = (mn[a] - ro[a]) / rd[a];
+			float t2 = (mx[a] - ro[a]) / rd[a];
+			vec3 n1 = vec3(0.0);
+			vec3 n2 = vec3(0.0);
+			n1[a] = -1.0;
+			n2[a] = 1.0;
+			if (t1 > t2) {
+				float tv = t1; t1 = t2; t2 = tv;
+				vec3 nv = n1; n1 = n2; n2 = nv;
+			}
+			if (t1 > tNear) {
+				tNear = t1;
+				nearNormal = n1;
+			}
+			tFar = min(tFar, t2);
+			if (tNear > tFar) {
+				return false;
+			}
+		}
+	}
+
+	if (tFar <= 0.0001) {
+		return false;
+	}
+	if (tNear <= 0.0001) {
+		tHit = tFar;
+		nHit = -nearNormal;
+	} else {
+		tHit = tNear;
+		nHit = nearNormal;
+	}
+	return true;
+}
+
+vec2 surfaceUv(vec3 p, vec3 n) {
+	vec3 an = abs(n);
+	if (an.z > 0.5) {
+		return p.xy / 128.0;
+	}
+	if (an.x > 0.5) {
+		return vec2(p.y, p.z) / 128.0;
+	}
+	return vec2(p.x, p.z) / 128.0;
+}
+
+float blockMortar(vec2 f, float width) {
+	float edge = min(min(f.x, 1.0 - f.x), min(f.y, 1.0 - f.y));
+	return 1.0 - smoothstep(width, width * 1.9, edge);
+}
+
+vec3 wallStoneTexture(vec2 uv, int rid, int kind) {
+	vec2 brick = uv * vec2(0.82, 1.35);
+	float row = floor(brick.y);
+	brick.x += mod(row, 2.0) * 0.5;
+	vec2 cell = floor(brick);
+	vec2 f = fract(brick);
+	float mortar = blockMortar(f, 0.045);
+	float bevel = smoothstep(0.035, 0.18, min(min(f.x, 1.0 - f.x), min(f.y, 1.0 - f.y)));
+	float grain = valueNoise(uv * 8.0) * 0.16 + valueNoise(uv * 27.0) * 0.06;
+	float stone = 0.76 + hash21(cell + float(rid) * 19.0) * 0.18 + grain;
+	float crackX = 1.0 - smoothstep(0.006, 0.018, abs(fract(uv.x * 5.0 + hash21(cell)) - 0.5));
+	float crackY = 1.0 - smoothstep(0.006, 0.018, abs(fract(uv.y * 4.0 + hash21(cell.yx)) - 0.5));
+	float cracks = max(crackX * step(0.76, hash21(cell + 3.0)), crackY * step(0.80, hash21(cell + 7.0))) * 0.18;
+	vec3 base = vec3(0.30, 0.32, 0.23);
+	if (kind == 3) {
+		base = vec3(0.34, 0.27, 0.21);
+	}
+	vec3 roomTint = mix(vec3(1.0), roomColorById(rid), 0.035);
+	vec3 color = base * roomTint * stone * mix(0.72, 1.0, bevel);
+	color = mix(color, vec3(0.075, 0.080, 0.070), mortar);
+	color *= 1.0 - cracks;
+	return color;
+}
+
+vec3 slabStoneTexture(vec2 uv, int rid, int kind) {
+	vec2 slab = uv * (kind == 0 ? vec2(1.0, 1.0) : vec2(0.72, 0.72));
+	vec2 cell = floor(slab);
+	vec2 f = fract(slab);
+	float mortar = blockMortar(f, kind == 0 ? 0.035 : 0.050);
+	float grain = valueNoise(uv * 10.0) * 0.18 + valueNoise(uv * 33.0) * 0.05;
+	float stone = 0.70 + hash21(cell + float(rid) * 11.0) * 0.20 + grain;
+	vec3 base = kind == 0 ? vec3(0.27, 0.32, 0.22) : vec3(0.22, 0.24, 0.19);
+	vec3 roomTint = mix(vec3(1.0), roomColorById(rid), 0.030);
+	vec3 color = base * roomTint * stone;
+	color = mix(color, vec3(0.055, 0.060, 0.052), mortar);
+	return color;
+}
+
+vec3 materialLightmapTint(vec3 p, vec3 n, int rid, int kind) {
+	float height = clamp((p.z + 64.0) / 576.0, 0.0, 1.0);
+	float lampBand = 0.5 + 0.5 * sin((p.x + p.y) * 0.008 + float(rid) * 1.7);
+	vec3 roomTint = roomColorById(rid);
+	vec3 bakedTint = mix(vec3(0.66, 0.70, 0.48), roomTint, kind == 0 ? 0.045 : 0.070);
+	float baked = mix(0.52, 0.82, height) + lampBand * 0.06;
+	if (kind == 0) {
+		baked *= 0.82;
+	}
+	if (kind == 1) {
+		baked *= 0.70;
+	}
+	return clamp(bakedTint * baked + vec3(0.045, 0.050, 0.035), 0.10, 0.78);
+}
+
+vec3 roomSurfaceColor(vec3 p, vec3 n, int kind) {
+	int rid = roomIdForPoint(p - n * 2.0);
+	vec2 uv = surfaceUv(p, n);
+	vec3 procedural;
+	if (kind == 0 || kind == 1) {
+		procedural = slabStoneTexture(uv, rid, kind);
+	} else {
+		procedural = wallStoneTexture(uv, rid, kind);
+	}
+
+	vec3 texel = texture(roomTexture, uv).rgb;
+	float whiteFallback = step(0.97, min(texel.r, min(texel.g, texel.b)));
+	vec3 color = mix(texel, procedural, whiteFallback);
+	vec3 detail = texture(detailTexture, uv * 16.0).rgb;
+	float detailFallback = step(0.97, min(detail.r, min(detail.g, detail.b)));
+	vec3 detailMod = mix(clamp(detail * 2.0, 0.45, 1.45), vec3(1.0), detailFallback);
+	color *= mix(vec3(1.0), detailMod, 0.38);
+	color = color * materialLightmapTint(p, n, rid, kind) * 1.08;
+	float grime = 1.0 - valueNoise(vec2(uv.x * 0.45, uv.y * 1.20 + float(rid))) * 0.12;
+	return clamp(color * grime + vec3(0.018, 0.016, 0.012), 0.0, 1.0);
+}
+
+bool intersectSphere(vec3 ro, vec3 rd, vec3 c, float r, out float tHit, out vec3 nHit) {
+	vec3 oc = ro - c;
+	float b = dot(oc, rd);
+	float h = b * b - dot(oc, oc) + r * r;
+	if (h < 0.0) {
+		return false;
+	}
+	h = sqrt(h);
+	float t = -b - h;
+	if (t <= 0.0001) {
+		t = -b + h;
+	}
+	if (t <= 0.0001) {
+		return false;
+	}
+	tHit = t;
+	nHit = normalize(ro + rd * t - c);
+	return true;
+}
+
+int objectRoomId(int objectId) {
+	return objectId == 0 ? 1 : (objectId == 2 ? 3 : 2);
+}
+
+vec3 objectCenter(int objectId) {
+	if (objectId == 0) {
+		return vec3(0.0, -1040.0, 160.0);
+	}
+	if (objectId == 2) {
+		return vec3(0.0, 1040.0, 165.0);
+	}
+	return vec3(0.0, 0.0, 165.0);
+}
+
+vec3 objectTint(int objectId) {
+	if (objectId == 0) {
+		return vec3(1.00, 0.32, 0.08);
+	}
+	if (objectId == 2) {
+		return vec3(0.20, 0.80, 1.30);
+	}
+	return vec3(1.00, 0.42, 0.08);
+}
+
+float southObjectDensity(vec3 p) {
+	float core = 1.0 - length((p - vec3(0.0, -1040.0, 138.0)) / vec3(42.0, 42.0, 72.0));
+	float crown = 1.0 - length((p - vec3(0.0, -1040.0, 222.0)) / vec3(28.0, 28.0, 30.0));
+	float left = 1.0 - length((p - vec3(-48.0, -1084.0, 170.0)) / vec3(18.0, 18.0, 28.0));
+	float right = 1.0 - length((p - vec3(48.0, -996.0, 170.0)) / vec3(18.0, 18.0, 28.0));
+	return clamp(max(max(core, crown), max(left, right)), 0.0, 1.0);
+}
+
+float middleObjectDensity(vec3 p) {
+	float body = 1.0 - length((p - vec3(0.0, 0.0, 145.0)) / vec3(48.0, 36.0, 58.0));
+	float head = 1.0 - length((p - vec3(0.0, -28.0, 205.0)) / vec3(28.0, 24.0, 28.0));
+	float leftWing = 1.0 - length((p - vec3(-56.0, 6.0, 175.0)) / vec3(24.0, 14.0, 62.0));
+	float rightWing = 1.0 - length((p - vec3(56.0, 6.0, 175.0)) / vec3(24.0, 14.0, 62.0));
+	float horns = max(1.0 - length((p - vec3(-14.0, -48.0, 232.0)) / vec3(8.0, 12.0, 18.0)),
+	                  1.0 - length((p - vec3( 14.0, -48.0, 232.0)) / vec3(8.0, 12.0, 18.0)));
+	return clamp(max(max(body, head), max(max(leftWing, rightWing), horns)), 0.0, 1.0);
+}
+
+float northObjectDensity(vec3 p) {
+	float stem = 1.0 - length((p - vec3(0.0, 1040.0, 160.0)) / vec3(28.0, 42.0, 112.0));
+	float cap = 1.0 - length((p - vec3(0.0, 1040.0, 260.0)) / vec3(22.0, 30.0, 32.0));
+	float leftShard = 1.0 - length((p - vec3(-54.0, 1012.0, 145.0)) / vec3(18.0, 22.0, 68.0));
+	float rightShard = 1.0 - length((p - vec3(58.0, 1070.0, 178.0)) / vec3(22.0, 18.0, 72.0));
+	return clamp(max(max(stem, cap), max(leftShard, rightShard)), 0.0, 1.0);
+}
+
+float objectDensity(vec3 p, int objectId) {
+	if (objectId == 0) {
+		return southObjectDensity(p);
+	}
+	if (objectId == 2) {
+		return northObjectDensity(p);
+	}
+	return middleObjectDensity(p);
+}
+
+vec3 objectEmission(vec3 p, int objectId) {
+	float d = objectDensity(p, objectId);
+	vec3 hot;
+	if (objectId == 0) {
+		hot = mix(vec3(0.50, 0.03, 0.01), vec3(2.60, 0.46, 0.08), d);
+	} else if (objectId == 2) {
+		hot = mix(vec3(0.01, 0.10, 0.24), vec3(0.20, 1.25, 3.00), d);
+	} else {
+		hot = mix(vec3(0.52, 0.05, 0.01), vec3(2.10, 0.72, 0.16), d);
+	}
+	float pulse = 0.85 + 0.15 * sin(neural.viewSeed.x * 4.0 + p.z * 0.035 + p.x * 0.02);
+	return hot * d * pulse;
+}
+
+bool hitExactSouthObject(vec3 ro, vec3 rd, inout RtHit hit) {
+	bool found = false;
+	float t;
+	vec3 n;
+
+	if (intersectBox(ro, rd, vec3(-22.0, -1062.0, 28.0), vec3(22.0, -1018.0, 232.0), t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 1; hit.materialId = 10;
+		hit.baseColor = vec3(0.70, 0.08, 0.03); hit.emission = objectEmission(hit.p, 0) * 0.28; hit.reflective = 0.26;
+		found = true;
+	}
+	if (intersectSphere(ro, rd, vec3(0.0, -1040.0, 138.0), 42.0, t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 1; hit.materialId = 11;
+		hit.baseColor = vec3(1.0, 0.22, 0.04); hit.emission = objectEmission(hit.p, 0) * 0.62; hit.reflective = 0.36;
+		found = true;
+	}
+	if (intersectSphere(ro, rd, vec3(0.0, -1040.0, 222.0), 26.0, t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 1; hit.materialId = 12;
+		hit.baseColor = vec3(1.0, 0.38, 0.08); hit.emission = objectEmission(hit.p, 0) * 0.90; hit.reflective = 0.48;
+		found = true;
+	}
+	if (intersectSphere(ro, rd, vec3(-48.0, -1084.0, 170.0), 18.0, t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 1; hit.materialId = 13;
+		hit.baseColor = vec3(1.0, 0.18, 0.05); hit.emission = objectEmission(hit.p, 0) * 0.52; hit.reflective = 0.34;
+		found = true;
+	}
+	if (intersectSphere(ro, rd, vec3(48.0, -996.0, 170.0), 18.0, t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 1; hit.materialId = 13;
+		hit.baseColor = vec3(1.0, 0.18, 0.05); hit.emission = objectEmission(hit.p, 0) * 0.52; hit.reflective = 0.34;
+		found = true;
+	}
+	return found;
+}
+
+bool hitExactMiddleObject(vec3 ro, vec3 rd, inout RtHit hit) {
+	bool found = false;
+	float t;
+	vec3 n;
+
+	if (intersectSphere(ro, rd, vec3(0.0, 0.0, 145.0), 44.0, t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 2; hit.materialId = 14;
+		hit.baseColor = vec3(0.95, 0.22, 0.05); hit.emission = objectEmission(hit.p, 1) * 0.55; hit.reflective = 0.34;
+		found = true;
+	}
+	if (intersectSphere(ro, rd, vec3(0.0, -28.0, 205.0), 26.0, t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 2; hit.materialId = 15;
+		hit.baseColor = vec3(1.0, 0.28, 0.06); hit.emission = objectEmission(hit.p, 1) * 0.70; hit.reflective = 0.42;
+		found = true;
+	}
+	if (intersectSphere(ro, rd, vec3(-56.0, 6.0, 175.0), 28.0, t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 2; hit.materialId = 16;
+		hit.baseColor = vec3(0.75, 0.11, 0.03); hit.emission = objectEmission(hit.p, 1) * 0.40; hit.reflective = 0.25;
+		found = true;
+	}
+	if (intersectSphere(ro, rd, vec3(56.0, 6.0, 175.0), 28.0, t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 2; hit.materialId = 16;
+		hit.baseColor = vec3(0.75, 0.11, 0.03); hit.emission = objectEmission(hit.p, 1) * 0.40; hit.reflective = 0.25;
+		found = true;
+	}
+	if (intersectSphere(ro, rd, vec3(-14.0, -48.0, 232.0), 10.0, t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 2; hit.materialId = 17;
+		hit.baseColor = vec3(1.0, 0.46, 0.10); hit.emission = vec3(3.0, 1.0, 0.14); hit.reflective = 0.55;
+		found = true;
+	}
+	if (intersectSphere(ro, rd, vec3(14.0, -48.0, 232.0), 10.0, t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 2; hit.materialId = 17;
+		hit.baseColor = vec3(1.0, 0.46, 0.10); hit.emission = vec3(3.0, 1.0, 0.14); hit.reflective = 0.55;
+		found = true;
+	}
+	return found;
+}
+
+bool hitExactNorthObject(vec3 ro, vec3 rd, inout RtHit hit) {
+	bool found = false;
+	float t;
+	vec3 n;
+
+	if (intersectBox(ro, rd, vec3(-32.0, 1010.0, 42.0), vec3(32.0, 1070.0, 250.0), t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 3; hit.materialId = 22;
+		hit.baseColor = vec3(0.05, 0.55, 0.95); hit.emission = objectEmission(hit.p, 2) * 0.42; hit.reflective = 0.52;
+		found = true;
+	}
+	if (intersectSphere(ro, rd, vec3(0.0, 1040.0, 260.0), 24.0, t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 3; hit.materialId = 23;
+		hit.baseColor = vec3(0.12, 0.90, 1.0); hit.emission = objectEmission(hit.p, 2) * 0.72; hit.reflective = 0.58;
+		found = true;
+	}
+	if (intersectSphere(ro, rd, vec3(-54.0, 1012.0, 145.0), 24.0, t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 3; hit.materialId = 24;
+		hit.baseColor = vec3(0.05, 0.45, 1.0); hit.emission = objectEmission(hit.p, 2) * 0.48; hit.reflective = 0.46;
+		found = true;
+	}
+	if (intersectSphere(ro, rd, vec3(58.0, 1070.0, 178.0), 28.0, t, n) && t < hit.t) {
+		hit.t = t; hit.p = ro + rd * t; hit.n = n; hit.roomId = 3; hit.materialId = 24;
+		hit.baseColor = vec3(0.05, 0.45, 1.0); hit.emission = objectEmission(hit.p, 2) * 0.48; hit.reflective = 0.46;
+		found = true;
+	}
+	return found;
+}
+
+bool hitExactObjects(vec3 ro, vec3 rd, inout RtHit hit) {
+	bool found = false;
+	if (hitExactSouthObject(ro, rd, hit)) found = true;
+	if (hitExactMiddleObject(ro, rd, hit)) found = true;
+	if (hitExactNorthObject(ro, rd, hit)) found = true;
+	return found;
+}
+
+void surfaceProxyBounds(int objectId, out vec3 mn, out vec3 mx) {
+	if (objectId == 0) {
+		mn = vec3(-76.0, -1052.0, 70.0);
+		mx = vec3( 76.0, -1028.0, 246.0);
+		return;
+	}
+	if (objectId == 2) {
+		mn = vec3(-72.0, 1028.0, 70.0);
+		mx = vec3( 72.0, 1052.0, 262.0);
+		return;
+	}
+	mn = vec3(-78.0, -12.0, 88.0);
+	mx = vec3( 78.0,  12.0, 246.0);
+}
+
+vec3 surfaceProxyColor(vec3 p, int objectId) {
+	vec3 c = objectCenter(objectId);
+	vec2 q = vec2((p.x - c.x) / 150.0, (p.z - c.z) / 128.0);
+	if (objectId == 0) {
+		float core = smoothstep(0.72, 0.14, length(q - vec2(0.0, -0.16)));
+		float crown = smoothstep(0.38, 0.06, length(q - vec2(0.0, 0.48)));
+		float sparks = smoothstep(0.16, 0.02, abs(abs(q.x) - 0.36)) * smoothstep(0.70, 0.08, abs(q.y - 0.08));
+		float mask = clamp(max(max(core, crown), sparks), 0.0, 1.0);
+		return mix(vec3(0.34, 0.035, 0.01), vec3(2.10, 0.42, 0.06), mask) * (0.18 + 0.72 * mask);
+	}
+	if (objectId == 2) {
+		float stem = smoothstep(0.30, 0.04, abs(q.x)) * smoothstep(1.02, 0.05, abs(q.y));
+		float shards = smoothstep(0.15, 0.02, abs(abs(q.x) - 0.42)) * smoothstep(0.92, 0.10, abs(q.y + 0.02));
+		float cap = smoothstep(0.34, 0.05, length(q - vec2(0.0, 0.74)));
+		float mask = clamp(max(max(stem, shards), cap), 0.0, 1.0);
+		return mix(vec3(0.01, 0.08, 0.26), vec3(0.14, 0.82, 2.10), mask) * (0.20 + 0.72 * mask);
+	}
+	float head = smoothstep(0.55, 0.18, length(q - vec2(0.0, 0.35)));
+	float body = smoothstep(0.72, 0.20, length(q - vec2(0.0, -0.15)));
+	float wings = smoothstep(0.34, 0.03, abs(abs(q.x) - 0.58)) * smoothstep(0.88, 0.08, abs(q.y + 0.05));
+	float mask = clamp(max(max(head, body), wings), 0.0, 1.0);
+	return mix(vec3(0.24, 0.025, 0.01), vec3(1.90, 0.62, 0.10), mask) * (0.18 + 0.72 * mask);
+}
+
+bool hitSurfaceProxyObject(vec3 ro, vec3 rd, int objectId, inout RtHit hit) {
+	float t;
+	vec3 n;
+	vec3 mn;
+	vec3 mx;
+
+	surfaceProxyBounds(objectId, mn, mx);
+	if (intersectBox(ro, rd, mn, mx, t, n) && t < hit.t) {
+		hit.t = t;
+		hit.p = ro + rd * t;
+		hit.n = n;
+		hit.baseColor = objectTint(objectId) * 0.70;
+		hit.emission = surfaceProxyColor(hit.p, objectId);
+		hit.reflective = 0.18;
+		hit.roomId = objectRoomId(objectId);
+		hit.materialId = 40 + objectId;
+		return true;
+	}
+
+	return false;
+}
+
+bool hitSurfaceProxies(vec3 ro, vec3 rd, inout RtHit hit) {
+	bool found = false;
+	for (int objectId = 0; objectId < 3; objectId++) {
+		if (hitSurfaceProxyObject(ro, rd, objectId, hit)) {
+			found = true;
+		}
+	}
+	return found;
+}
+
+bool hitMirror(vec3 ro, vec3 rd, inout RtHit hit) {
+	vec3 p0 = vec3(494.0, 0.0, 240.0);
+	vec3 n = vec3(-1.0, 0.0, 0.0);
+	float denom = dot(rd, n);
+	if (abs(denom) < 0.000001) {
+		return false;
+	}
+	float t = dot(p0 - ro, n) / denom;
+	if (t <= 0.0001 || t >= hit.t) {
+		return false;
+	}
+	vec3 p = ro + rd * t;
+	vec2 local = vec2(p.y, p.z - 240.0);
+	if (abs(local.x) > 384.0 || abs(local.y) > 192.0) {
+		return false;
+	}
+	hit.t = t;
+	hit.p = p;
+	hit.n = denom < 0.0 ? n : -n;
+	hit.baseColor = vec3(0.76, 0.90, 1.0);
+	hit.emission = vec3(0.0);
+	hit.reflective = 0.86;
+	hit.roomId = 2;
+	hit.materialId = 30;
+	return true;
+}
+
+bool traceScene(vec3 ro, vec3 rd, int mode, out RtHit hit) {
+	bool found = false;
+	hit.t = 100000.0;
+	hit.p = vec3(0.0);
+	hit.n = vec3(0.0, 0.0, 1.0);
+	hit.baseColor = vec3(0.0);
+	hit.emission = vec3(0.0);
+	hit.reflective = 0.0;
+	hit.roomId = roomIdForPoint(ro);
+	hit.materialId = 0;
+
+	for (int i = 0; i < 20; i++) {
+		vec3 mn, mx, n;
+		int kind;
+		float t;
+		roomBox(i, mn, mx, kind);
+		if (intersectBox(ro, rd, mn, mx, t, n) && t < hit.t) {
+			hit.t = t;
+			hit.p = ro + rd * t;
+			hit.n = n;
+			hit.baseColor = roomSurfaceColor(hit.p, n, kind);
+			hit.emission = vec3(0.0);
+			hit.reflective = 0.0;
+			hit.roomId = roomIdForPoint(hit.p - n * 2.0);
+			hit.materialId = kind + 1;
+			found = true;
+		}
+	}
+
+	if (hitMirror(ro, rd, hit)) {
+		found = true;
+	}
+	if (mode == 4 && hitExactObjects(ro, rd, hit)) {
+		found = true;
+	}
+	if (mode == 5 && hitSurfaceProxies(ro, rd, hit)) {
+		found = true;
+	}
+	return found;
+}
+
+bool shadowed(vec3 p, vec3 lpos, int mode) {
+	vec3 toL = lpos - p;
+	float maxT = length(toL);
+	vec3 dir = toL / max(maxT, 0.0001);
+	RtHit sh;
+	if (!traceScene(p + dir * 1.5, dir, mode, sh)) {
+		return false;
+	}
+	return sh.t < maxT - 3.0 && sh.materialId != 30;
+}
+
+vec3 shadeDirect(RtHit hit, vec3 rd, int mode) {
+	vec3 roomTint = roomColorById(hit.roomId);
+	vec3 keyDir = normalize(vec3(-0.35, 0.45, 0.82));
+	vec3 fillDir = normalize(vec3(0.60, -0.25, 0.45));
+	float key = max(dot(hit.n, keyDir), 0.0);
+	float fill = max(dot(hit.n, fillDir), 0.0);
+	float upLight = 0.35 + 0.35 * max(hit.n.z, 0.0);
+	vec3 color = hit.baseColor * (0.12 + 0.07 * roomTint + key * 0.18 + fill * 0.08 + upLight * 0.08) + hit.emission;
+	for (int i = 0; i < 6; i++) {
+		vec3 lp = lightPosition(i);
+		vec3 toL = lp - hit.p;
+		float dist2 = max(dot(toL, toL), 1.0);
+		vec3 ldir = normalize(toL);
+		float ndotl = max(dot(hit.n, ldir), 0.0);
+		if (ndotl <= 0.0 || shadowed(hit.p + hit.n * 1.0, lp, mode)) {
+			continue;
+		}
+		float falloff = lightIntensity(i) / (dist2 * 0.10);
+		vec3 halfV = normalize(ldir - rd);
+		float spec = pow(max(dot(hit.n, halfV), 0.0), hit.reflective > 0.0 ? 80.0 : 32.0) * falloff * (0.10 + hit.reflective * 0.35);
+		color += hit.baseColor * lightColor(i) * ndotl * falloff + lightColor(i) * spec;
+	}
+	return color;
+}
+
+vec3 shadeRay(vec3 ro, vec3 rd, int mode) {
+	vec3 accum = vec3(0.0);
+	vec3 throughput = vec3(1.0);
+	vec3 rayOrigin = ro;
+	vec3 rayDir = rd;
+
+	for (int bounce = 0; bounce < 3; bounce++) {
+		RtHit hit;
+		if (!traceScene(rayOrigin, rayDir, mode, hit)) {
+			accum += throughput * vec3(0.015, 0.020, 0.030);
+			break;
+		}
+		vec3 direct = shadeDirect(hit, rayDir, mode);
+		float facing = max(dot(-rayDir, hit.n), 0.0);
+		float fresnel = pow(1.0 - facing, 5.0);
+		float mixFactor = min(1.0, hit.reflective * (0.45 + 0.55 * fresnel));
+		accum += throughput * direct * (1.0 - mixFactor);
+
+		if (mixFactor <= 0.001) {
+			break;
+		}
+		throughput *= mixFactor;
+		rayDir = normalize(reflect(rayDir, hit.n));
+		rayOrigin = hit.p + rayDir * 1.5;
+	}
+	return accum;
+}
+
+vec3 tonemapRt(vec3 c);
+
+bool intersectBoxRange(vec3 ro, vec3 rd, vec3 mn, vec3 mx, out float tNear, out float tFar) {
+	tNear = -100000.0;
+	tFar = 100000.0;
+
+	for (int a = 0; a < 3; a++) {
+		if (abs(rd[a]) < 0.0000001) {
+			if (ro[a] < mn[a] || ro[a] > mx[a]) {
+				return false;
+			}
+		} else {
+			float t1 = (mn[a] - ro[a]) / rd[a];
+			float t2 = (mx[a] - ro[a]) / rd[a];
+			if (t1 > t2) {
+				float tv = t1; t1 = t2; t2 = tv;
+			}
+			tNear = max(tNear, t1);
+			tFar = min(tFar, t2);
+			if (tNear > tFar) {
+				return false;
+			}
+		}
+	}
+
+	return tFar > 0.0001;
+}
+
+void volumeProxyBounds(int objectId, out vec3 mn, out vec3 mx) {
+	if (objectId == 0) {
+		mn = vec3(-160.0, -1190.0, 35.0);
+		mx = vec3( 160.0,  -890.0, 315.0);
+		return;
+	}
+	if (objectId == 2) {
+		mn = vec3(-160.0,  900.0, 35.0);
+		mx = vec3( 160.0, 1190.0, 335.0);
+		return;
+	}
+	mn = vec3(-190.0, -170.0, 35.0);
+	mx = vec3( 190.0,  210.0, 335.0);
+}
+
+bool insideBounds(vec3 p, vec3 mn, vec3 mx) {
+	return all(greaterThanEqual(p, mn)) && all(lessThanEqual(p, mx));
+}
+
+vec3 volumeCellPoint(vec3 p, int objectId) {
+	vec3 mn;
+	vec3 mx;
+	volumeProxyBounds(objectId, mn, mx);
+	vec3 cell = floor((p - mn) / 36.0);
+	return mn + (cell + vec3(0.5)) * 36.0;
+}
+
+float volumeObjectDensity(vec3 p, int objectId) {
+	vec3 mn;
+	vec3 mx;
+	volumeProxyBounds(objectId, mn, mx);
+	if (!insideBounds(p, mn, mx)) {
+		return 0.0;
+	}
+	vec3 cp = volumeCellPoint(p, objectId);
+	vec3 center = objectCenter(objectId);
+	vec3 plumeScale = objectId == 0 ? vec3(135.0, 130.0, 165.0) : (objectId == 2 ? vec3(130.0, 135.0, 175.0) : vec3(170.0, 150.0, 170.0));
+	float plume = 1.0 - length((cp - (center + vec3(0.0, objectId == 0 ? 8.0 : 10.0, 18.0))) / plumeScale);
+	float density = max(objectDensity(cp, objectId), 0.52 * clamp(plume, 0.0, 1.0));
+	return smoothstep(0.05, 0.85, density);
+}
+
+vec3 volumeObjectEmission(vec3 p, int objectId, float density) {
+	vec3 cp = volumeCellPoint(p, objectId);
+	vec3 tint = objectTint(objectId);
+	return objectEmission(cp, objectId) * 0.42 + tint * density * 0.32 + vec3(0.04, 0.08, 0.12) * density;
+}
+
+float volumeProxySample(vec3 p, out vec3 emission) {
+	emission = vec3(0.0);
+	float densityMax = 0.0;
+	for (int objectId = 0; objectId < 3; objectId++) {
+		float density = volumeObjectDensity(p, objectId);
+		if (density > 0.0) {
+			emission += volumeObjectEmission(p, objectId, density);
+			densityMax = max(densityMax, density);
+		}
+	}
+	return densityMax;
+}
+
+float volumeProxySampleObject(vec3 p, int objectId, out vec3 emission) {
+	float density = volumeObjectDensity(p, objectId);
+	emission = density > 0.0 ? volumeObjectEmission(p, objectId, density) : vec3(0.0);
+	return density;
+}
+
+vec4 shadeVolumeProxyRaw(vec3 ro, vec3 rd, float tMax) {
+	float t0 = 0.0;
+	float t1 = min(tMax, 1900.0);
+	if (t1 <= t0) {
+		return vec4(0.0);
+	}
+
+	vec3 accum = vec3(0.0);
+	float trans = 1.0;
+	for (int i = 0; i < 64; i++) {
+		float u = (float(i) + 0.5) / 64.0;
+		float t = mix(t0, t1, u);
+		vec3 p = ro + rd * t;
+		vec3 emit;
+		float density = volumeProxySample(p, emit);
+		if (density <= 0.0) {
+			continue;
+		}
+		float alpha = clamp(density * 0.10, 0.0, 0.34);
+		accum += trans * alpha * emit;
+		trans *= 1.0 - alpha;
+		if (trans < 0.03) {
+			break;
+		}
+	}
+
+	float alpha = clamp((1.0 - trans) * 1.25, 0.0, 0.72);
+	if (alpha <= 0.01) {
+		return vec4(0.0);
+	}
+
+	vec3 color = accum / max(alpha, 0.08) * 1.8;
+	return vec4(color, alpha);
+}
+
+vec4 shadeVolumeProxyObjectRaw(vec3 ro, vec3 rd, int objectId, float tMax) {
+	float t0 = 0.0;
+	float t1 = min(tMax, 1900.0);
+	if (t1 <= t0) {
+		return vec4(0.0);
+	}
+
+	vec3 accum = vec3(0.0);
+	float trans = 1.0;
+	for (int i = 0; i < 64; i++) {
+		float u = (float(i) + 0.5) / 64.0;
+		float t = mix(t0, t1, u);
+		vec3 p = ro + rd * t;
+		vec3 emit;
+		float density = volumeProxySampleObject(p, objectId, emit);
+		if (density <= 0.0) {
+			continue;
+		}
+		float alpha = clamp(density * 0.10, 0.0, 0.34);
+		accum += trans * alpha * emit;
+		trans *= 1.0 - alpha;
+		if (trans < 0.03) {
+			break;
+		}
+	}
+
+	float alpha = clamp((1.0 - trans) * 1.25, 0.0, 0.72);
+	if (alpha <= 0.01) {
+		return vec4(0.0);
+	}
+
+	vec3 color = accum / max(alpha, 0.08) * 1.8;
+	return vec4(color, alpha);
+}
+
+vec4 shadeVolumeOverlay(vec3 ro, vec3 rd) {
+	RtHit roomHit;
+	bool hasHit = traceScene(ro, rd, 0, roomHit);
+	float tMax = hasHit ? roomHit.t : 1800.0;
+	vec4 volume = shadeVolumeProxyRaw(ro, rd, tMax);
+	return volume.a > 0.01 ? vec4(tonemapRt(volume.rgb), volume.a) : vec4(0.0);
+}
+
+bool hitVolumeProxyShadowCaster(vec3 ro, vec3 rd, float maxT) {
+	vec4 volume = shadeVolumeProxyRaw(ro, rd, maxT);
+	return volume.a > 0.10;
+}
+
+vec3 tonemapRt(vec3 c) {
+	c = max(c, vec3(0.0));
+	c = c / (vec3(1.0) + c);
+	return pow(clamp(c, 0.0, 1.0), vec3(1.0 / 2.2));
+}
+
+bool liveContributionMaterial(int materialId) {
+	return materialId == 30 || (materialId >= 10 && materialId <= 29) || (materialId >= 40 && materialId <= 49);
+}
+
+bool roomSurfaceMaterial(int materialId) {
+	return materialId >= 1 && materialId <= 4;
+}
+
+bool projectToCurrentView(vec3 worldPoint, out vec2 uv) {
+	vec3 rel = worldPoint - neural.cameraOrigin.xyz;
+	float z = dot(rel, neural.cameraForward.xyz);
+	if (z <= 1.0) {
+		uv = vec2(0.0);
+		return false;
+	}
+
+	vec3 q = rel / z - neural.cameraForward.xyz;
+	vec3 right = neural.cameraRight.xyz;
+	vec3 up = neural.cameraUp.xyz;
+	float rightLen = max(length(right), 0.0001);
+	float upLen = max(length(up), 0.0001);
+	float ndcX = dot(q, right / rightLen) / rightLen;
+	float ndcY = dot(q, up / upLen) / upLen;
+	uv = vec2(ndcX * 0.5 + 0.5, 0.5 - ndcY * 0.5);
+	return all(greaterThanEqual(uv, vec2(0.002))) && all(lessThanEqual(uv, vec2(0.998)));
+}
+
+vec3 sceneColorAtWorld(vec3 worldPoint, vec3 fallback, float mixAmount) {
+	vec2 sceneUv;
+	if (!projectToCurrentView(worldPoint, sceneUv)) {
+		return fallback;
+	}
+
+	vec3 sampled = texture(sceneColor, sceneUv).rgb;
+	if (dot(sampled, sampled) < 0.0005) {
+		return fallback;
+	}
+
+	return mix(fallback, sampled, mixAmount);
+}
+
+bool hitDynamicShadowCaster(vec3 ro, vec3 rd, float maxT, int mode) {
+	RtHit sh;
+	sh.t = maxT;
+	sh.p = vec3(0.0);
+	sh.n = vec3(0.0, 0.0, 1.0);
+	sh.baseColor = vec3(0.0);
+	sh.emission = vec3(0.0);
+	sh.reflective = 0.0;
+	sh.roomId = roomIdForPoint(ro);
+	sh.materialId = 0;
+
+	if (mode == 4 && hitExactObjects(ro, rd, sh) && sh.t < maxT) {
+		return true;
+	}
+	if (mode == 5 && hitSurfaceProxies(ro, rd, sh) && sh.t < maxT) {
+		return true;
+	}
+	if (mode == 6 && hitVolumeProxyShadowCaster(ro, rd, maxT)) {
+		return true;
+	}
+	return false;
+}
+
+float dynamicShadowAlpha(RtHit hit, int mode) {
+	if (!roomSurfaceMaterial(hit.materialId)) {
+		return 0.0;
+	}
+
+	float shadow = 0.0;
+	for (int i = 0; i < 6; i++) {
+		vec3 lp = lightPosition(i);
+		vec3 toL = lp - hit.p;
+		float dist2 = max(dot(toL, toL), 1.0);
+		float maxT = sqrt(dist2);
+		vec3 ldir = toL / max(maxT, 0.0001);
+		float ndotl = max(dot(hit.n, ldir), 0.0);
+		if (ndotl <= 0.0) {
+			continue;
+		}
+		if (hitDynamicShadowCaster(hit.p + hit.n * 2.0, ldir, maxT, mode)) {
+			float strength = ndotl * lightIntensity(i) / (dist2 * 0.10);
+			shadow += clamp(strength * 1.25, 0.0, 0.36);
+		}
+	}
+	return clamp(shadow, 0.0, 0.68);
+}
+
+vec4 mirrorOverlay(RtHit mirrorHit, vec3 rd, vec2 uv, int mode) {
+	vec3 reflected = normalize(reflect(rd, mirrorHit.n));
+	vec3 reflectedOrigin = mirrorHit.p + reflected * 1.5;
+	RtHit reflectedHit;
+	vec3 reflectedColor;
+	float alpha = 0.90;
+	if (mode == 6) {
+		bool hasHit = traceScene(reflectedOrigin, reflected, 0, reflectedHit);
+		float tMax = hasHit ? reflectedHit.t : 1800.0;
+		reflectedColor = hasHit ? shadeRay(reflectedOrigin, reflected, 0) : vec3(0.015, 0.020, 0.030);
+		vec4 volume = shadeVolumeProxyRaw(reflectedOrigin, reflected, tMax);
+		if (volume.a > 0.01) {
+			reflectedColor = mix(reflectedColor, volume.rgb, volume.a);
+		}
+		alpha = hasHit && roomSurfaceMaterial(reflectedHit.materialId) ? 0.82 : 0.88;
+	} else if (traceScene(reflectedOrigin, reflected, mode, reflectedHit)) {
+		reflectedColor = shadeRay(reflectedOrigin, reflected, mode);
+		alpha = roomSurfaceMaterial(reflectedHit.materialId) ? 0.82 : 0.90;
+	} else {
+		reflectedColor = vec3(0.015, 0.020, 0.030);
+		alpha = 0.70;
+	}
+	vec3 color = tonemapRt(reflectedColor * 0.92 + vec3(0.006, 0.008, 0.008));
+	vec3 glass = vec3(0.08, 0.12, 0.14) + pow(max(dot(-rd, mirrorHit.n), 0.0), 12.0) * vec3(0.14, 0.18, 0.20);
+	color = mix(color, color + glass, 0.30);
+	return vec4(color, alpha);
+}
+
+vec4 mirrorPanelOverlay(RtHit mirrorHit, vec3 rd, vec2 uv) {
+	vec4 roomReflection = mirrorOverlay(mirrorHit, rd, uv, 0);
+	vec2 rel = vec2(abs(mirrorHit.p.y) / 384.0, abs(mirrorHit.p.z - 240.0) / 192.0);
+	float edge = max(rel.x, rel.y);
+	float frame = smoothstep(0.925, 0.985, edge);
+	float bevel = smoothstep(0.72, 0.94, edge) * (1.0 - frame);
+	float facing = max(dot(-rd, mirrorHit.n), 0.0);
+	float fresnel = pow(max(1.0 - facing, 0.0), 4.0);
+	vec3 glass = roomReflection.rgb;
+	vec3 tint = vec3(0.10, 0.15, 0.16) + vec3(0.05, 0.06, 0.06) * fresnel;
+	vec3 frameColor = mix(vec3(0.025, 0.035, 0.035), vec3(0.12, 0.14, 0.13), smoothstep(0.965, 1.0, edge));
+
+	glass = mix(glass, tint, 0.22) + bevel * vec3(0.030, 0.038, 0.038);
+	return vec4(mix(glass, frameColor, frame), mix(0.92, 0.98, frame));
+}
+
+vec4 mirrorFrameOverlay(RtHit mirrorHit) {
+	vec2 rel = vec2(abs(mirrorHit.p.y) / 384.0, abs(mirrorHit.p.z - 240.0) / 192.0);
+	float edge = max(rel.x, rel.y);
+	float frame = smoothstep(0.900, 0.975, edge);
+	if (frame <= 0.001) {
+		return vec4(0.0);
+	}
+	return vec4(mix(vec3(0.040, 0.055, 0.055), vec3(0.18, 0.20, 0.18), frame), frame * 0.98);
+}
+
+vec4 mirrorSurfaceMiddleOverlay(RtHit mirrorHit, vec3 rd, vec2 uv) {
+	vec3 reflected = normalize(reflect(rd, mirrorHit.n));
+	vec3 reflectedOrigin = mirrorHit.p + reflected * 1.5;
+	RtHit roomHit;
+	RtHit proxyHit;
+	vec3 reflectedColor;
+	float alpha = 0.90;
+	bool hasRoom = traceScene(reflectedOrigin, reflected, 0, roomHit);
+
+	if (hasRoom) {
+		reflectedColor = shadeRay(reflectedOrigin, reflected, 0);
+		alpha = roomSurfaceMaterial(roomHit.materialId) ? 0.82 : 0.90;
+	} else {
+		reflectedColor = vec3(0.015, 0.020, 0.030);
+		alpha = 0.70;
+	}
+
+	proxyHit.t = hasRoom ? roomHit.t : 100000.0;
+	proxyHit.p = vec3(0.0);
+	proxyHit.n = vec3(0.0, 0.0, 1.0);
+	proxyHit.baseColor = vec3(0.0);
+	proxyHit.emission = vec3(0.0);
+	proxyHit.reflective = 0.0;
+	proxyHit.roomId = 2;
+	proxyHit.materialId = 0;
+	if (hitSurfaceProxyObject(reflectedOrigin, reflected, 1, proxyHit)) {
+		reflectedColor = shadeDirect(proxyHit, reflected, 5);
+		alpha = 0.90;
+	}
+
+	vec3 color = tonemapRt(reflectedColor * 0.92 + vec3(0.006, 0.008, 0.008));
+	vec3 glass = vec3(0.08, 0.12, 0.14) + pow(max(dot(-rd, mirrorHit.n), 0.0), 12.0) * vec3(0.14, 0.18, 0.20);
+	color = mix(color, color + glass, 0.30);
+	return vec4(color, alpha);
+}
+
+float reflectionInputSignal(vec4 surface, vec4 volume) {
+	float surfaceSignal = max(surface.r, max(surface.g, surface.b));
+	float volumeSignal = max(volume.r, max(volume.g, volume.b));
+	return max(surfaceSignal, volumeSignal);
+}
+
+bool neuralMirrorOnly() {
+	return (neural.activeObjectMeta.w & 256) != 0;
+}
+
+vec4 renderMirrorOnlyMode(vec2 uv, int mode, out int outRoomId) {
+	vec2 ndc = vec2(uv.x * 2.0 - 1.0, 1.0 - uv.y * 2.0);
+	vec3 ro = neural.cameraOrigin.xyz;
+	vec3 rd = normalize(neural.cameraForward.xyz + neural.cameraRight.xyz * ndc.x + neural.cameraUp.xyz * ndc.y);
+	RtHit mirrorHit;
+	RtHit objectHit;
+	vec3 reflected;
+	vec3 reflectedOrigin;
+
+	outRoomId = 2;
+	mirrorHit.t = 100000.0;
+	mirrorHit.p = vec3(0.0);
+	mirrorHit.n = vec3(0.0, 0.0, 1.0);
+	mirrorHit.baseColor = vec3(0.0);
+	mirrorHit.emission = vec3(0.0);
+	mirrorHit.reflective = 0.0;
+	mirrorHit.roomId = 2;
+	mirrorHit.materialId = 0;
+
+	if (!hitMirror(ro, rd, mirrorHit)) {
+		return vec4(0.0, 0.0, 0.0, 1.0);
+	}
+
+	reflected = normalize(reflect(rd, mirrorHit.n));
+	reflectedOrigin = mirrorHit.p + reflected * 1.5;
+
+	if (mode == 6) {
+		vec4 volume = shadeVolumeProxyObjectRaw(reflectedOrigin, reflected, 1, 1800.0);
+		return volume.a > 0.01 ? vec4(tonemapRt(volume.rgb), 1.0) : vec4(0.0, 0.0, 0.0, 1.0);
+	}
+
+	objectHit.t = 100000.0;
+	objectHit.p = vec3(0.0);
+	objectHit.n = vec3(0.0, 0.0, 1.0);
+	objectHit.baseColor = vec3(0.0);
+	objectHit.emission = vec3(0.0);
+	objectHit.reflective = 0.0;
+	objectHit.roomId = 2;
+	objectHit.materialId = 0;
+
+	if (mode == 5) {
+		if (!hitSurfaceProxyObject(reflectedOrigin, reflected, 1, objectHit)) {
+			return vec4(0.0, 0.0, 0.0, 1.0);
+		}
+		return vec4(tonemapRt(shadeDirect(objectHit, reflected, 5) * 0.74), 1.0);
+	}
+
+	if (!hitExactMiddleObject(reflectedOrigin, reflected, objectHit)) {
+		return vec4(0.0, 0.0, 0.0, 1.0);
+	}
+	return vec4(tonemapRt(shadeDirect(objectHit, reflected, 4) * 0.88), 1.0);
+}
+
+vec4 renderLiveMode(vec2 uv, int mode, out int outRoomId) {
+	vec2 ndc = vec2(uv.x * 2.0 - 1.0, 1.0 - uv.y * 2.0);
+	vec3 ro = neural.cameraOrigin.xyz;
+	vec3 rd = normalize(neural.cameraForward.xyz + neural.cameraRight.xyz * ndc.x + neural.cameraUp.xyz * ndc.y);
+	RtHit roomHit;
+
+	if (neuralMirrorOnly() && mode >= 4 && mode <= 6) {
+		return renderMirrorOnlyMode(uv, mode, outRoomId);
+	}
+
+	if (traceScene(ro, rd, mode == 6 ? 0 : mode, roomHit)) {
+		outRoomId = roomHit.roomId;
+	} else {
+		outRoomId = roomIdForPoint(ro);
+	}
+
+	if (mode == 6) {
+		vec4 volume = shadeVolumeOverlay(ro, rd);
+		if (roomHit.materialId == 30) {
+			vec4 mirror = mirrorOverlay(roomHit, rd, uv, mode);
+			if (volume.a > 0.01) {
+				return vec4(mix(mirror.rgb, volume.rgb, clamp(volume.a, 0.0, 1.0)), max(mirror.a, volume.a));
+			}
+			return mirror;
+		}
+		if (volume.a > 0.01) {
+			return volume;
+		}
+		float shadow = dynamicShadowAlpha(roomHit, mode);
+		return shadow > 0.01 ? vec4(0.0, 0.0, 0.0, shadow) : vec4(0.0);
+	}
+
+	if (roomHit.materialId == 30) {
+		return mirrorOverlay(roomHit, rd, uv, mode);
+	}
+
+	if (!liveContributionMaterial(roomHit.materialId)) {
+		float shadow = dynamicShadowAlpha(roomHit, mode);
+		return shadow > 0.01 ? vec4(0.0, 0.0, 0.0, shadow) : vec4(0.0);
+	}
+
+	float alpha = roomHit.materialId >= 40 && roomHit.materialId <= 49 ? 0.84 : 0.96;
+	float gain = roomHit.materialId >= 40 && roomHit.materialId <= 49 ? 0.74 : 0.88;
+	return vec4(tonemapRt(shadeRay(ro, rd, mode) * gain), alpha);
+}
+
+bool activeObjectId(int objectId) {
+	if (neural.activeObjectIds0.x == objectId || neural.activeObjectIds0.y == objectId ||
+			neural.activeObjectIds0.z == objectId || neural.activeObjectIds0.w == objectId) {
+		return true;
+	}
+	return neural.activeObjectIds1.x == objectId || neural.activeObjectIds1.y == objectId ||
+		neural.activeObjectIds1.z == objectId || neural.activeObjectIds1.w == objectId;
+}
+
+bool activeObjectSlot(int objectIndex) {
+	if (objectIndex < 0 || objectIndex >= neural.objectCount || objectIndex >= 3) {
+		return false;
+	}
+	return activeObjectId(neural.objectId[objectIndex]);
+}
+
+vec3 activeMarkerCenter(int objectIndex) {
+	vec3 c = objectCenter(objectIndex);
+	c.z = objectIndex == 0 ? 356.0 : (objectIndex == 2 ? 374.0 : 370.0);
+	return c;
+}
+
+bool hitActiveMarkerRay(vec3 ro, vec3 rd, out float bestT, out vec3 markerNormal, out int markerIndex) {
+	bool found = false;
+	bestT = 100000.0;
+	markerNormal = vec3(0.0, 0.0, 1.0);
+	markerIndex = -1;
+	if (neural.activeObjectMeta.z == 0) {
+		return false;
+	}
+	for (int objectIndex = 0; objectIndex < 3; objectIndex++) {
+		float t;
+		vec3 n;
+		if (!activeObjectSlot(objectIndex)) {
+			continue;
+		}
+		if (intersectSphere(ro, rd, activeMarkerCenter(objectIndex), 24.0, t, n) && t < bestT) {
+			bestT = t;
+			markerNormal = n;
+			markerIndex = objectIndex;
+			found = true;
+		}
+	}
+	return found;
+}
+
+vec4 shadeActiveMarker(vec3 ro, vec3 rd, float t, vec3 n, int markerIndex, bool reflected) {
+	vec3 p = ro + rd * t;
+	vec3 ldir = normalize(vec3(-0.35, 0.25, 0.90));
+	float shade = 0.36 + 0.48 * max(dot(n, ldir), 0.0) + 0.18 * max(n.z, 0.0);
+	vec3 roomTint = roomColorById(objectRoomId(markerIndex));
+	vec3 color = vec3(0.02, 0.90, 0.14) * shade + roomTint * 0.035;
+	float rim = pow(max(0.0, 1.0 - max(dot(-rd, n), 0.0)), 3.0);
+	color += vec3(0.08, 0.55, 0.14) * rim;
+	color *= 0.92 + 0.08 * sin(neural.viewSeed.x * 6.0 + p.z * 0.035);
+	if (reflected) {
+		color *= vec3(0.70, 0.86, 0.76);
+	}
+	return vec4(clamp(color, 0.0, 1.0), reflected ? 0.78 : 0.92);
+}
+
+vec4 renderActiveMarkerOverlay(vec2 uv) {
+	vec2 ndc = vec2(uv.x * 2.0 - 1.0, 1.0 - uv.y * 2.0);
+	vec3 ro = neural.cameraOrigin.xyz;
+	vec3 rd = normalize(neural.cameraForward.xyz + neural.cameraRight.xyz * ndc.x + neural.cameraUp.xyz * ndc.y);
+	float bestT;
+	vec3 n;
+	int markerIndex;
+
+	if (hitActiveMarkerRay(ro, rd, bestT, n, markerIndex)) {
+		return shadeActiveMarker(ro, rd, bestT, n, markerIndex, false);
+	}
+
+	RtHit mirrorHit;
+	mirrorHit.t = 100000.0;
+	if (hitMirror(ro, rd, mirrorHit)) {
+		vec3 reflected = normalize(reflect(rd, mirrorHit.n));
+		vec3 reflectedOrigin = mirrorHit.p + reflected * 1.5;
+		if (hitActiveMarkerRay(reflectedOrigin, reflected, bestT, n, markerIndex)) {
+			return shadeActiveMarker(reflectedOrigin, reflected, bestT, n, markerIndex, true);
+		}
+	}
+
+	return vec4(0.0);
+}
+
+vec4 compositeOverlay(vec4 base, vec4 overlay) {
+	float a = clamp(overlay.a, 0.0, 1.0);
+	if (a <= 0.001) {
+		return base;
+	}
+	return vec4(mix(base.rgb, overlay.rgb, a), max(base.a, a));
+}
+
+int objectIndexForId(int id) {
+	int count = clamp(neural.objectCount, 0, MAX_NEURAL_OBJECTS);
+	for (int i = 0; i < count; i++) {
+		if (neural.objectId[i] == id) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+int objectIndexForProxyMaterial(int materialId) {
+	if (materialId >= 40 && materialId < 40 + MAX_NEURAL_OBJECTS) {
+		int index = materialId - 40;
+		if (index >= 0 && index < neural.objectCount) {
+			return index;
+		}
+	}
+	return -1;
+}
+
+bool objectReadyForCorrection(int objectIndex) {
+	if (objectIndex < 0 || objectIndex >= neural.objectCount) {
+		return false;
+	}
+	if (neural.objectHasWeights[objectIndex] == 0) {
+		return false;
+	}
+	return activeObjectId(neural.objectId[objectIndex]);
+}
+
+bool neuralMlpEnabled() {
+	return (neural.activeObjectMeta.w & 255) != 0;
+}
+
+int neuralMlpMode() {
+	return neural.activeObjectMeta.w & 255;
+}
+
+bool proxyObjectVisibleForRay(vec3 ro, vec3 rd, out int objectIndex, out RtHit proxyHit) {
+	objectIndex = -1;
+	if (!traceScene(ro, rd, 5, proxyHit)) {
+		return false;
+	}
+
+	objectIndex = objectIndexForProxyMaterial(proxyHit.materialId);
+	if (objectReadyForCorrection(objectIndex)) {
+		return true;
+	}
+
+	if (proxyHit.materialId == 30) {
+		vec3 reflected = normalize(reflect(rd, proxyHit.n));
+		vec3 reflectedOrigin = proxyHit.p + reflected * 1.5;
+		RtHit reflectedHit;
+		if (traceScene(reflectedOrigin, reflected, 5, reflectedHit)) {
+			objectIndex = objectIndexForProxyMaterial(reflectedHit.materialId);
+			if (!objectReadyForCorrection(objectIndex)) {
+				return false;
+			}
+			proxyHit = reflectedHit;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool renderObjectCorrection(vec2 uv, out vec4 correction, out vec4 exact, out int outRoomId, out int outObjectIndex) {
+	vec2 ndc = vec2(uv.x * 2.0 - 1.0, 1.0 - uv.y * 2.0);
+	vec3 ro = neural.cameraOrigin.xyz;
+	vec3 rd = normalize(neural.cameraForward.xyz + neural.cameraRight.xyz * ndc.x + neural.cameraUp.xyz * ndc.y);
+	RtHit proxyHit;
+	vec3 surfaceFeature;
+	vec3 volumeFeature;
+	vec3 volumeEmission;
+	vec2 features;
+	vec3 corrected;
+	float density;
+
+	outRoomId = roomIdForPoint(ro);
+	outObjectIndex = -1;
+	correction = vec4(0.0);
+	exact = vec4(0.0);
+
+	if (!proxyObjectVisibleForRay(ro, rd, outObjectIndex, proxyHit)) {
+		return false;
+	}
+
+	outRoomId = proxyHit.roomId;
+	if (outObjectIndex < 0 || outObjectIndex >= 3) {
+		return false;
+	}
+
+	surfaceFeature = tonemapRt(surfaceProxyColor(proxyHit.p, outObjectIndex) * 0.74);
+	density = max(volumeObjectDensity(proxyHit.p, outObjectIndex), 0.08);
+	volumeEmission = volumeObjectEmission(proxyHit.p, outObjectIndex, density);
+	volumeFeature = tonemapRt(volumeEmission * 1.25);
+	features = vec2(luminanceRgb(surfaceFeature), luminanceRgb(volumeFeature));
+	if (neuralMlpEnabled()) {
+		corrected = evalObjectNetworkInput(outObjectIndex, clamp(features, 0.0, 1.0));
+	} else {
+		corrected = mix(surfaceFeature, volumeFeature, 0.35);
+	}
+	exact = vec4(tonemapRt(shadeRay(ro, rd, 4) * 0.88), 0.96);
+	correction = vec4(corrected, 0.96);
+
+	return true;
+}
+
+float sigmoidReflection(float x) {
+	return 1.0 / (1.0 + exp(-clamp(x, -60.0, 60.0)));
+}
+
+vec3 safeReflectionRgb(vec4 v) {
+	vec3 rgb = clamp(v.rgb, 0.0, 1.0);
+	if (any(isnan(rgb)) || any(isinf(rgb))) {
+		return vec3(0.0);
+	}
+	return rgb;
+}
+
+bool reflectionMlpLoaded() {
+	return neural.reflectionMeta.x != 0 &&
+		neural.reflectionMeta.y == NEURAL_REFLECTION_DECAL_GEOM_INPUTS &&
+		neural.reflectionMeta.z == NEURAL_REFLECTION_DECAL_TAG;
+}
+
+bool reflectionDecalLoaded() {
+	return neural.reflectionMeta.x != 0 &&
+		neural.reflectionMeta.y == NEURAL_REFLECTION_DECAL_GEOM_INPUTS &&
+		neural.reflectionMeta.z == NEURAL_REFLECTION_DECAL_TAG;
+}
+
+float reflectionRel(float v, float c, float e) {
+	return clamp((v - c) / max(e, 0.0001), -8.0, 8.0);
+}
+
+bool reflectionInsideSelectedBounds(vec2 uv) {
+	vec4 b = vec4(neural.reflectionBbox[0], neural.reflectionBbox[1], neural.reflectionBbox[2], neural.reflectionBbox[3]);
+	vec2 margin = vec2(0.015, 0.020);
+	return reflectionDecalLoaded() &&
+		uv.x >= b.x - margin.x && uv.x <= b.z + margin.x &&
+		uv.y >= b.y - margin.y && uv.y <= b.w + margin.y;
+}
+
+#if 0
+void fillReflectionFeatures(vec2 uv, vec3 surfaceRgb, vec3 volumeRgb, out float f[NEURAL_REFLECTION_INPUTS]) {
+	float ux = uv.x * 2.0 - 1.0;
+	float uy = uv.y * 2.0 - 1.0;
+	float pi = 3.14159265358979323846;
+	float sl = luminanceRgb(surfaceRgb);
+	float vl = luminanceRgb(volumeRgb);
+	float sm = max(surfaceRgb.r, max(surfaceRgb.g, surfaceRgb.b)) > (3.0 / 255.0) ? 1.0 : 0.0;
+	float vm = max(volumeRgb.r, max(volumeRgb.g, volumeRgb.b)) > (3.0 / 255.0) ? 1.0 : 0.0;
+	float scx = neural.reflectionBbox[0];
+	float scy = neural.reflectionBbox[1];
+	float sex = neural.reflectionBbox[2];
+	float sey = neural.reflectionBbox[3];
+	float vcx = neural.reflectionBbox[4];
+	float vcy = neural.reflectionBbox[5];
+	float vex = neural.reflectionBbox[6];
+	float vey = neural.reflectionBbox[7];
+	float ccx = neural.reflectionBbox[8];
+	float ccy = neural.reflectionBbox[9];
+	float cex = neural.reflectionBbox[10];
+	float cey = neural.reflectionBbox[11];
+	float srx = reflectionRel(ux, scx, sex);
+	float sry = reflectionRel(uy, scy, sey);
+	float vrx = reflectionRel(ux, vcx, vex);
+	float vry = reflectionRel(uy, vcy, vey);
+	float crx = reflectionRel(ux, ccx, cex);
+	float cry = reflectionRel(uy, ccy, cey);
+	float omega = neural.reflectionParams.x;
+	int k = 0;
+
+	f[k++] = ux;
+	f[k++] = uy;
+	f[k++] = sin(pi * ux);
+	f[k++] = cos(pi * ux);
+	f[k++] = sin(pi * uy);
+	f[k++] = cos(pi * uy);
+	f[k++] = sin(2.0 * pi * ux);
+	f[k++] = cos(2.0 * pi * ux);
+	f[k++] = sin(2.0 * pi * uy);
+	f[k++] = cos(2.0 * pi * uy);
+	f[k++] = sin(4.0 * pi * ux);
+	f[k++] = cos(4.0 * pi * ux);
+	f[k++] = sin(4.0 * pi * uy);
+	f[k++] = cos(4.0 * pi * uy);
+	f[k++] = sin(8.0 * pi * ux);
+	f[k++] = cos(8.0 * pi * ux);
+	f[k++] = sin(8.0 * pi * uy);
+	f[k++] = cos(8.0 * pi * uy);
+	f[k++] = sin(16.0 * pi * ux);
+	f[k++] = cos(16.0 * pi * ux);
+	f[k++] = sin(16.0 * pi * uy);
+	f[k++] = cos(16.0 * pi * uy);
+	f[k++] = neural.cameraOrigin.x / 576.0;
+	f[k++] = neural.cameraOrigin.y / 512.0;
+	f[k++] = neural.cameraOrigin.z / 576.0;
+	f[k++] = neural.cameraForward.x;
+	f[k++] = neural.cameraForward.y;
+	f[k++] = neural.cameraForward.z;
+	f[k++] = surfaceRgb.r;
+	f[k++] = surfaceRgb.g;
+	f[k++] = surfaceRgb.b;
+	f[k++] = sl;
+	f[k++] = sm;
+	f[k++] = volumeRgb.r;
+	f[k++] = volumeRgb.g;
+	f[k++] = volumeRgb.b;
+	f[k++] = vl;
+	f[k++] = vm;
+	f[k++] = srx;
+	f[k++] = sry;
+	f[k++] = sex;
+	f[k++] = sey;
+	f[k++] = vrx;
+	f[k++] = vry;
+	f[k++] = vex;
+	f[k++] = vey;
+	f[k++] = crx;
+	f[k++] = cry;
+	f[k++] = cex;
+	f[k++] = cey;
+	f[k++] = sin(pi * crx);
+	f[k++] = cos(pi * crx);
+	f[k++] = sin(pi * cry);
+	f[k++] = cos(pi * cry);
+	f[k++] = sin(2.0 * pi * crx);
+	f[k++] = cos(2.0 * pi * crx);
+	f[k++] = sin(2.0 * pi * cry);
+	f[k++] = cos(2.0 * pi * cry);
+	f[k++] = sin(4.0 * pi * crx);
+	f[k++] = cos(4.0 * pi * crx);
+	f[k++] = sin(4.0 * pi * cry);
+	f[k++] = cos(4.0 * pi * cry);
+	f[k++] = sin(8.0 * pi * crx);
+	f[k++] = cos(8.0 * pi * crx);
+	f[k++] = sin(8.0 * pi * cry);
+	f[k++] = cos(8.0 * pi * cry);
+	for (int i = 0; i < NEURAL_REFLECTION_POSE_CODE; i++) {
+		f[k++] = neural.reflectionPoseCode[i];
+	}
+
+	for (int i = 0; i < NEURAL_REFLECTION_INPUTS; i++) {
+		f[i] = (f[i] - neural.reflectionFeatureMean[i]) * neural.reflectionFeatureInvStd[i];
+	}
+}
+
+vec4 evalReflectionMlp(vec2 uv, vec3 surfaceRgb, vec3 volumeRgb) {
+	float f[NEURAL_REFLECTION_INPUTS];
+	float h1[NEURAL_REFLECTION_HIDDEN];
+	float h2[NEURAL_REFLECTION_HIDDEN];
+	float omega = neural.reflectionParams.x;
+
+	fillReflectionFeatures(uv, surfaceRgb, volumeRgb, f);
+
+	for (int j = 0; j < NEURAL_REFLECTION_HIDDEN; j++) {
+		float sum = neural.reflectionWeights[NEURAL_REFLECTION_B1_OFFSET + j];
+		for (int i = 0; i < NEURAL_REFLECTION_INPUTS; i++) {
+			sum += f[i] * neural.reflectionWeights[NEURAL_REFLECTION_W1_OFFSET + i * NEURAL_REFLECTION_HIDDEN + j];
+		}
+		h1[j] = sin(omega * sum);
+	}
+
+	for (int j = 0; j < NEURAL_REFLECTION_HIDDEN; j++) {
+		float sum = neural.reflectionWeights[NEURAL_REFLECTION_B2_OFFSET + j];
+		for (int i = 0; i < NEURAL_REFLECTION_HIDDEN; i++) {
+			sum += h1[i] * neural.reflectionWeights[NEURAL_REFLECTION_W2_OFFSET + i * NEURAL_REFLECTION_HIDDEN + j];
+		}
+		h2[j] = sin(omega * sum);
+	}
+
+	vec4 outv;
+	for (int j = 0; j < NEURAL_REFLECTION_OUTPUTS; j++) {
+		float sum = neural.reflectionWeights[NEURAL_REFLECTION_B3_OFFSET + j];
+		for (int i = 0; i < NEURAL_REFLECTION_HIDDEN; i++) {
+			sum += h2[i] * neural.reflectionWeights[NEURAL_REFLECTION_W3_OFFSET + i * NEURAL_REFLECTION_OUTPUTS + j];
+		}
+		outv[j] = sigmoidReflection(sum);
+	}
+	return clamp(outv, 0.0, 1.0);
+}
+
+vec4 evalReflectionDummyMlp(vec2 uv, vec3 surfaceRgb, vec3 volumeRgb) {
+	float f[NEURAL_REFLECTION_INPUTS];
+	float h1[NEURAL_REFLECTION_DUMMY_HIDDEN];
+	float h2[NEURAL_REFLECTION_DUMMY_HIDDEN];
+	float omega = neural.reflectionParams.x;
+
+	fillReflectionFeatures(uv, surfaceRgb, volumeRgb, f);
+
+	for (int j = 0; j < NEURAL_REFLECTION_DUMMY_HIDDEN; j++) {
+		float sum = neural.reflectionWeights[NEURAL_REFLECTION_DUMMY_B1_OFFSET + j];
+		for (int i = 0; i < NEURAL_REFLECTION_INPUTS; i++) {
+			sum += f[i] * neural.reflectionWeights[NEURAL_REFLECTION_DUMMY_W1_OFFSET + i * NEURAL_REFLECTION_DUMMY_HIDDEN + j];
+		}
+		h1[j] = sin(omega * sum);
+	}
+
+	for (int j = 0; j < NEURAL_REFLECTION_DUMMY_HIDDEN; j++) {
+		float sum = neural.reflectionWeights[NEURAL_REFLECTION_DUMMY_B2_OFFSET + j];
+		for (int i = 0; i < NEURAL_REFLECTION_DUMMY_HIDDEN; i++) {
+			sum += h1[i] * neural.reflectionWeights[NEURAL_REFLECTION_DUMMY_W2_OFFSET + i * NEURAL_REFLECTION_DUMMY_HIDDEN + j];
+		}
+		h2[j] = sin(omega * sum);
+	}
+
+	vec4 outv;
+	for (int j = 0; j < NEURAL_REFLECTION_OUTPUTS; j++) {
+		float sum = neural.reflectionWeights[NEURAL_REFLECTION_DUMMY_B3_OFFSET + j];
+		for (int i = 0; i < NEURAL_REFLECTION_DUMMY_HIDDEN; i++) {
+			sum += h2[i] * neural.reflectionWeights[NEURAL_REFLECTION_DUMMY_W3_OFFSET + i * NEURAL_REFLECTION_OUTPUTS + j];
+		}
+		outv[j] = sigmoidReflection(sum);
+	}
+	return clamp(outv, 0.0, 1.0);
+}
+
+vec4 evalReflectionMediumMlp(vec2 uv, vec3 surfaceRgb, vec3 volumeRgb) {
+	float f[NEURAL_REFLECTION_INPUTS];
+	float h1[NEURAL_REFLECTION_MEDIUM_HIDDEN];
+	float h2[NEURAL_REFLECTION_MEDIUM_HIDDEN];
+	float omega = neural.reflectionParams.x;
+
+	fillReflectionFeatures(uv, surfaceRgb, volumeRgb, f);
+
+	for (int j = 0; j < NEURAL_REFLECTION_MEDIUM_HIDDEN; j++) {
+		float sum = neural.reflectionWeights[NEURAL_REFLECTION_MEDIUM_B1_OFFSET + j];
+		for (int i = 0; i < NEURAL_REFLECTION_INPUTS; i++) {
+			sum += f[i] * neural.reflectionWeights[NEURAL_REFLECTION_MEDIUM_W1_OFFSET + i * NEURAL_REFLECTION_MEDIUM_HIDDEN + j];
+		}
+		h1[j] = sin(omega * sum);
+	}
+
+	for (int j = 0; j < NEURAL_REFLECTION_MEDIUM_HIDDEN; j++) {
+		float sum = neural.reflectionWeights[NEURAL_REFLECTION_MEDIUM_B2_OFFSET + j];
+		for (int i = 0; i < NEURAL_REFLECTION_MEDIUM_HIDDEN; i++) {
+			sum += h1[i] * neural.reflectionWeights[NEURAL_REFLECTION_MEDIUM_W2_OFFSET + i * NEURAL_REFLECTION_MEDIUM_HIDDEN + j];
+		}
+		h2[j] = sin(omega * sum);
+	}
+
+	vec4 outv;
+	for (int j = 0; j < NEURAL_REFLECTION_OUTPUTS; j++) {
+		float sum = neural.reflectionWeights[NEURAL_REFLECTION_MEDIUM_B3_OFFSET + j];
+		for (int i = 0; i < NEURAL_REFLECTION_MEDIUM_HIDDEN; i++) {
+			sum += h2[i] * neural.reflectionWeights[NEURAL_REFLECTION_MEDIUM_W3_OFFSET + i * NEURAL_REFLECTION_OUTPUTS + j];
+		}
+		outv[j] = sigmoidReflection(sum);
+	}
+	return clamp(outv, 0.0, 1.0);
+}
+#endif
+
+#if 0
+float reflectionDecalLogit(float x) {
+	float v = clamp(x, 0.00001, 0.99999);
+	return log(v / (1.0 - v));
+}
+
+vec2 reflectionDecalQ(vec2 uv, int offset) {
+	vec2 lo = vec2(neural.reflectionBbox[offset + 0], neural.reflectionBbox[offset + 1]);
+	vec2 hi = vec2(neural.reflectionBbox[offset + 2], neural.reflectionBbox[offset + 3]);
+	return clamp((uv - lo) / max(hi - lo, vec2(0.00001)), vec2(0.0), vec2(1.0));
+}
+
+float reflectionDecalAtlasFetch(int x, int y, int c) {
+	int xx = clamp(x, 0, NEURAL_REFLECTION_DECAL_ATLAS_WIDTH - 1);
+	int yy = clamp(y, 0, NEURAL_REFLECTION_DECAL_ATLAS_HEIGHT - 1);
+	return neural.reflectionWeights[NEURAL_REFLECTION_DECAL_ATLAS_OFFSET + (yy * NEURAL_REFLECTION_DECAL_ATLAS_WIDTH + xx) * 4 + c];
+}
+
+vec4 sampleReflectionDecalAtlas(vec2 q) {
+	vec2 a = clamp(q, vec2(0.0), vec2(1.0)) * vec2(float(NEURAL_REFLECTION_DECAL_ATLAS_WIDTH - 1), float(NEURAL_REFLECTION_DECAL_ATLAS_HEIGHT - 1));
+	ivec2 p0 = ivec2(floor(a));
+	ivec2 p1 = min(p0 + ivec2(1), ivec2(NEURAL_REFLECTION_DECAL_ATLAS_WIDTH - 1, NEURAL_REFLECTION_DECAL_ATLAS_HEIGHT - 1));
+	vec2 t = a - vec2(p0);
+	vec4 c00 = vec4(
+		reflectionDecalAtlasFetch(p0.x, p0.y, 0),
+		reflectionDecalAtlasFetch(p0.x, p0.y, 1),
+		reflectionDecalAtlasFetch(p0.x, p0.y, 2),
+		reflectionDecalAtlasFetch(p0.x, p0.y, 3));
+	vec4 c10 = vec4(
+		reflectionDecalAtlasFetch(p1.x, p0.y, 0),
+		reflectionDecalAtlasFetch(p1.x, p0.y, 1),
+		reflectionDecalAtlasFetch(p1.x, p0.y, 2),
+		reflectionDecalAtlasFetch(p1.x, p0.y, 3));
+	vec4 c01 = vec4(
+		reflectionDecalAtlasFetch(p0.x, p1.y, 0),
+		reflectionDecalAtlasFetch(p0.x, p1.y, 1),
+		reflectionDecalAtlasFetch(p0.x, p1.y, 2),
+		reflectionDecalAtlasFetch(p0.x, p1.y, 3));
+	vec4 c11 = vec4(
+		reflectionDecalAtlasFetch(p1.x, p1.y, 0),
+		reflectionDecalAtlasFetch(p1.x, p1.y, 1),
+		reflectionDecalAtlasFetch(p1.x, p1.y, 2),
+		reflectionDecalAtlasFetch(p1.x, p1.y, 3));
+	return mix(mix(c00, c10, t.x), mix(c01, c11, t.x), t.y);
+}
+
+void fillReflectionDecalGeom(vec2 uv, vec3 surfaceRgb, vec3 volumeRgb, out float g[NEURAL_REFLECTION_DECAL_GEOM_INPUTS], out vec2 qRoi) {
+	vec2 qSurface;
+	vec2 qVolume;
+	float ms = max(surfaceRgb.r, max(surfaceRgb.g, surfaceRgb.b)) > (3.0 / 255.0) ? 1.0 : 0.0;
+	float mv = max(volumeRgb.r, max(volumeRgb.g, volumeRgb.b)) > (3.0 / 255.0) ? 1.0 : 0.0;
+	float mu = 1.0 - (1.0 - ms) * (1.0 - mv);
+	vec2 ndc = vec2(uv.x * 2.0 - 1.0, 1.0 - uv.y * 2.0);
+	vec3 rd = normalize(neural.cameraForward.xyz + neural.cameraRight.xyz * ndc.x + neural.cameraUp.xyz * ndc.y);
+	vec3 virtualOrigin = neural.cameraOrigin.xyz;
+	vec3 reflectedRay;
+	int k = 0;
+
+	virtualOrigin.x = 988.0 - virtualOrigin.x;
+	virtualOrigin = (virtualOrigin - vec3(0.0, 0.0, 165.0)) / 576.0;
+	reflectedRay = normalize(vec3(-rd.x, rd.y, rd.z));
+
+	qRoi = reflectionDecalQ(uv, 0);
+	qSurface = reflectionDecalQ(uv, 4) * ms;
+	qVolume = reflectionDecalQ(uv, 8) * mv;
+
+	g[k++] = qRoi.x;
+	g[k++] = qRoi.y;
+	g[k++] = qSurface.x;
+	g[k++] = qSurface.y;
+	g[k++] = qVolume.x;
+	g[k++] = qVolume.y;
+	g[k++] = ms;
+	g[k++] = mv;
+	g[k++] = mu;
+	g[k++] = virtualOrigin.x;
+	g[k++] = virtualOrigin.y;
+	g[k++] = virtualOrigin.z;
+	g[k++] = reflectedRay.x;
+	g[k++] = reflectedRay.y;
+	g[k++] = reflectedRay.z;
+	g[k++] = 0.0;
+	g[k++] = 0.0;
+	g[k++] = 0.0;
+	g[k++] = 0.0;
+}
+
+vec4 evalReflectionDecalMlp(vec2 uv, vec3 surfaceRgb, vec3 volumeRgb) {
+	float g[NEURAL_REFLECTION_DECAL_GEOM_INPUTS];
+	float alphaIn[20];
+	float colorIn[28];
+	float alphaH[NEURAL_REFLECTION_DECAL_ALPHA_HIDDEN];
+	float colorH1[NEURAL_REFLECTION_DECAL_COLOR_HIDDEN1];
+	float colorH2[NEURAL_REFLECTION_DECAL_COLOR_HIDDEN2];
+	vec2 qRoi;
+	vec4 latent;
+	float mu;
+	float insidePrior = neural.reflectionParams.x > 0.0 ? neural.reflectionParams.x : (1.0 - 1.0 / 255.0);
+	float outsidePrior = neural.reflectionParams.y > 0.0 ? neural.reflectionParams.y : (1.0 / 255.0);
+	float deltaAlpha;
+	float alpha;
+	float blendLogit;
+	float beta;
+	float ms;
+	float mv;
+	float ws;
+	float wv;
+	vec3 residual;
+	vec3 baseRgb;
+	vec3 rgb;
+
+	fillReflectionDecalGeom(uv, surfaceRgb, volumeRgb, g, qRoi);
+	latent = sampleReflectionDecalAtlas(qRoi);
+
+	for (int i = 0; i < NEURAL_REFLECTION_DECAL_GEOM_INPUTS; i++) {
+		alphaIn[i] = g[i];
+		colorIn[i] = g[i];
+	}
+	alphaIn[19] = latent.r;
+	colorIn[19] = latent.g;
+	colorIn[20] = latent.b;
+	colorIn[21] = latent.a;
+	colorIn[22] = surfaceRgb.r;
+	colorIn[23] = surfaceRgb.g;
+	colorIn[24] = surfaceRgb.b;
+	colorIn[25] = volumeRgb.r;
+	colorIn[26] = volumeRgb.g;
+	colorIn[27] = volumeRgb.b;
+
+	for (int j = 0; j < NEURAL_REFLECTION_DECAL_ALPHA_HIDDEN; j++) {
+		float sum = neural.reflectionWeights[NEURAL_REFLECTION_DECAL_ALPHA_B1_OFFSET + j];
+		for (int i = 0; i < 20; i++) {
+			sum += alphaIn[i] * neural.reflectionWeights[NEURAL_REFLECTION_DECAL_ALPHA_W1_OFFSET + j * 20 + i];
+		}
+		alphaH[j] = relu(sum);
+	}
+	deltaAlpha = neural.reflectionWeights[NEURAL_REFLECTION_DECAL_ALPHA_B2_OFFSET];
+	for (int i = 0; i < NEURAL_REFLECTION_DECAL_ALPHA_HIDDEN; i++) {
+		deltaAlpha += alphaH[i] * neural.reflectionWeights[NEURAL_REFLECTION_DECAL_ALPHA_W2_OFFSET + i];
+	}
+
+	mu = outsidePrior + g[8] * (insidePrior - outsidePrior);
+	alpha = sigmoidReflection(reflectionDecalLogit(mu) + deltaAlpha);
+
+	for (int j = 0; j < NEURAL_REFLECTION_DECAL_COLOR_HIDDEN1; j++) {
+		float sum = neural.reflectionWeights[NEURAL_REFLECTION_DECAL_COLOR_B1_OFFSET + j];
+		for (int i = 0; i < 28; i++) {
+			sum += colorIn[i] * neural.reflectionWeights[NEURAL_REFLECTION_DECAL_COLOR_W1_OFFSET + j * 28 + i];
+		}
+		colorH1[j] = relu(sum);
+	}
+
+	for (int j = 0; j < NEURAL_REFLECTION_DECAL_COLOR_HIDDEN2; j++) {
+		float sum = neural.reflectionWeights[NEURAL_REFLECTION_DECAL_COLOR_B2_OFFSET + j];
+		for (int i = 0; i < NEURAL_REFLECTION_DECAL_COLOR_HIDDEN1; i++) {
+			sum += colorH1[i] * neural.reflectionWeights[NEURAL_REFLECTION_DECAL_COLOR_W2_OFFSET + j * NEURAL_REFLECTION_DECAL_COLOR_HIDDEN1 + i];
+		}
+		colorH2[j] = relu(sum);
+	}
+
+	blendLogit = neural.reflectionWeights[NEURAL_REFLECTION_DECAL_COLOR_B3_OFFSET + 0];
+	residual = vec3(
+		neural.reflectionWeights[NEURAL_REFLECTION_DECAL_COLOR_B3_OFFSET + 1],
+		neural.reflectionWeights[NEURAL_REFLECTION_DECAL_COLOR_B3_OFFSET + 2],
+		neural.reflectionWeights[NEURAL_REFLECTION_DECAL_COLOR_B3_OFFSET + 3]
+	);
+	for (int i = 0; i < NEURAL_REFLECTION_DECAL_COLOR_HIDDEN2; i++) {
+		blendLogit += colorH2[i] * neural.reflectionWeights[NEURAL_REFLECTION_DECAL_COLOR_W3_OFFSET + 0 * NEURAL_REFLECTION_DECAL_COLOR_HIDDEN2 + i];
+		residual.r += colorH2[i] * neural.reflectionWeights[NEURAL_REFLECTION_DECAL_COLOR_W3_OFFSET + 1 * NEURAL_REFLECTION_DECAL_COLOR_HIDDEN2 + i];
+		residual.g += colorH2[i] * neural.reflectionWeights[NEURAL_REFLECTION_DECAL_COLOR_W3_OFFSET + 2 * NEURAL_REFLECTION_DECAL_COLOR_HIDDEN2 + i];
+		residual.b += colorH2[i] * neural.reflectionWeights[NEURAL_REFLECTION_DECAL_COLOR_W3_OFFSET + 3 * NEURAL_REFLECTION_DECAL_COLOR_HIDDEN2 + i];
+	}
+
+	beta = sigmoidReflection(blendLogit);
+	ms = g[6];
+	mv = g[7];
+	ws = ms * beta;
+	wv = mv * (1.0 - beta);
+	baseRgb = (ws * surfaceRgb + wv * volumeRgb) / max(ws + wv, 0.000001);
+	rgb = clamp(baseRgb + residual, 0.0, 1.0);
+
+	return vec4(rgb, clamp(alpha, 0.0, 1.0));
+}
+#endif
+
+vec4 evalReflectionDecalMlp(vec2 uv, vec3 surfaceRgb, vec3 volumeRgb) {
+	float signal = max(max(surfaceRgb.r, max(surfaceRgb.g, surfaceRgb.b)), max(volumeRgb.r, max(volumeRgb.g, volumeRgb.b)));
+	float alpha = smoothstep(2.0 / 255.0, 16.0 / 255.0, signal);
+	return vec4(clamp(max(surfaceRgb, volumeRgb), 0.0, 1.0), alpha);
+}
+
+vec4 evalActiveReflectionMlp(vec2 uv, vec3 surfaceRgb, vec3 volumeRgb) {
+	return evalReflectionDecalMlp(uv, surfaceRgb, volumeRgb);
+}
+
+vec4 renderExactDirectOverlay(vec2 uv, out int outRoomId) {
+	vec2 ndc = vec2(uv.x * 2.0 - 1.0, 1.0 - uv.y * 2.0);
+	vec3 ro = neural.cameraOrigin.xyz;
+	vec3 rd = normalize(neural.cameraForward.xyz + neural.cameraRight.xyz * ndc.x + neural.cameraUp.xyz * ndc.y);
+	RtHit hit;
+
+	if (!traceScene(ro, rd, 4, hit)) {
+		outRoomId = roomIdForPoint(ro);
+		return vec4(0.0);
+	}
+
+	outRoomId = hit.roomId;
+	if (hit.materialId == 30) {
+		return vec4(0.0);
+	}
+
+	if (!liveContributionMaterial(hit.materialId)) {
+		float shadow = dynamicShadowAlpha(hit, 4);
+		return shadow > 0.01 ? vec4(0.0, 0.0, 0.0, shadow) : vec4(0.0);
+	}
+
+	float alpha = hit.materialId >= 40 && hit.materialId <= 49 ? 0.84 : 0.96;
+	float gain = hit.materialId >= 40 && hit.materialId <= 49 ? 0.74 : 0.88;
+	return vec4(tonemapRt(shadeRay(ro, rd, 4) * gain), alpha);
+}
+
+vec4 renderActualObjectOverlay(vec2 uv, out int outRoomId) {
+	vec2 ndc = vec2(uv.x * 2.0 - 1.0, 1.0 - uv.y * 2.0);
+	vec3 ro = neural.cameraOrigin.xyz;
+	vec3 rd = normalize(neural.cameraForward.xyz + neural.cameraRight.xyz * ndc.x + neural.cameraUp.xyz * ndc.y);
+	RtHit hit;
+
+	outRoomId = roomIdForPoint(ro);
+	hit.t = 100000.0;
+	hit.p = vec3(0.0);
+	hit.n = vec3(0.0, 0.0, 1.0);
+	hit.baseColor = vec3(0.0);
+	hit.emission = vec3(0.0);
+	hit.reflective = 0.0;
+	hit.roomId = outRoomId;
+	hit.materialId = 0;
+
+	if (!hitExactMiddleObject(ro, rd, hit)) {
+		return vec4(0.0);
+	}
+
+	outRoomId = hit.roomId;
+	return vec4(tonemapRt(shadeRay(ro, rd, 4) * 0.88), 0.96);
+}
+
+vec4 renderMode7SurfaceMirrorBaseline(vec2 uv, out int outRoomId) {
+	vec2 ndc = vec2(uv.x * 2.0 - 1.0, 1.0 - uv.y * 2.0);
+	vec3 ro = neural.cameraOrigin.xyz;
+	vec3 rd = normalize(neural.cameraForward.xyz + neural.cameraRight.xyz * ndc.x + neural.cameraUp.xyz * ndc.y);
+	RtHit mirrorHit;
+	RtHit objectHit;
+
+	outRoomId = roomIdForPoint(ro);
+
+	mirrorHit.t = 100000.0;
+	mirrorHit.p = vec3(0.0);
+	mirrorHit.n = vec3(0.0, 0.0, 1.0);
+	mirrorHit.baseColor = vec3(0.0);
+	mirrorHit.emission = vec3(0.0);
+	mirrorHit.reflective = 0.0;
+	mirrorHit.roomId = 2;
+	mirrorHit.materialId = 0;
+	hitMirror(ro, rd, mirrorHit);
+
+	objectHit.t = 100000.0;
+	objectHit.p = vec3(0.0);
+	objectHit.n = vec3(0.0, 0.0, 1.0);
+	objectHit.baseColor = vec3(0.0);
+	objectHit.emission = vec3(0.0);
+	objectHit.reflective = 0.0;
+	objectHit.roomId = 2;
+	objectHit.materialId = 0;
+	if (hitExactMiddleObject(ro, rd, objectHit) && objectHit.t < mirrorHit.t - 0.5) {
+		outRoomId = objectHit.roomId;
+		return vec4(tonemapRt(shadeRay(ro, rd, 4) * 0.88), 0.96);
+	}
+
+	if (mirrorHit.t < 100000.0) {
+		outRoomId = mirrorHit.roomId;
+		return mirrorSurfaceMiddleOverlay(mirrorHit, rd, uv);
+	}
+
+	return vec4(0.0);
+}
+
+vec4 renderReflectionMlpCorrected(vec2 uv, out int outRoomId) {
+	vec2 ndc = vec2(uv.x * 2.0 - 1.0, 1.0 - uv.y * 2.0);
+	vec3 ro = neural.cameraOrigin.xyz;
+	vec3 rd = normalize(neural.cameraForward.xyz + neural.cameraRight.xyz * ndc.x + neural.cameraUp.xyz * ndc.y);
+	RtHit mirrorHit;
+	RtHit objectHit;
+	vec4 result = vec4(0.0);
+	vec4 actual = renderActualObjectOverlay(uv, outRoomId);
+	vec4 surface;
+	vec4 volume;
+	vec4 pred;
+	vec3 paint;
+	vec3 premulPaint;
+	float mask;
+	float paintAlpha;
+	float paintSignal;
+	float inputSignal;
+	int mlpMode;
+	int modeRoomId;
+
+	mirrorHit.t = 100000.0;
+	mirrorHit.p = vec3(0.0);
+	mirrorHit.n = vec3(0.0, 0.0, 1.0);
+	mirrorHit.baseColor = vec3(0.0);
+	mirrorHit.emission = vec3(0.0);
+	mirrorHit.reflective = 0.0;
+	mirrorHit.roomId = 2;
+	mirrorHit.materialId = 0;
+	if (!hitMirror(ro, rd, mirrorHit)) {
+		return actual;
+	}
+
+	objectHit.t = 100000.0;
+	objectHit.p = vec3(0.0);
+	objectHit.n = vec3(0.0, 0.0, 1.0);
+	objectHit.baseColor = vec3(0.0);
+	objectHit.emission = vec3(0.0);
+	objectHit.reflective = 0.0;
+	objectHit.roomId = roomIdForPoint(ro);
+	objectHit.materialId = 0;
+	if (hitExactObjects(ro, rd, objectHit) && objectHit.t < mirrorHit.t - 0.5) {
+		return actual;
+	}
+
+	outRoomId = mirrorHit.roomId;
+	result = compositeOverlay(actual, mirrorPanelOverlay(mirrorHit, rd, uv));
+
+	surface = renderMirrorOnlyMode(uv, 5, modeRoomId);
+	volume = renderMirrorOnlyMode(uv, 6, modeRoomId);
+	inputSignal = reflectionInputSignal(surface, volume);
+	if (!reflectionMlpLoaded() || !neuralMlpEnabled() || !reflectionInsideSelectedBounds(uv)) {
+		return compositeOverlay(result, mirrorFrameOverlay(mirrorHit));
+	}
+	if (!reflectionDecalLoaded() && inputSignal <= (3.0 / 255.0)) {
+		return compositeOverlay(result, mirrorFrameOverlay(mirrorHit));
+	}
+
+	pred = evalActiveReflectionMlp(uv, surface.rgb, volume.rgb);
+	paint = clamp(pred.rgb, 0.0, 1.0);
+	mask = clamp(pred.a, 0.0, 1.0);
+	premulPaint = paint * mask;
+	paintSignal = max(premulPaint.r, max(premulPaint.g, premulPaint.b));
+	paintAlpha = smoothstep(2.0 / 255.0, 8.0 / 255.0, paintSignal);
+	mlpMode = neuralMlpMode();
+
+	if (mlpMode == 2) {
+		return compositeOverlay(compositeOverlay(result, vec4(vec3(mask), 0.85)), mirrorFrameOverlay(mirrorHit));
+	}
+	if (mlpMode == 3) {
+		result = paintSignal > (1.0 / 255.0) ? compositeOverlay(result, vec4(premulPaint, 0.85)) : result;
+		return compositeOverlay(result, mirrorFrameOverlay(mirrorHit));
+	}
+
+	if (paintAlpha <= 0.001) {
+		return compositeOverlay(result, mirrorFrameOverlay(mirrorHit));
+	}
+
+	return compositeOverlay(compositeOverlay(result, vec4(premulPaint, paintAlpha)), mirrorFrameOverlay(mirrorHit));
+}
+
+vec4 renderReflectionMlpError(vec2 uv, out int outRoomId) {
+	vec2 ndc = vec2(uv.x * 2.0 - 1.0, 1.0 - uv.y * 2.0);
+	vec3 ro = neural.cameraOrigin.xyz;
+	vec3 rd = normalize(neural.cameraForward.xyz + neural.cameraRight.xyz * ndc.x + neural.cameraUp.xyz * ndc.y);
+	RtHit mirrorHit;
+
+	outRoomId = roomIdForPoint(ro);
+	mirrorHit.t = 100000.0;
+	mirrorHit.p = vec3(0.0);
+	mirrorHit.n = vec3(0.0, 0.0, 1.0);
+	mirrorHit.baseColor = vec3(0.0);
+	mirrorHit.emission = vec3(0.0);
+	mirrorHit.reflective = 0.0;
+	mirrorHit.roomId = 2;
+	mirrorHit.materialId = 0;
+	if (!hitMirror(ro, rd, mirrorHit) ||
+			!reflectionMlpLoaded() || !neuralMlpEnabled() || !reflectionInsideSelectedBounds(uv)) {
+		return vec4(0.0);
+	}
+	outRoomId = mirrorHit.roomId;
+
+	int modeRoomId;
+	vec4 surface = renderMirrorOnlyMode(uv, 5, modeRoomId);
+	vec4 volume = renderMirrorOnlyMode(uv, 6, modeRoomId);
+	vec4 exact = renderMirrorOnlyMode(uv, 4, modeRoomId);
+	vec4 pred = evalActiveReflectionMlp(uv, surface.rgb, volume.rgb);
+	vec3 predPremul = clamp(pred.rgb, 0.0, 1.0) * clamp(pred.a, 0.0, 1.0);
+	vec3 exactPremul = exact.rgb * exact.a;
+	vec3 delta = abs(predPremul - exactPremul);
+	float e = max(delta.x, max(delta.y, delta.z));
+	if (e < 0.015 && max(max(predPremul.r, max(predPremul.g, predPremul.b)), max(exactPremul.r, max(exactPremul.g, exactPremul.b))) < 0.02) {
+		return vec4(0.0);
+	}
+	return vec4(errorHeat(e), 0.85);
+}
+
+vec4 renderReflectionMlpInputView(vec2 uv, int inputMode, out int outRoomId) {
+	int modeRoomId;
+	vec4 inputColor;
+
+	outRoomId = roomIdForPoint(neural.cameraOrigin.xyz);
+
+	inputColor = renderMirrorOnlyMode(uv, inputMode, modeRoomId);
+	outRoomId = modeRoomId;
+	return vec4(inputColor.rgb, 1.0);
+}
+
+vec4 renderReflectionMlpOutputView(vec2 uv, out int outRoomId) {
+	int modeRoomId;
+	int mlpMode;
+	vec4 surface;
+	vec4 volume;
+	vec4 pred;
+	float proxySignal;
+	float proxyMask;
+
+	outRoomId = roomIdForPoint(neural.cameraOrigin.xyz);
+	mlpMode = neuralMlpMode();
+	if (mlpMode == 5) {
+		vec3 bars = vec3(uv.x, uv.y, 0.5 + 0.5 * sin((uv.x + uv.y) * 40.0));
+		return vec4(bars, 1.0);
+	}
+
+	surface = renderMirrorOnlyMode(uv, 5, modeRoomId);
+	volume = renderMirrorOnlyMode(uv, 6, modeRoomId);
+	outRoomId = modeRoomId;
+	proxySignal = max(max(surface.r, max(surface.g, surface.b)), max(volume.r, max(volume.g, volume.b)));
+	proxyMask = smoothstep(2.0 / 255.0, 24.0 / 255.0, proxySignal);
+
+	if (mlpMode == 4) {
+		return vec4(clamp(max(surface.rgb, volume.rgb), vec3(0.0), vec3(1.0)), 1.0);
+	}
+	if (mlpMode == 6) {
+		vec3 proxyColor = mix(vec3(0.02, 0.0, 0.08), vec3(0.0, 1.0, 0.35), smoothstep(2.0 / 255.0, 24.0 / 255.0, proxySignal));
+		return vec4(proxyColor, 1.0);
+	}
+	if (mlpMode == 7) {
+		return vec4(neural.reflectionMeta.x != 0 ? 1.0 : 0.0, 0.55, neuralMlpEnabled() ? 1.0 : 0.0, 1.0);
+	}
+	if (mlpMode == 1) {
+		return vec4(mix(vec3(0.04, 0.0, 0.06), vec3(1.0, 0.12, 0.85), proxyMask), 1.0);
+	}
+	if (!reflectionMlpLoaded() || !neuralMlpEnabled()) {
+		return vec4(0.0, 0.0, 0.0, 1.0);
+	}
+
+	pred = evalActiveReflectionMlp(uv, surface.rgb, volume.rgb);
+
+	if (mlpMode == 2) {
+		return vec4(vec3(clamp(pred.a, 0.0, 1.0)), 1.0);
+	}
+	if (mlpMode == 3) {
+		return vec4(clamp(pred.rgb, 0.0, 1.0), 1.0);
+	}
+	return vec4(clamp(pred.rgb * pred.a, 0.0, 1.0), 1.0);
+}
+
+vec4 renderCorrectedObjects(vec2 uv, out int outRoomId) {
+	vec4 correction;
+	vec4 exact;
+	int objectIndex;
+	if (reflectionMlpLoaded()) {
+		return renderReflectionMlpCorrected(uv, outRoomId);
+	}
+	return renderMode7SurfaceMirrorBaseline(uv, outRoomId);
+	if (!renderObjectCorrection(uv, correction, exact, outRoomId, objectIndex)) {
+		return vec4(0.0);
+	}
+	return correction;
+}
+
+vec4 renderCorrectionError(vec2 uv, out int outRoomId) {
+	vec4 correction;
+	vec4 exact;
+	int objectIndex;
+	vec3 scene;
+	vec3 correctedFinal;
+	vec3 exactFinal;
+	vec3 delta;
+	if (reflectionMlpLoaded()) {
+		return renderReflectionMlpError(uv, outRoomId);
+	}
+	if (!renderObjectCorrection(uv, correction, exact, outRoomId, objectIndex)) {
+		return vec4(0.0);
+	}
+	scene = texture(sceneColor, uv).rgb;
+	correctedFinal = mix(scene, correction.rgb, clamp(correction.a, 0.0, 1.0));
+	exactFinal = mix(scene, exact.rgb, clamp(exact.a, 0.0, 1.0));
+	delta = abs(correctedFinal - exactFinal);
+	return vec4(errorHeat(max(delta.x, max(delta.y, delta.z))), 0.90);
+}
+
+int roomIndexForUv(vec2 uv) {
+	int count = clamp(neural.roomCount, 0, MAX_NEURAL_ROOMS);
+
+	if (count <= 0) {
+		return -1;
+	}
+	if (neural.activeRoom >= 0 && neural.activeRoom < count) {
+		return neural.activeRoom;
+	}
+	if (count == 1) {
+		return 0;
+	}
+	if (uv.y < 0.333333) {
+		return 0;
+	}
+	if (uv.y < 0.666667) {
+		return min(1, count - 1);
+	}
+	return min(2, count - 1);
+}
+
+void main() {
+	ivec2 p = ivec2(gl_GlobalInvocationID.xy);
+	ivec2 size = imageSize(outHDR);
+	int roomIndex;
+	float encodedRoomId;
+	vec3 y;
+	vec3 roomTint;
+	vec3 reference;
+	vec3 delta;
+	int liveRoomId;
+
+	if (p.x >= size.x || p.y >= size.y) {
+		return;
+	}
+
+	vec2 uv = (vec2(p) + vec2(0.5)) / vec2(size);
+
+	if (neural.viewMode >= 1 && neural.viewMode <= 8) {
+		vec4 live = neural.viewMode == 1 ? renderLiveMode(uv, 5, liveRoomId) :
+			(neural.viewMode == 2 ? renderLiveMode(uv, 6, liveRoomId) :
+			(neural.viewMode == 3 ? renderLiveMode(uv, 4, liveRoomId) :
+			(neural.viewMode == 4 ? renderReflectionMlpInputView(uv, 5, liveRoomId) :
+			(neural.viewMode == 5 ? renderReflectionMlpInputView(uv, 6, liveRoomId) :
+			(neural.viewMode == 6 ? renderReflectionMlpOutputView(uv, liveRoomId) :
+			(neural.viewMode == 7 ? renderCorrectedObjects(uv, liveRoomId) : renderCorrectionError(uv, liveRoomId)))))));
+		if (neural.viewMode <= 8) {
+			live = compositeOverlay(live, renderActiveMarkerOverlay(uv));
+		}
+		imageStore(outHDR, p, live);
+		imageStore(outRoomId, p, vec4(float(liveRoomId) / 255.0, 0.0, 0.0, 1.0));
+		return;
+	}
+
+	roomIndex = roomIndexForUv(uv);
+
+	if (roomIndex >= 0) {
+		encodedRoomId = float(neural.roomId[roomIndex]) / 255.0;
+		roomTint = neural.roomColor[roomIndex].rgb;
+		if (neural.hasWeights[roomIndex] != 0) {
+			y = evalRoomNetwork(roomIndex, uv);
+		} else {
+			y = roomTint;
+		}
+	} else {
+		encodedRoomId = uv.y < 0.333333 ? 1.0 / 255.0 : (uv.y < 0.666667 ? 2.0 / 255.0 : 3.0 / 255.0);
+		y = evalFallback(uv);
+		roomTint = y;
+	}
+
+	if (neural.viewMode == 2) {
+		int referenceRoomId = roomIndex >= 0 ? neural.roomId[roomIndex] : (uv.y < 0.333333 ? 1 : (uv.y < 0.666667 ? 2 : 3));
+		reference = evalReferenceNetwork(referenceRoomId, uv);
+		delta = abs(y - reference);
+		y = errorHeat(max(delta.x, max(delta.y, delta.z)));
+	} else if (neural.viewMode == 3) {
+		y = evalFuzz(uv, y, roomTint);
+	}
+
+	imageStore(outHDR, p, vec4(y, 1.0));
+	imageStore(outRoomId, p, vec4(encodedRoomId, 0.0, 0.0, 1.0));
+}

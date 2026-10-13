@@ -1,0 +1,362 @@
+#version 450
+#extension GL_GOOGLE_include_directive : require
+#include "surface_geometry.glsl"
+#include "surface_gate.glsl"
+
+// Exact frozen light1979, fixed FHD 4x shared LR-guide specialization.
+// Original baseline is preserved; actual HR visibility remains an explicit cost.
+layout(std430,binding=2) readonly buffer UpscaleAsset { uint data[]; } upAsset;
+layout(binding=3) uniform usampler2D hrIDTexture;
+layout(binding=4) uniform sampler2D hrBaryTexture;
+layout(rgba32f,binding=5) uniform writeonly image2D outputImage; // display associated
+layout(binding=9) uniform usampler2D lrIDTexture;
+layout(binding=10) uniform sampler2D lrBaryTexture;
+layout(binding=11) uniform sampler2D lrLinearTexture;
+layout(rgba32f,binding=12) uniform writeonly image2D geometryLinearImage;
+layout(r32ui,binding=13) uniform writeonly uimage2D hrCenterGateImage;
+layout(local_size_x=8,local_size_y=8) in;
+
+const uint UP_MISS=0xffffffffu;
+const uint UP_BILINEAR=8u, UP_GEOMETRY=16u;
+// uint words in the unchanged little-endian NLUP0001 file, not repacked weights.
+const uint UP_EMBED=240u, UP_W0=416u, UP_B0=1520u;
+const uint UP_W1=1544u, UP_B1=2120u, UP_W2=2144u, UP_B2=2216u;
+
+struct UpGuide {
+    uint triangle;
+    uint chart;
+    float depth;
+    float roughness;
+    vec2 uv;
+    vec3 normal;
+    vec3 reflected;
+    bool valid;
+};
+
+bool upHeaderValid() {
+    return upAsset.data.length()==2219
+        && upAsset.data[0]==0x50554c4eu && upAsset.data[1]==0x31303030u
+        && upAsset.data[2]==256u && upAsset.data[3]==1u
+        && upAsset.data[4]==1u && upAsset.data[5]==1u
+        && upAsset.data[6]==44u && upAsset.data[7]==24u
+        && upAsset.data[8]==88u && upAsset.data[9]==2u
+        && upAsset.data[10]==1803u && upAsset.data[11]==1979u
+        && upAsset.data[12]==1u && upAsset.data[13]==1u
+        && upAsset.data[48]==8620u && upAsset.data[49]==0u;
+}
+float upWeight(uint word) { return uintBitsToFloat(upAsset.data[word]); }
+vec3 upUnit(vec3 value) {
+    precise float squared=(value.x*value.x+value.y*value.y)+value.z*value.z;
+    precise float scale=max(sqrt(squared),1e-12);
+    return value/scale;
+}
+
+// Same canonical hit math as surfaceFromCanonicalHit; omit UV derivatives,
+// material fetches and ndotv, which are not part of frozen prepare's guides.
+// Re-normalize normal/reflection as _guide does in the CPU implementation.
+vec3 upCanonicalVirtualQ(vec2 nativePixel,ivec2 dimensions) {
+    precise float px=(nativePixel.x/float(dimensions.x))*2.0-1.0;
+    precise float py=1.0-(nativePixel.y/float(dimensions.y))*2.0;
+    precise float horizontal=px*frame.forwardTanX.w;
+    precise float vertical=py*frame.rightTanY.w;
+    precise vec3 forward=surfaceMirrorVector(frame.forwardTanX.xyz);
+    precise vec3 right=surfaceMirrorVector(frame.rightTanY.xyz);
+    precise vec3 up=surfaceMirrorVector(frame.upNear.xyz);
+    precise vec3 first=forward+right*horizontal;
+    precise vec3 result=first+up*vertical;
+    return result;
+}
+UpGuide upGuide(uint triangleID,vec2 bary12,vec2 nativePixel,ivec2 dimensions) {
+    UpGuide g;
+    g.triangle=UP_MISS;g.chart=UP_MISS;g.depth=0.0;g.roughness=0.0;
+    g.uv=vec2(0.0);g.normal=vec3(0.0);g.reflected=vec3(0.0);g.valid=false;
+    if(triangleID>=frame.info.w) return g;
+    SurfaceTriangle triangle=geometry.triangles[triangleID];
+    precise vec3 p0=surfacePosition(triangle,0);
+    precise vec3 e1=surfacePosition(triangle,1)-p0;
+    precise vec3 e2=surfacePosition(triangle,2)-p0;
+    precise float b0=1.0-bary12.x-bary12.y;
+    precise vec3 q=upCanonicalVirtualQ(nativePixel,dimensions);
+    precise vec3 ray=surfaceCanonicalNormalize(q);
+    precise vec3 view=ray*(-1.0);
+    precise vec3 rawNg=surfaceCanonicalCross(e1,e2);
+    precise vec3 normalInterpolated=(surfaceCornerNormal(triangle,0)*b0
+                                    +surfaceCornerNormal(triangle,1)*bary12.x)
+                                    +surfaceCornerNormal(triangle,2)*bary12.y;
+    precise vec3 normal=surfaceCanonicalNormalize(normalInterpolated);
+    precise vec3 geometricNormal=surfaceCanonicalNormalize(rawNg);
+    if(surfaceCanonicalDot(geometricNormal,view)<0.0) normal=normal*(-1.0);
+    precise float twiceNV=2.0*surfaceCanonicalDot(normal,view);
+    precise vec3 reflection=surfaceCanonicalNormalize(normal*twiceNV-view);
+    precise vec2 uv=(surfaceCornerUV(triangle,0)*b0
+                   +surfaceCornerUV(triangle,1)*bary12.x)
+                   +surfaceCornerUV(triangle,2)*bary12.y;
+    precise vec3 pvec=surfaceCanonicalCross(ray,e2);
+    precise float inv=1.0/surfaceCanonicalDot(e1,pvec);
+    precise vec3 fromCorner=surfaceVirtualOrigin()-p0;
+    precise vec3 qvec=surfaceCanonicalCross(fromCorner,e1);
+    g.triangle=triangleID;g.chart=triangle.metadata.x;
+    g.depth=surfaceCanonicalDot(e2,qvec)*inv;
+    g.roughness=uintBitsToFloat(triangle.metadata.w);
+    g.uv=uv;g.normal=upUnit(normal);g.reflected=upUnit(reflection);g.valid=true;
+    return g;
+}
+
+vec4 upDisplay(vec4 linearAssociated) {
+    float alpha=clamp(linearAssociated.a,0.0,1.0);
+    vec3 straight=max(linearAssociated.rgb,vec3(0.0))/max(alpha,1e-8);
+    return vec4(alpha*pow(straight/(vec3(1.0)+straight),vec3(1.0/2.2)),alpha);
+}
+
+vec2 upEmbedding(uint chart) {
+    if(chart==UP_MISS) return vec2(0.0);
+    // Exact chart IDs are signed int64 in the asset, nonnegative and sorted.
+    // Host verifies scene IDs fit uint32 and all high words are zero.
+    int lo=0,hi=88;
+    while(lo<hi) {
+        int mid=(lo+hi)/2;
+        uint word=64u+uint(mid)*2u;
+        uint id=upAsset.data[word];
+        if(upAsset.data[word+1u]!=0u) return vec2(0.0);
+        if(id<chart) lo=mid+1; else hi=mid;
+    }
+    if(lo==88||upAsset.data[64u+uint(lo)*2u]!=chart) return vec2(0.0);
+    uint start=UP_EMBED+uint(lo)*2u;
+    return vec2(upWeight(start),upWeight(start+1u));
+}
+
+vec3 upDecode(float f[46]) {
+    float h0[24],h1[24];
+    for(int o=0;o<24;o++) {
+        float v=upWeight(UP_B0+uint(o));
+        for(int i=0;i<46;i++) v+=f[i]*upWeight(UP_W0+uint(o*46+i));
+        h0[o]=max(v,0.0);
+    }
+    for(int o=0;o<24;o++) {
+        float v=upWeight(UP_B1+uint(o));
+        for(int i=0;i<24;i++) v+=h0[i]*upWeight(UP_W1+uint(o*24+i));
+        h1[o]=max(v,0.0);
+    }
+    vec3 logits=vec3(0.0);
+    for(int o=0;o<3;o++) {
+        float v=upWeight(UP_B2+uint(o));
+        for(int i=0;i<24;i++) v+=h1[i]*upWeight(UP_W2+uint(o*24+i));
+        logits[o]=v;
+    }
+    return tanh(logits)*upWeight(50u);
+}
+
+
+// 4x-only: an 8x8 HR group touches 4x4 LR pixels, four quarters each.
+// Exactly 64 records: 512B IDs + 1024B normal/depth = 1536B workgroup storage.
+shared uvec2 upLRIds[64];
+shared vec4 upLRNormalDepth[64];
+
+// Only these LR fields enter frozen matching/features. Preserve upGuide's
+// normal, orientation and Moller depth operation order; omit unused UV,
+// reflection and roughness construction without changing any used value.
+void upCacheLRGuide(uint triangleID,vec2 bary12,vec2 nativePixel,ivec2 dimensions,
+                    out uvec2 ids,out vec4 normalDepth) {
+    ids=uvec2(UP_MISS);normalDepth=vec4(0.0);
+    if(triangleID>=frame.info.w) return;
+    SurfaceTriangle triangle=geometry.triangles[triangleID];
+    precise vec3 p0=surfacePosition(triangle,0);
+    precise vec3 e1=surfacePosition(triangle,1)-p0;
+    precise vec3 e2=surfacePosition(triangle,2)-p0;
+    precise float b0=1.0-bary12.x-bary12.y;
+    precise vec3 q=upCanonicalVirtualQ(nativePixel,dimensions);
+    precise vec3 ray=surfaceCanonicalNormalize(q);
+    precise vec3 view=ray*(-1.0);
+    precise vec3 rawNg=surfaceCanonicalCross(e1,e2);
+    precise vec3 normalInterpolated=(surfaceCornerNormal(triangle,0)*b0
+                                    +surfaceCornerNormal(triangle,1)*bary12.x)
+                                    +surfaceCornerNormal(triangle,2)*bary12.y;
+    precise vec3 normal=surfaceCanonicalNormalize(normalInterpolated);
+    precise vec3 geometricNormal=surfaceCanonicalNormalize(rawNg);
+    if(surfaceCanonicalDot(geometricNormal,view)<0.0) normal=normal*(-1.0);
+    precise vec3 pvec=surfaceCanonicalCross(ray,e2);
+    precise float inv=1.0/surfaceCanonicalDot(e1,pvec);
+    precise vec3 fromCorner=surfaceVirtualOrigin()-p0;
+    precise vec3 qvec=surfaceCanonicalCross(fromCorner,e1);
+    precise float depth=surfaceCanonicalDot(e2,qvec)*inv;
+    ids=uvec2(triangleID,triangle.metadata.x);
+    normalDepth=vec4(upUnit(normal),depth);
+}
+void main() {
+    ivec2 pixel=ivec2(gl_GlobalInvocationID.xy),hrSize=ivec2(frame.info.xy);
+    ivec2 lrSize=textureSize(lrLinearTexture,0);
+    // Host must use the preserved generic shader for resize/other scales.
+    bool contractValid=upHeaderValid()
+       &&all(equal(hrSize,ivec2(1920,1080)))&&all(equal(lrSize,ivec2(480,270)))
+       &&(frame.info.z&UP_BILINEAR)==0u
+       &&all(equal(imageSize(outputImage),hrSize))
+       &&all(equal(imageSize(geometryLinearImage),hrSize))
+       &&all(equal(imageSize(hrCenterGateImage),hrSize))
+       &&all(equal(textureSize(hrIDTexture,0),hrSize*2))
+       &&all(equal(textureSize(hrBaryTexture,0),hrSize*2))
+       &&all(equal(textureSize(lrIDTexture,0),lrSize*2))
+       &&all(equal(textureSize(lrBaryTexture,0),lrSize*2));
+    ivec2 cacheOrigin=ivec2(gl_WorkGroupID.xy)*2-ivec2(1);
+    uint slot=gl_LocalInvocationIndex;
+    uvec2 ids=uvec2(UP_MISS);
+    vec4 normalDepth=vec4(0.0);
+    if(contractValid) {
+        uint cachePixel=slot/4u;
+        int quarter=int(slot%4u);
+        ivec2 lowPixel=clamp(cacheOrigin+ivec2(int(cachePixel%4u),int(cachePixel/4u)),
+                            ivec2(0),lrSize-ivec2(1));
+        ivec2 sub=lowPixel*2+ivec2(quarter%2,quarter/2);
+        upCacheLRGuide(texelFetch(lrIDTexture,sub,0).r,
+                       texelFetch(lrBaryTexture,sub,0).xy,
+                       (vec2(sub)+vec2(0.5))*0.5,lrSize,ids,normalDepth);
+    }
+    upLRIds[slot]=ids;
+    upLRNormalDepth[slot]=normalDepth;
+    // EVERY invocation, including malformed-contract/out-of-bounds ones,
+    // reaches this shared-memory barrier before ANY per-pixel main return.
+    barrier();
+    if(any(greaterThanEqual(pixel,hrSize))) return;
+    if(!contractValid) {
+        imageStore(outputImage,pixel,vec4(1.0,0.0,1.0,1.0));
+        imageStore(geometryLinearImage,pixel,vec4(0.0));
+        imageStore(hrCenterGateImage,pixel,uvec4(0u));
+        return;
+    }
+    bool incident=surfaceIncident(frame.origin.xyz,
+                                  normalize(surfaceRealRayUnnormalized(vec2(pixel)+0.5)));
+    imageStore(hrCenterGateImage,pixel,uvec4(incident?1u:0u,0u,0u,0u));
+    if(!incident) {
+        // Frozen HR alpha/base are both zero under this gate.
+        imageStore(outputImage,pixel,vec4(0.0));
+        imageStore(geometryLinearImage,pixel,vec4(0.0));
+        return;
+    }
+    UpGuide hg[4]; // Full HR guide contract stays unchanged.
+    int validQuarters=0;
+    for(int q=0;q<4;q++) {
+        ivec2 sub=pixel*2+ivec2(q%2,q/2);
+        hg[q]=upGuide(texelFetch(hrIDTexture,sub,0).r,
+                     texelFetch(hrBaryTexture,sub,0).xy,
+                     (vec2(sub)+vec2(0.5))*0.5,hrSize);
+        if(hg[q].valid) validQuarters++;
+    }
+    if(validQuarters==0) {
+        imageStore(outputImage,pixel,vec4(0.0));
+        imageStore(geometryLinearImage,pixel,vec4(0.0));
+        return;
+    }
+    vec2 low=(vec2(pixel)+vec2(0.5))*(vec2(lrSize)/vec2(hrSize))-vec2(0.5);
+    ivec2 cell=ivec2(floor(low));
+    vec2 phase=low-floor(low);
+    int cacheBase[4];
+    float spatial[4];
+    vec4 colors[4];
+    vec3 straight[4];
+    for(int p=0;p<4;p++) {
+        ivec2 offset=ivec2(p%2,p/2),unclamped=cell+offset;
+        ivec2 cachePixel=unclamped-cacheOrigin;
+        // Use logical UNCLAMPED cache coordinates. Fill already clamps each
+        // fetch, preserving repeated edge neighbors and their quarter rays.
+        cacheBase[p]=(cachePixel.y*4+cachePixel.x)*4;
+        ivec2 lowPixel=clamp(unclamped,ivec2(0),lrSize-ivec2(1));
+        spatial[p]=(offset.x==0?1.0-phase.x:phase.x)
+                  *(offset.y==0?1.0-phase.y:phase.y);
+        colors[p]=texelFetch(lrLinearTexture,lowPixel,0);
+        straight[p]=colors[p].rgb/max(colors[p].a,1e-8);
+    }
+    float gate=1.0; // false center gate already returned after the barrier.
+    float alpha=float(validQuarters)*0.25*gate;
+    vec3 accumulated=vec3(0.0);
+    float confidence=0.0,missing=0.0,relativeError=0.0,normalQuality=0.0;
+    for(int q=0;q<4;q++) {
+        if(!hg[q].valid) continue;
+        float pixelWeights[4];
+        float denominator=0.0,denominatorQ=0.0;
+        float errorWeighted=0.0,normalWeighted=0.0;
+        for(int p=0;p<4;p++) {
+            float sumQuarterWeights=0.0;
+            for(int k=0;k<4;k++) {
+                int index=cacheBase[p]+k;
+                uvec2 gID=upLRIds[index];
+                vec4 gND=upLRNormalDepth[index];
+                float ndot=clamp(dot(gND.xyz,hg[q].normal),0.0,1.0);
+                float depthError=abs(gND.w-hg[q].depth)
+                                /max(max(abs(gND.w),abs(hg[q].depth)),1e-3);
+                float weight=0.0;
+                if(gID.x<frame.info.w&&colors[p].a>0.0&&gID.y==hg[q].chart) {
+                    float n2=ndot*ndot,n4=n2*n2,n8=n4*n4;
+                    float exact=gID.x==hg[q].triangle?1.0:0.0;
+                    weight=(0.5+0.5*exact)*n8*exp(-40.0*depthError);
+                }
+                sumQuarterWeights+=weight;
+                errorWeighted+=depthError*weight;
+                normalWeighted+=ndot*weight;
+            }
+            denominatorQ+=sumQuarterWeights;
+            pixelWeights[p]=sumQuarterWeights*0.25*spatial[p];
+            denominator+=pixelWeights[p];
+        }
+        bool matched=denominator>1e-8;
+        vec3 color=vec3(0.0);
+        for(int p=0;p<4;p++) color+=straight[p]*pixelWeights[p];
+        color/=max(denominator,1e-8);
+        if(!matched) color=vec3(0.0);
+        accumulated+=color*0.25;
+        confidence+=clamp(denominator,0.0,1.0)*0.25;
+        if(!matched) missing+=0.25;
+        relativeError+=errorWeighted/max(denominatorQ,1e-8)*0.25;
+        normalQuality+=normalWeighted/max(denominatorQ,1e-8)*0.25;
+    }
+    vec4 geometryLinear=vec4(accumulated*gate,alpha);
+    vec4 base=upDisplay(geometryLinear);
+    imageStore(geometryLinearImage,pixel,geometryLinear);
+    if((frame.info.z&UP_GEOMETRY)!=0u) {
+        imageStore(outputImage,pixel,base);
+        return;
+    }
+    // Dominant-chart representative. Strict > preserves first-quarter ties.
+    int representative=0,bestVotes=-1;
+    for(int q=0;q<4;q++) {
+        int votes=-1;
+        if(hg[q].valid) {
+            votes=0;
+            for(int k=0;k<4;k++) if(hg[k].valid&&hg[k].chart==hg[q].chart) votes++;
+        }
+        if(votes>bestVotes) {bestVotes=votes;representative=q;}
+    }
+    UpGuide rep=hg[representative];
+    uint chart=validQuarters>0?rep.chart:UP_MISS;
+    vec2 footprint=vec2(0.0);
+    if(validQuarters>0) {
+        vec2 lo=vec2(1e30),hi=vec2(-1e30);
+        for(int q=0;q<4;q++) if(hg[q].valid&&hg[q].chart==chart) {
+            lo=min(lo,hg[q].uv);hi=max(hi,hg[q].uv);
+        }
+        footprint=clamp(hi-lo,vec2(0.0),vec2(1.0));
+    }
+    float f[46];
+    for(int p=0;p<4;p++) {
+        vec3 localDisplay=pow(straight[p]/(vec3(1.0)+straight[p]),vec3(1.0/2.2));
+        for(int c=0;c<3;c++) f[p*3+c]=localDisplay[c];
+        f[12+p]=colors[p].a;
+        int matching=0;
+        for(int q=0;q<4;q++) {
+            uvec2 gID=upLRIds[cacheBase[p]+q];
+            if(gID.x<frame.info.w&&colors[p].a>0.0&&gID.y==chart) matching++;
+        }
+        f[16+p]=float(matching)*0.25;
+    }
+    for(int c=0;c<3;c++) {f[20+c]=base[c];f[25+c]=rep.normal[c];f[28+c]=rep.reflected[c];}
+    f[23]=rep.uv.x;f[24]=rep.uv.y;f[31]=rep.roughness;
+    f[32]=phase.x*2.0-1.0;f[33]=phase.y*2.0-1.0;
+    f[34]=footprint.x;f[35]=footprint.y;
+    f[36]=alpha;f[37]=confidence;f[38]=missing;
+    f[39]=float(max(bestVotes,0))/float(max(validQuarters,1));
+    f[40]=rep.depth/(1.0+abs(rep.depth));f[41]=clamp(relativeError,0.0,1.0);
+    f[42]=normalQuality;f[43]=gate;
+    vec2 embedding=upEmbedding(chart);f[44]=embedding.x;f[45]=embedding.y;
+    // alpha==0 produces zero exactly; this skip stores no missing information.
+    vec3 residual=alpha>0.0?upDecode(f):vec3(0.0);
+    imageStore(outputImage,pixel,vec4(clamp(base.rgb+alpha*residual,vec3(0.0),vec3(alpha)),alpha));
+}
+

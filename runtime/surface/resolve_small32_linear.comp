@@ -1,0 +1,37 @@
+#version 450
+#extension GL_GOOGLE_include_directive : require
+#include "surface_geometry.glsl"
+layout(std430,binding=2) readonly buffer Appearance {uint data[];} appearance;
+uvec4 readChart(int c) {uint i=64u+uint(c)*4u;return uvec4(appearance.data[i],appearance.data[i+1u],appearance.data[i+2u],appearance.data[i+3u]);}
+float readAtlas(int i) {return uintBitsToFloat(appearance.data[64u+appearance.data[10]*4u+uint(i)]);}
+float readWeight(int i) {return uintBitsToFloat(appearance.data[64u+appearance.data[10]*4u+appearance.data[4]*appearance.data[6]+uint(i)]);}
+#define SF_CHART(i) readChart(i)
+#define SF_ATLAS(i) readAtlas(i)
+#define SF_WEIGHT(i) readWeight(i)
+#include "appearance_small32.glsl"
+#include "surface_gate.glsl"
+layout(binding=3) uniform usampler2D idTexture;
+layout(binding=4) uniform sampler2D baryTexture;
+layout(rgba32f,binding=5) uniform writeonly image2D outputImage; // linear associated
+layout(r32ui,binding=14) uniform writeonly uimage2D lrCenterGateImage;
+layout(local_size_x=8,local_size_y=8) in;
+void main() {
+    ivec2 pixel=ivec2(gl_GlobalInvocationID.xy);
+    if(any(greaterThanEqual(pixel,ivec2(frame.info.xy))))return;
+    vec3 linearSum=vec3(0.0);int count=0;
+    for(int s=0;s<4;s++) {
+        ivec2 sub=pixel*2+ivec2(s%2,s/2);
+        uint id=texelFetch(idTexture,sub,0).r;
+        if(id<frame.info.w) {
+            count++;
+            SurfaceHit h=surfaceFromRaster(id,texelFetch(baryTexture,sub,0).xy,(vec2(sub)+0.5)*0.5);
+            linearSum+=sfShade(int(h.chart),h.uv,h.position,h.normal,h.reflected,h.roughness,
+                               h.metallic,h.ndotv,h.derivatives,true);
+        }
+    }
+    bool incident=surfaceIncident(frame.origin.xyz,
+                                  normalize(surfaceRealRayUnnormalized(vec2(pixel)+0.5)));
+    imageStore(lrCenterGateImage,pixel,uvec4(incident?1u:0u,0u,0u,0u));
+    imageStore(outputImage,pixel,incident?vec4(linearSum*0.25,float(count)*0.25):vec4(0.0));
+}
+

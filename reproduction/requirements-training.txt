@@ -1,0 +1,5 @@
+# Original fitting backend. Install only in your own chosen environment.
+numpy
+torch==2.5.0
+# CUDA training used the official cu124 PyTorch distribution (2.5.0+cu124).
+# Blender 3.6.0 is a separate application; use its bundled Python/NumPy for scenes.

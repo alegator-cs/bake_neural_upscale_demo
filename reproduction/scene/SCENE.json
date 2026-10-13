@@ -1,0 +1,315 @@
+{
+  "scene_version": "indirect_alcove_v1",
+  "blender_version": "3.6.0",
+  "blender_build_hash": "c7fc78b81ecb",
+  "scene_bounds_game_units": {
+    "min": [
+      -174.0,
+      -166.0,
+      34.0
+    ],
+    "max": [
+      112.0,
+      166.0,
+      302.0
+    ]
+  },
+  "scale_metres_per_game_unit": 0.0078125,
+  "triangles": 10936,
+  "geometry": [
+    {
+      "name": "floor",
+      "game_bounds_min": [
+        -174.0,
+        -166.0,
+        34.0
+      ],
+      "game_bounds_max": [
+        112.0,
+        166.0,
+        44.0
+      ],
+      "triangles": 12
+    },
+    {
+      "name": "back wall",
+      "game_bounds_min": [
+        -174.0,
+        -166.0,
+        44.0
+      ],
+      "game_bounds_max": [
+        -164.0,
+        166.0,
+        302.0
+      ],
+      "triangles": 12
+    },
+    {
+      "name": "left coral wall",
+      "game_bounds_min": [
+        -164.0,
+        -166.0,
+        44.0
+      ],
+      "game_bounds_max": [
+        105.0,
+        -156.0,
+        302.0
+      ],
+      "triangles": 12
+    },
+    {
+      "name": "right teal wall",
+      "game_bounds_min": [
+        -164.0,
+        156.0,
+        44.0
+      ],
+      "game_bounds_max": [
+        105.0,
+        166.0,
+        302.0
+      ],
+      "triangles": 12
+    },
+    {
+      "name": "ceiling",
+      "game_bounds_min": [
+        -174.0,
+        -166.0,
+        292.0
+      ],
+      "game_bounds_max": [
+        105.0,
+        166.0,
+        302.0
+      ],
+      "triangles": 12
+    },
+    {
+      "name": "back relief 0",
+      "game_bounds_min": [
+        -164.0,
+        -124.0,
+        58.0
+      ],
+      "game_bounds_max": [
+        -157.0,
+        -106.0,
+        278.0
+      ],
+      "triangles": 188
+    },
+    {
+      "name": "back relief 1",
+      "game_bounds_min": [
+        -164.0,
+        -66.0,
+        58.0
+      ],
+      "game_bounds_max": [
+        -157.0,
+        -48.0,
+        278.0
+      ],
+      "triangles": 188
+    },
+    {
+      "name": "back relief 2",
+      "game_bounds_min": [
+        -164.0,
+        -8.0,
+        58.0
+      ],
+      "game_bounds_max": [
+        -157.0,
+        10.0,
+        278.0
+      ],
+      "triangles": 188
+    },
+    {
+      "name": "back relief 3",
+      "game_bounds_min": [
+        -164.0,
+        50.0,
+        58.0
+      ],
+      "game_bounds_max": [
+        -157.0,
+        68.0,
+        278.0
+      ],
+      "triangles": 188
+    },
+    {
+      "name": "back relief 4",
+      "game_bounds_min": [
+        -164.0,
+        108.0,
+        58.0
+      ],
+      "game_bounds_max": [
+        -157.0,
+        126.0,
+        278.0
+      ],
+      "triangles": 188
+    },
+    {
+      "name": "left plinth",
+      "game_bounds_min": [
+        -52.0,
+        -116.0,
+        44.0
+      ],
+      "game_bounds_max": [
+        57.0,
+        -23.0,
+        64.0
+      ],
+      "triangles": 188
+    },
+    {
+      "name": "bronze low sphere",
+      "game_bounds_min": [
+        -39.000064849853516,
+        -114.00004577636719,
+        64.0
+      ],
+      "game_bounds_max": [
+        49.000022888183594,
+        -25.999916076660156,
+        152.0
+      ],
+      "triangles": 2208
+    },
+    {
+      "name": "right plinth",
+      "game_bounds_min": [
+        -75.0,
+        21.0,
+        44.0
+      ],
+      "game_bounds_max": [
+        18.0,
+        126.0,
+        66.0
+      ],
+      "triangles": 188
+    },
+    {
+      "name": "blue tall ellipsoid",
+      "game_bounds_min": [
+        -48.880008697509766,
+        45.399993896484375,
+        66.18000030517578
+      ],
+      "game_bounds_max": [
+        6.880002975463867,
+        106.60001373291016,
+        149.82000732421875
+      ],
+      "triangles": 2208
+    },
+    {
+      "name": "ivory upper sphere",
+      "game_bounds_min": [
+        -49.00001525878906,
+        48.99999237060547,
+        146.0
+      ],
+      "game_bounds_max": [
+        1.0000038146972656,
+        99.0000228881836,
+        196.0
+      ],
+      "triangles": 2208
+    },
+    {
+      "name": "rough bronze standing ring",
+      "game_bounds_min": [
+        -99.00000762939453,
+        -50.0,
+        164.0
+      ],
+      "game_bounds_max": [
+        -76.99999237060547,
+        54.0,
+        268.0
+      ],
+      "triangles": 2560
+    },
+    {
+      "name": "left light baffle",
+      "game_bounds_min": [
+        45.0,
+        -156.0,
+        172.0
+      ],
+      "game_bounds_max": [
+        54.0,
+        -105.0,
+        292.0
+      ],
+      "triangles": 188
+    },
+    {
+      "name": "right light baffle",
+      "game_bounds_min": [
+        45.0,
+        108.0,
+        185.0
+      ],
+      "game_bounds_max": [
+        54.0,
+        156.0,
+        292.0
+      ],
+      "triangles": 188
+    }
+  ],
+  "world": "zero-energy black; no original Quake walls in transport scene",
+  "transport": "Cycles surface path tracing, six total/four diffuse/four glossy bounces; NEE/light tree; no glass/volume/caustics",
+  "lights": [
+    {
+      "name": "warm hidden area",
+      "watts": 145.0,
+      "color": [
+        1.0,
+        0.6499999761581421,
+        0.3400000035762787
+      ]
+    },
+    {
+      "name": "cool hidden area",
+      "watts": 115.0,
+      "color": [
+        0.3799999952316284,
+        0.6800000071525574,
+        1.0
+      ]
+    },
+    {
+      "name": "soft overhead",
+      "watts": 75.0,
+      "color": [
+        1.0,
+        0.8999999761581421,
+        0.699999988079071
+      ]
+    }
+  ],
+  "width": 128,
+  "height": 72,
+  "pixel_filter": "BOX width 0.01 pixels; near-center rays, finite sampling footprint remains",
+  "linear_rgba_convention": "scene-linear associated RGB + coverage alpha; top-down horizontally corrected original camera ordering",
+  "display_transfer": "unpremultiply by alpha; max(linear,0)/(1+max(linear,0)); power 1/2.2; premultiply by alpha; exposure 0",
+  "exr_note": "EXR file itself retains native Blender camera orientation; NPY arrays have Y and X flips applied",
+  "runtime_gate": "not baked here: caller must apply real mirror/front-occluder visibility consistently, and count that work",
+  "script_sha256": "b82e37e62532a90cfa2bb5af9f249f2270b0db6d2bb91f65b76e381abcd860b4",
+  "prepared_without_render": true,
+  "frozen_scene_file": "<private path omitted>",
+  "frozen_scene_sha256": "c844dfc2401c5fb3b8e30d9f4f375dbeca4fbb8d5aeb21ff66e6876bc2237f93"
+}

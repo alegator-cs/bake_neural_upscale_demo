@@ -1,0 +1,2066 @@
+{
+  "scene_sha256": "c844dfc2401c5fb3b8e30d9f4f375dbeca4fbb8d5aeb21ff66e6876bc2237f93",
+  "exporter_sha256": "4e089faac802835e7dfb986c4e4272956c7bf13ad4d81ad2aec456b54c2cad6f",
+  "schema_sha256": "6d11c1760dc605467707d507de2cf7cc6bafaa0fc11ab7fad4c1f732d5fb403a",
+  "mesh_npz_sha256": "cbc50451b331a947bdd17ec77b3706efae39364d6f9fda933e87cf8f1a5b33e6",
+  "triangle_binary_sha256": "657e3d200dcf36412bec2e4b3b3730737a5de07a8e8a49df6e2ba80bb9b1c9ce",
+  "triangles": 10936,
+  "objects": [
+    {
+      "id": 0,
+      "name": "floor",
+      "triangle_offset": 0,
+      "triangle_count": 12,
+      "chart_offset": 0,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": false,
+      "has_custom_normals": false,
+      "material_ids": [
+        0
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.2421875
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.3046875
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 1,
+      "name": "back wall",
+      "triangle_offset": 12,
+      "triangle_count": 12,
+      "chart_offset": 6,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": false,
+      "has_custom_normals": false,
+      "material_ids": [
+        1
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -1.3203125
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.3515625
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 2,
+      "name": "left coral wall",
+      "triangle_offset": 24,
+      "triangle_count": 12,
+      "chart_offset": 12,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": false,
+      "has_custom_normals": false,
+      "material_ids": [
+        2
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.23046875
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -1.2578125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.3515625
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 3,
+      "name": "right teal wall",
+      "triangle_offset": 36,
+      "triangle_count": 12,
+      "chart_offset": 18,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": false,
+      "has_custom_normals": false,
+      "material_ids": [
+        3
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.23046875
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.2578125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.3515625
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 4,
+      "name": "ceiling",
+      "triangle_offset": 48,
+      "triangle_count": 12,
+      "chart_offset": 24,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": false,
+      "has_custom_normals": false,
+      "material_ids": [
+        1
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.26953125
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          2.3203125
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 5,
+      "name": "back relief 0",
+      "triangle_offset": 60,
+      "triangle_count": 188,
+      "chart_offset": 30,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": true,
+      "has_custom_normals": true,
+      "material_ids": [
+        4
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -1.25390625
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -0.8984375
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.3125
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 6,
+      "name": "back relief 1",
+      "triangle_offset": 248,
+      "triangle_count": 188,
+      "chart_offset": 36,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": true,
+      "has_custom_normals": true,
+      "material_ids": [
+        4
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -1.25390625
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -0.4453125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.3125
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 7,
+      "name": "back relief 2",
+      "triangle_offset": 436,
+      "triangle_count": 188,
+      "chart_offset": 42,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": true,
+      "has_custom_normals": true,
+      "material_ids": [
+        4
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -1.25390625
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0078125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.3125
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 8,
+      "name": "back relief 3",
+      "triangle_offset": 624,
+      "triangle_count": 188,
+      "chart_offset": 48,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": true,
+      "has_custom_normals": true,
+      "material_ids": [
+        4
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -1.25390625
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.4609375
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.3125
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 9,
+      "name": "back relief 4",
+      "triangle_offset": 812,
+      "triangle_count": 188,
+      "chart_offset": 54,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": true,
+      "has_custom_normals": true,
+      "material_ids": [
+        4
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -1.25390625
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.9140625
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.3125
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 10,
+      "name": "left plinth",
+      "triangle_offset": 1000,
+      "triangle_count": 188,
+      "chart_offset": 60,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": true,
+      "has_custom_normals": true,
+      "material_ids": [
+        1
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.01953125
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -0.54296875
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.421875
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 11,
+      "name": "bronze low sphere",
+      "triangle_offset": 1188,
+      "triangle_count": 2208,
+      "chart_offset": 66,
+      "chart_count": 1,
+      "original_mesh_users": 1,
+      "auto_smooth": false,
+      "has_custom_normals": false,
+      "material_ids": [
+        5
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0390625
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -0.546875
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.84375
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 12,
+      "name": "right plinth",
+      "triangle_offset": 3396,
+      "triangle_count": 188,
+      "chart_offset": 67,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": true,
+      "has_custom_normals": true,
+      "material_ids": [
+        1
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.22265625
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.57421875
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.4296875
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 13,
+      "name": "blue tall ellipsoid",
+      "triangle_offset": 3584,
+      "triangle_count": 2208,
+      "chart_offset": 73,
+      "chart_count": 1,
+      "original_mesh_users": 1,
+      "auto_smooth": false,
+      "has_custom_normals": false,
+      "material_ids": [
+        6
+      ],
+      "matrix_world": [
+        [
+          0.8199999928474426,
+          0.0,
+          0.0,
+          -0.1640625
+        ],
+        [
+          0.0,
+          0.8999999761581421,
+          0.0,
+          0.59375
+        ],
+        [
+          0.0,
+          0.0,
+          1.2300000190734863,
+          0.84375
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 14,
+      "name": "ivory upper sphere",
+      "triangle_offset": 5792,
+      "triangle_count": 2208,
+      "chart_offset": 74,
+      "chart_count": 1,
+      "original_mesh_users": 1,
+      "auto_smooth": false,
+      "has_custom_normals": false,
+      "material_ids": [
+        4
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -0.1875
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.578125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.3359375
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 15,
+      "name": "rough bronze standing ring",
+      "triangle_offset": 8000,
+      "triangle_count": 2560,
+      "chart_offset": 75,
+      "chart_count": 1,
+      "original_mesh_users": 1,
+      "auto_smooth": false,
+      "has_custom_normals": false,
+      "material_ids": [
+        5
+      ],
+      "matrix_world": [
+        [
+          7.549790126404332e-08,
+          0.0,
+          1.0,
+          -0.6875
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.015625
+        ],
+        [
+          -1.0,
+          0.0,
+          7.549790126404332e-08,
+          1.6875
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 16,
+      "name": "left light baffle",
+      "triangle_offset": 10560,
+      "triangle_count": 188,
+      "chart_offset": 76,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": true,
+      "has_custom_normals": true,
+      "material_ids": [
+        7
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.38671875
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -1.01953125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.8125
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": 17,
+      "name": "right light baffle",
+      "triangle_offset": 10748,
+      "triangle_count": 188,
+      "chart_offset": 82,
+      "chart_count": 6,
+      "original_mesh_users": 1,
+      "auto_smooth": true,
+      "has_custom_normals": true,
+      "material_ids": [
+        7
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.38671875
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.03125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.86328125
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "id": 0,
+      "name": "neutral satin floor",
+      "base_color": [
+        0.47999998927116394,
+        0.47999998927116394,
+        0.44999998807907104
+      ],
+      "roughness": 0.3199999928474426,
+      "metallic": 0.0
+    },
+    {
+      "id": 1,
+      "name": "warm limestone rough",
+      "base_color": [
+        0.550000011920929,
+        0.47999998927116394,
+        0.3499999940395355
+      ],
+      "roughness": 0.7799999713897705,
+      "metallic": 0.0
+    },
+    {
+      "id": 2,
+      "name": "coral bounce wall",
+      "base_color": [
+        0.6499999761581421,
+        0.07500000298023224,
+        0.03500000014901161
+      ],
+      "roughness": 0.800000011920929,
+      "metallic": 0.0
+    },
+    {
+      "id": 3,
+      "name": "teal bounce wall",
+      "base_color": [
+        0.03500000014901161,
+        0.3499999940395355,
+        0.38999998569488525
+      ],
+      "roughness": 0.800000011920929,
+      "metallic": 0.0
+    },
+    {
+      "id": 4,
+      "name": "ivory ceramic",
+      "base_color": [
+        0.699999988079071,
+        0.6600000262260437,
+        0.5
+      ],
+      "roughness": 0.2800000011920929,
+      "metallic": 0.0
+    },
+    {
+      "id": 5,
+      "name": "rough bronze",
+      "base_color": [
+        0.6600000262260437,
+        0.36000001430511475,
+        0.10000000149011612
+      ],
+      "roughness": 0.23999999463558197,
+      "metallic": 0.800000011920929
+    },
+    {
+      "id": 6,
+      "name": "cobalt glaze",
+      "base_color": [
+        0.02800000086426735,
+        0.14000000059604645,
+        0.47999998927116394
+      ],
+      "roughness": 0.2199999988079071,
+      "metallic": 0.25
+    },
+    {
+      "id": 7,
+      "name": "dark baffles",
+      "base_color": [
+        0.054999999701976776,
+        0.06499999761581421,
+        0.07500000298023224
+      ],
+      "roughness": 0.800000011920929,
+      "metallic": 0.0
+    }
+  ],
+  "charts": [
+    {
+      "id": 0,
+      "object_id": 0,
+      "object_name": "floor",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 3320.0,
+      "metric_u": 332.0,
+      "metric_v": 10.0,
+      "metric_aspect": 33.2
+    },
+    {
+      "id": 1,
+      "object_id": 0,
+      "object_name": "floor",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 3320.0,
+      "metric_u": 332.0,
+      "metric_v": 10.0,
+      "metric_aspect": 33.2
+    },
+    {
+      "id": 2,
+      "object_id": 0,
+      "object_name": "floor",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2860.0,
+      "metric_u": 286.0,
+      "metric_v": 10.0,
+      "metric_aspect": 28.6
+    },
+    {
+      "id": 3,
+      "object_id": 0,
+      "object_name": "floor",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2860.0,
+      "metric_u": 286.0,
+      "metric_v": 10.0,
+      "metric_aspect": 28.6
+    },
+    {
+      "id": 4,
+      "object_id": 0,
+      "object_name": "floor",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 94952.0,
+      "metric_u": 286.0,
+      "metric_v": 332.0,
+      "metric_aspect": 0.8614457831325302
+    },
+    {
+      "id": 5,
+      "object_id": 0,
+      "object_name": "floor",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 94952.0,
+      "metric_u": 286.0,
+      "metric_v": 332.0,
+      "metric_aspect": 0.8614457831325302
+    },
+    {
+      "id": 6,
+      "object_id": 1,
+      "object_name": "back wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 85656.0,
+      "metric_u": 332.0,
+      "metric_v": 258.0,
+      "metric_aspect": 1.2868217054263567
+    },
+    {
+      "id": 7,
+      "object_id": 1,
+      "object_name": "back wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 85656.0,
+      "metric_u": 332.0,
+      "metric_v": 258.0,
+      "metric_aspect": 1.2868217054263567
+    },
+    {
+      "id": 8,
+      "object_id": 1,
+      "object_name": "back wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2580.0,
+      "metric_u": 10.0,
+      "metric_v": 258.0,
+      "metric_aspect": 0.03875968992248062
+    },
+    {
+      "id": 9,
+      "object_id": 1,
+      "object_name": "back wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2580.0,
+      "metric_u": 10.0,
+      "metric_v": 258.0,
+      "metric_aspect": 0.03875968992248062
+    },
+    {
+      "id": 10,
+      "object_id": 1,
+      "object_name": "back wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 3320.0,
+      "metric_u": 10.0,
+      "metric_v": 332.0,
+      "metric_aspect": 0.030120481927710843
+    },
+    {
+      "id": 11,
+      "object_id": 1,
+      "object_name": "back wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 3320.0,
+      "metric_u": 10.0,
+      "metric_v": 332.0,
+      "metric_aspect": 0.030120481927710843
+    },
+    {
+      "id": 12,
+      "object_id": 2,
+      "object_name": "left coral wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2580.0,
+      "metric_u": 10.0,
+      "metric_v": 258.0,
+      "metric_aspect": 0.03875968992248062
+    },
+    {
+      "id": 13,
+      "object_id": 2,
+      "object_name": "left coral wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2580.0,
+      "metric_u": 10.0,
+      "metric_v": 258.0,
+      "metric_aspect": 0.03875968992248062
+    },
+    {
+      "id": 14,
+      "object_id": 2,
+      "object_name": "left coral wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 69402.0,
+      "metric_u": 269.0,
+      "metric_v": 258.0,
+      "metric_aspect": 1.0426356589147288
+    },
+    {
+      "id": 15,
+      "object_id": 2,
+      "object_name": "left coral wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 69402.0,
+      "metric_u": 269.0,
+      "metric_v": 258.0,
+      "metric_aspect": 1.0426356589147288
+    },
+    {
+      "id": 16,
+      "object_id": 2,
+      "object_name": "left coral wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2690.0,
+      "metric_u": 269.0,
+      "metric_v": 10.0,
+      "metric_aspect": 26.9
+    },
+    {
+      "id": 17,
+      "object_id": 2,
+      "object_name": "left coral wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2690.0,
+      "metric_u": 269.0,
+      "metric_v": 10.0,
+      "metric_aspect": 26.9
+    },
+    {
+      "id": 18,
+      "object_id": 3,
+      "object_name": "right teal wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2580.0,
+      "metric_u": 10.0,
+      "metric_v": 258.0,
+      "metric_aspect": 0.03875968992248062
+    },
+    {
+      "id": 19,
+      "object_id": 3,
+      "object_name": "right teal wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2580.0,
+      "metric_u": 10.0,
+      "metric_v": 258.0,
+      "metric_aspect": 0.03875968992248062
+    },
+    {
+      "id": 20,
+      "object_id": 3,
+      "object_name": "right teal wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 69402.0,
+      "metric_u": 269.0,
+      "metric_v": 258.0,
+      "metric_aspect": 1.0426356589147288
+    },
+    {
+      "id": 21,
+      "object_id": 3,
+      "object_name": "right teal wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 69402.0,
+      "metric_u": 269.0,
+      "metric_v": 258.0,
+      "metric_aspect": 1.0426356589147288
+    },
+    {
+      "id": 22,
+      "object_id": 3,
+      "object_name": "right teal wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2690.0,
+      "metric_u": 269.0,
+      "metric_v": 10.0,
+      "metric_aspect": 26.9
+    },
+    {
+      "id": 23,
+      "object_id": 3,
+      "object_name": "right teal wall",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2690.0,
+      "metric_u": 269.0,
+      "metric_v": 10.0,
+      "metric_aspect": 26.9
+    },
+    {
+      "id": 24,
+      "object_id": 4,
+      "object_name": "ceiling",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 3320.0,
+      "metric_u": 332.0,
+      "metric_v": 10.0,
+      "metric_aspect": 33.2
+    },
+    {
+      "id": 25,
+      "object_id": 4,
+      "object_name": "ceiling",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 3320.0,
+      "metric_u": 332.0,
+      "metric_v": 10.0,
+      "metric_aspect": 33.2
+    },
+    {
+      "id": 26,
+      "object_id": 4,
+      "object_name": "ceiling",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2790.0,
+      "metric_u": 279.0,
+      "metric_v": 10.0,
+      "metric_aspect": 27.9
+    },
+    {
+      "id": 27,
+      "object_id": 4,
+      "object_name": "ceiling",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 2790.0,
+      "metric_u": 279.0,
+      "metric_v": 10.0,
+      "metric_aspect": 27.9
+    },
+    {
+      "id": 28,
+      "object_id": 4,
+      "object_name": "ceiling",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 92628.0,
+      "metric_u": 279.0,
+      "metric_v": 332.0,
+      "metric_aspect": 0.8403614457831325
+    },
+    {
+      "id": 29,
+      "object_id": 4,
+      "object_name": "ceiling",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 2,
+      "physical_area": 92628.0,
+      "metric_u": 279.0,
+      "metric_v": 332.0,
+      "metric_aspect": 0.8403614457831325
+    },
+    {
+      "id": 30,
+      "object_id": 5,
+      "object_name": "back relief 0",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 30,
+      "physical_area": 3536.1917982983255,
+      "metric_u": 18.0815939771164,
+      "metric_v": 220.91131332174228,
+      "metric_aspect": 0.08185001349741554
+    },
+    {
+      "id": 31,
+      "object_id": 5,
+      "object_name": "back relief 0",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 30,
+      "physical_area": 3536.1917982983255,
+      "metric_u": 18.081593977116395,
+      "metric_v": 220.91131332174228,
+      "metric_aspect": 0.08185001349741552
+    },
+    {
+      "id": 32,
+      "object_id": 5,
+      "object_name": "back relief 0",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 46,
+      "physical_area": 1567.5008128771633,
+      "metric_u": 7.909309399193863,
+      "metric_v": 220.69321440100055,
+      "metric_aspect": 0.03583848022088533
+    },
+    {
+      "id": 33,
+      "object_id": 5,
+      "object_name": "back relief 0",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 46,
+      "physical_area": 1567.5008128771633,
+      "metric_u": 7.90930939919386,
+      "metric_v": 220.6932144010001,
+      "metric_aspect": 0.035838480220885385
+    },
+    {
+      "id": 34,
+      "object_id": 5,
+      "object_name": "back relief 0",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 18,
+      "physical_area": 81.24990855160678,
+      "metric_u": 7.100862935773855,
+      "metric_v": 18.08216244127297,
+      "metric_aspect": 0.39269987529621814
+    },
+    {
+      "id": 35,
+      "object_id": 5,
+      "object_name": "back relief 0",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 18,
+      "physical_area": 81.24997516663828,
+      "metric_u": 7.10086792391765,
+      "metric_v": 18.0821651270254,
+      "metric_aspect": 0.39270009282819635
+    },
+    {
+      "id": 36,
+      "object_id": 6,
+      "object_name": "back relief 1",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 30,
+      "physical_area": 3536.1918084200197,
+      "metric_u": 18.081594032815882,
+      "metric_v": 220.9113134965403,
+      "metric_aspect": 0.08185001368478605
+    },
+    {
+      "id": 37,
+      "object_id": 6,
+      "object_name": "back relief 1",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 30,
+      "physical_area": 3536.1918084200192,
+      "metric_u": 18.081594032815886,
+      "metric_v": 220.9113134965403,
+      "metric_aspect": 0.08185001368478606
+    },
+    {
+      "id": 38,
+      "object_id": 6,
+      "object_name": "back relief 1",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 46,
+      "physical_area": 1567.5015581614125,
+      "metric_u": 7.90931641623329,
+      "metric_v": 220.69321640994892,
+      "metric_aspect": 0.03583851169009804
+    },
+    {
+      "id": 39,
+      "object_id": 6,
+      "object_name": "back relief 1",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 46,
+      "physical_area": 1567.5008128771633,
+      "metric_u": 7.90930939919386,
+      "metric_v": 220.6932144010001,
+      "metric_aspect": 0.035838480220885385
+    },
+    {
+      "id": 40,
+      "object_id": 6,
+      "object_name": "back relief 1",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 18,
+      "physical_area": 81.24991208654166,
+      "metric_u": 7.100862941999434,
+      "metric_v": 18.08216334025117,
+      "metric_aspect": 0.39269985611692854
+    },
+    {
+      "id": 41,
+      "object_id": 6,
+      "object_name": "back relief 1",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 18,
+      "physical_area": 81.2499787015876,
+      "metric_u": 7.10086793014373,
+      "metric_v": 18.082166026002646,
+      "metric_aspect": 0.3927000736489472
+    },
+    {
+      "id": 42,
+      "object_id": 7,
+      "object_name": "back relief 2",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 30,
+      "physical_area": 3536.1918096852296,
+      "metric_u": 18.08159403977821,
+      "metric_v": 220.91131351838976,
+      "metric_aspect": 0.08185001370820698
+    },
+    {
+      "id": 43,
+      "object_id": 7,
+      "object_name": "back relief 2",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 30,
+      "physical_area": 3536.19180968523,
+      "metric_u": 18.08159403977821,
+      "metric_v": 220.91131351838973,
+      "metric_aspect": 0.08185001370820698
+    },
+    {
+      "id": 44,
+      "object_id": 7,
+      "object_name": "back relief 2",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 46,
+      "physical_area": 1567.5015622504666,
+      "metric_u": 7.909316430610943,
+      "metric_v": 220.69321693456058,
+      "metric_aspect": 0.035838511670053703
+    },
+    {
+      "id": 45,
+      "object_id": 7,
+      "object_name": "back relief 2",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 46,
+      "physical_area": 1567.5015600998597,
+      "metric_u": 7.909316420860372,
+      "metric_v": 220.69321658985447,
+      "metric_aspect": 0.035838511681849185
+    },
+    {
+      "id": 46,
+      "object_id": 7,
+      "object_name": "back relief 2",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 18,
+      "physical_area": 81.24991252840803,
+      "metric_u": 7.100862942777375,
+      "metric_v": 18.082163452621675,
+      "metric_aspect": 0.3926998537195417
+    },
+    {
+      "id": 47,
+      "object_id": 7,
+      "object_name": "back relief 2",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 18,
+      "physical_area": 81.24997914345576,
+      "metric_u": 7.100867930921733,
+      "metric_v": 18.082166138373033,
+      "metric_aspect": 0.39270007125156536
+    },
+    {
+      "id": 48,
+      "object_id": 8,
+      "object_name": "back relief 3",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 30,
+      "physical_area": 3536.1918084200192,
+      "metric_u": 18.08159403281587,
+      "metric_v": 220.91131349654037,
+      "metric_aspect": 0.08185001368478596
+    },
+    {
+      "id": 49,
+      "object_id": 8,
+      "object_name": "back relief 3",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 30,
+      "physical_area": 3536.1918084200197,
+      "metric_u": 18.081594032815868,
+      "metric_v": 220.91131349654037,
+      "metric_aspect": 0.08185001368478595
+    },
+    {
+      "id": 50,
+      "object_id": 8,
+      "object_name": "back relief 3",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 46,
+      "physical_area": 1567.5008128771633,
+      "metric_u": 7.909309399193863,
+      "metric_v": 220.69321440100055,
+      "metric_aspect": 0.03583848022088533
+    },
+    {
+      "id": 51,
+      "object_id": 8,
+      "object_name": "back relief 3",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 46,
+      "physical_area": 1567.5015581614125,
+      "metric_u": 7.909316416233286,
+      "metric_v": 220.6932164099485,
+      "metric_aspect": 0.035838511690098086
+    },
+    {
+      "id": 52,
+      "object_id": 8,
+      "object_name": "back relief 3",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 18,
+      "physical_area": 81.24991208654166,
+      "metric_u": 7.100862941999547,
+      "metric_v": 18.082163340250958,
+      "metric_aspect": 0.39269985611693936
+    },
+    {
+      "id": 53,
+      "object_id": 8,
+      "object_name": "back relief 3",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 18,
+      "physical_area": 81.2499787015876,
+      "metric_u": 7.100867930143839,
+      "metric_v": 18.082166026002433,
+      "metric_aspect": 0.39270007364895787
+    },
+    {
+      "id": 54,
+      "object_id": 9,
+      "object_name": "back relief 4",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 30,
+      "physical_area": 3536.1917982983255,
+      "metric_u": 18.0815939771164,
+      "metric_v": 220.91131332174228,
+      "metric_aspect": 0.08185001349741554
+    },
+    {
+      "id": 55,
+      "object_id": 9,
+      "object_name": "back relief 4",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 30,
+      "physical_area": 3536.1917982983255,
+      "metric_u": 18.081593977116395,
+      "metric_v": 220.91131332174228,
+      "metric_aspect": 0.08185001349741552
+    },
+    {
+      "id": 56,
+      "object_id": 9,
+      "object_name": "back relief 4",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 46,
+      "physical_area": 1567.5008128771633,
+      "metric_u": 7.909309399193863,
+      "metric_v": 220.69321440100055,
+      "metric_aspect": 0.03583848022088533
+    },
+    {
+      "id": 57,
+      "object_id": 9,
+      "object_name": "back relief 4",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 46,
+      "physical_area": 1567.5008128771633,
+      "metric_u": 7.90930939919386,
+      "metric_v": 220.6932144010001,
+      "metric_aspect": 0.035838480220885385
+    },
+    {
+      "id": 58,
+      "object_id": 9,
+      "object_name": "back relief 4",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 18,
+      "physical_area": 81.24990855160678,
+      "metric_u": 7.100862935773855,
+      "metric_v": 18.08216244127297,
+      "metric_aspect": 0.39269987529621814
+    },
+    {
+      "id": 59,
+      "object_id": 9,
+      "object_name": "back relief 4",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 18,
+      "physical_area": 81.24997516663828,
+      "metric_u": 7.10086792391765,
+      "metric_v": 18.0821651270254,
+      "metric_aspect": 0.39270009282819635
+    },
+    {
+      "id": 60,
+      "object_id": 10,
+      "object_name": "left plinth",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 38,
+      "physical_area": 1597.1822588118275,
+      "metric_u": 94.40811473176814,
+      "metric_v": 20.155402233980496,
+      "metric_aspect": 4.6840104521756025
+    },
+    {
+      "id": 61,
+      "object_id": 10,
+      "object_name": "left plinth",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 38,
+      "physical_area": 1597.1822588118275,
+      "metric_u": 94.40811473176814,
+      "metric_v": 20.1554022339805,
+      "metric_aspect": 4.684010452175602
+    },
+    {
+      "id": 62,
+      "object_id": 10,
+      "object_name": "left plinth",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 22,
+      "physical_area": 1817.3172802779895,
+      "metric_u": 109.12160133922004,
+      "metric_v": 20.1421209546094,
+      "metric_aspect": 5.417582467364155
+    },
+    {
+      "id": 63,
+      "object_id": 10,
+      "object_name": "left plinth",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 22,
+      "physical_area": 1817.3172901061212,
+      "metric_u": 109.12160126120146,
+      "metric_v": 20.142121233723717,
+      "metric_aspect": 5.417582388417981
+    },
+    {
+      "id": 64,
+      "object_id": 10,
+      "object_name": "left plinth",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 34,
+      "physical_area": 10160.43141923778,
+      "metric_u": 110.33232274224773,
+      "metric_v": 94.34166875452331,
+      "metric_aspect": 1.1694972560781391
+    },
+    {
+      "id": 65,
+      "object_id": 10,
+      "object_name": "left plinth",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 34,
+      "physical_area": 10160.431419237779,
+      "metric_u": 110.33232274224774,
+      "metric_v": 94.34166875452334,
+      "metric_aspect": 1.169497256078139
+    },
+    {
+      "id": 66,
+      "object_id": 11,
+      "object_name": "bronze low sphere",
+      "kind": "periodic_existing_uv",
+      "face_axis": null,
+      "face_negative": null,
+      "wrap_flags": 1,
+      "triangle_count": 2208,
+      "physical_area": 24241.77390263715,
+      "metric_u": 217.324862318762,
+      "metric_v": 138.12898407505207,
+      "metric_aspect": 1.5733472867698717
+    },
+    {
+      "id": 67,
+      "object_id": 12,
+      "object_name": "right plinth",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 38,
+      "physical_area": 2012.8316021969395,
+      "metric_u": 106.40748717674929,
+      "metric_v": 22.14995001164296,
+      "metric_aspect": 4.803960601302348
+    },
+    {
+      "id": 68,
+      "object_id": 12,
+      "object_name": "right plinth",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 38,
+      "physical_area": 2012.8316415444492,
+      "metric_u": 106.40748964561345,
+      "metric_v": 22.149950531762393,
+      "metric_aspect": 4.803960599958368
+    },
+    {
+      "id": 69,
+      "object_id": 12,
+      "object_name": "right plinth",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 22,
+      "physical_area": 1723.8971494310645,
+      "metric_u": 93.12114493542316,
+      "metric_v": 22.142532929920293,
+      "metric_aspect": 4.205532638481137
+    },
+    {
+      "id": 70,
+      "object_id": 12,
+      "object_name": "right plinth",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 22,
+      "physical_area": 1723.8971396029892,
+      "metric_u": 93.12114500569758,
+      "metric_v": 22.14253260617818,
+      "metric_aspect": 4.205532703143228
+    },
+    {
+      "id": 71,
+      "object_id": 12,
+      "object_name": "right plinth",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 34,
+      "physical_area": 9787.567217278618,
+      "metric_u": 94.3396006896997,
+      "metric_v": 106.33232350968716,
+      "metric_aspect": 0.887214701756283
+    },
+    {
+      "id": 72,
+      "object_id": 12,
+      "object_name": "right plinth",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 34,
+      "physical_area": 9787.567215448977,
+      "metric_u": 94.33960066852259,
+      "metric_v": 106.33232348574379,
+      "metric_aspect": 0.887214701756902
+    },
+    {
+      "id": 73,
+      "object_id": 13,
+      "object_name": "blue tall ellipsoid",
+      "kind": "periodic_existing_uv",
+      "face_axis": null,
+      "face_negative": null,
+      "wrap_flags": 1,
+      "triangle_count": 2208,
+      "physical_area": 13883.645369162288,
+      "metric_u": 148.4830478102424,
+      "metric_v": 120.13406877820967,
+      "metric_aspect": 1.2359778480854613
+    },
+    {
+      "id": 74,
+      "object_id": 14,
+      "object_name": "ivory upper sphere",
+      "kind": "periodic_existing_uv",
+      "face_axis": null,
+      "face_negative": null,
+      "wrap_flags": 1,
+      "triangle_count": 2208,
+      "physical_area": 7825.9825555179705,
+      "metric_u": 123.47999731544972,
+      "metric_v": 78.48236482733617,
+      "metric_aspect": 1.573347051749904
+    },
+    {
+      "id": 75,
+      "object_id": 15,
+      "object_name": "rough bronze standing ring",
+      "kind": "periodic_existing_uv",
+      "face_axis": null,
+      "face_negative": null,
+      "wrap_flags": 3,
+      "triangle_count": 2560,
+      "physical_area": 17713.84291827303,
+      "metric_u": 266.7776165068798,
+      "metric_v": 68.83116056858138,
+      "metric_aspect": 3.8758262145103637
+    },
+    {
+      "id": 76,
+      "object_id": 16,
+      "object_name": "left light baffle",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 22,
+      "physical_area": 5794.555923272452,
+      "metric_u": 51.07850803832061,
+      "metric_v": 120.08081054591263,
+      "metric_aspect": 0.4253677819637206
+    },
+    {
+      "id": 77,
+      "object_id": 16,
+      "object_name": "left light baffle",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 22,
+      "physical_area": 5794.555923272452,
+      "metric_u": 51.07850803832061,
+      "metric_v": 120.08081054591263,
+      "metric_aspect": 0.4253677819637206
+    },
+    {
+      "id": 78,
+      "object_id": 16,
+      "object_name": "left light baffle",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 40,
+      "physical_area": 1091.4922418145827,
+      "metric_u": 9.905537907466883,
+      "metric_v": 120.69059975598813,
+      "metric_aspect": 0.08207381459280066
+    },
+    {
+      "id": 79,
+      "object_id": 16,
+      "object_name": "left light baffle",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 40,
+      "physical_area": 1091.4922418145823,
+      "metric_u": 9.905537907466913,
+      "metric_v": 120.69059975598832,
+      "metric_aspect": 0.08207381459280079
+    },
+    {
+      "id": 80,
+      "object_id": 16,
+      "object_name": "left light baffle",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 32,
+      "physical_area": 448.1383170604058,
+      "metric_u": 9.910992212727793,
+      "metric_v": 51.1295517209703,
+      "metric_aspect": 0.19384078051016618
+    },
+    {
+      "id": 81,
+      "object_id": 16,
+      "object_name": "left light baffle",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 32,
+      "physical_area": 448.13768681969157,
+      "metric_u": 9.910963398908587,
+      "metric_v": 51.12955533754748,
+      "metric_aspect": 0.1938402032538385
+    },
+    {
+      "id": 82,
+      "object_id": 17,
+      "object_name": "right light baffle",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 22,
+      "physical_area": 4841.473908736811,
+      "metric_u": 48.07906289257322,
+      "metric_v": 107.0814181560555,
+      "metric_aspect": 0.4489953880000451
+    },
+    {
+      "id": 83,
+      "object_id": 17,
+      "object_name": "right light baffle",
+      "kind": "dominant_geometric_face",
+      "face_axis": 0,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 22,
+      "physical_area": 4841.473908736811,
+      "metric_u": 48.07906289257321,
+      "metric_v": 107.0814181560555,
+      "metric_aspect": 0.44899538800004507
+    },
+    {
+      "id": 84,
+      "object_id": 17,
+      "object_name": "right light baffle",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 40,
+      "physical_area": 972.6199070316076,
+      "metric_u": 9.904003275721717,
+      "metric_v": 107.69105441294035,
+      "metric_aspect": 0.09196681497559592
+    },
+    {
+      "id": 85,
+      "object_id": 17,
+      "object_name": "right light baffle",
+      "kind": "dominant_geometric_face",
+      "face_axis": 1,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 40,
+      "physical_area": 972.6199070316076,
+      "metric_u": 9.904003275721728,
+      "metric_v": 107.69105441294012,
+      "metric_aspect": 0.09196681497559621
+    },
+    {
+      "id": 86,
+      "object_id": 17,
+      "object_name": "right light baffle",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": false,
+      "wrap_flags": 0,
+      "triangle_count": 32,
+      "physical_area": 420.70619872690145,
+      "metric_u": 9.910527215686859,
+      "metric_v": 48.12988233366921,
+      "metric_aspect": 0.20591214304203606
+    },
+    {
+      "id": 87,
+      "object_id": 17,
+      "object_name": "right light baffle",
+      "kind": "dominant_geometric_face",
+      "face_axis": 2,
+      "face_negative": true,
+      "wrap_flags": 0,
+      "triangle_count": 32,
+      "physical_area": 420.705609562082,
+      "metric_u": 9.910498423890639,
+      "metric_v": 48.12988595866767,
+      "metric_aspect": 0.20591152932299572
+    }
+  ],
+  "triangle_stride_bytes": 112,
+  "triangle_payload_bytes": 1224832,
+  "curve_triangle_axis_unwrap_count": 0,
+  "normal_contract": "Cycles3.6 static-transform path: per-corner inverse-transpose then normalize; interpolate+normalize at hit; auto-smooth loop normals override flat polygon flags",
+  "static_transform_criteria_verified": "Each mesh data has one user; no subdivision/displacement modifier, BSSRDF, transmission, linked displacement, volume or normal map",
+  "normal_sources": [
+    "https://raw.githubusercontent.com/blender/blender/v3.6.0/intern/cycles/blender/mesh.cpp",
+    "https://raw.githubusercontent.com/blender/blender/v3.6.0/intern/cycles/scene/mesh.cpp"
+  ],
+  "render_invoked": false,
+  "export_seconds": 1.664963600007468,
+  "source_unchanged": true
+}

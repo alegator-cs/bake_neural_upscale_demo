@@ -1,0 +1,27 @@
+# Build and local execution outputs; preserve small release assets explicitly.
+**/__pycache__/
+*.pyc
+*.spv
+*.obj
+*.lib
+*.a
+*.dll
+*.dylib
+*.exe
+*.pdb
+*.exp
+*.res
+*.tlog
+*.lastbuildstate
+runtime/out/
+runtime/session/
+runtime/quake3e/code/win32/msvc2017/output/
+runtime/*-build.log
+runtime/shader_build_receipt.json
+runtime/*.spv
+work/
+.vs/
+.env
+.env.*
+/docs/*_DRAFT.md
+/scratch/
